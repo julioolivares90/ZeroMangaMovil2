@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="5dp"
+    android:layout_margin="5dp"
+    >
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_manga_popular"
+        android:layout_width="200dp"
+        android:layout_height="300dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/rin_tohsaka" />
+
+    <TextView
+        android:background="@color/negrotransparente"
+        android:id="@+id/tv_title_popular"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/iv_manga_popular"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_demografia_popular"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="220dp"
+        android:background="@color/backgroundcolorrojo"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/iv_manga_popular"
+        app:layout_constraintStart_toStartOf="@+id/iv_manga_popular"
+        app:layout_constraintTop_toBottomOf="@+id/tv_score_popular" />
+
+    <TextView
+        android:id="@+id/tv_tipo_popular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="100dp"
+        android:background="@drawable/backgroundtipoverde"
+        android:text="type"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/tv_score_popular"
+        app:layout_constraintStart_toStartOf="@+id/tv_title_popular"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title_popular" />
+
+    <TextView
+        android:id="@+id/tv_score_popular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:drawableRight="@drawable/ic_baseline_star_24"
+        android:text="TextView"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_title_popular"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title_popular" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
