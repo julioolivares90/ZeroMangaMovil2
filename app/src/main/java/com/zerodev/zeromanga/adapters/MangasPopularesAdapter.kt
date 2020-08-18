@@ -1,5 +1,6 @@
 package com.zerodev.zeromanga.adapters
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,21 +39,35 @@ class MangasPopularesAdapter(val mangas : MutableList<Manga>
             title.text = manga.title
             demografia.text = manga.demography
 
-            when(manga.demography){
-                "Josei"-> demografia.setBackgroundColor(R.drawable.backgroundtipoverde)
-                "Seinen" -> demografia.setBackgroundColor(R.drawable.backgroundcolorrojo)
-                "Shounen" -> demografia.setBackgroundColor(R.drawable.backgrounddemografiashounen)
-                "Shoujo"-> demografia.setBackgroundColor(R.drawable.backgroundrosado)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                when(manga.demography){
+                    "Josei"-> demografia.setTextAppearance(R.style.textJosei) //demografia.setBackgroundColor(R.drawable.backgroundtipoverde)
+                    "Seinen" -> demografia.setTextAppearance(R.style.textSeinen)//demografia.setBackgroundColor(R.drawable.backgroundcolorrojo)
+                    "Shounen" -> demografia.setTextAppearance(R.style.textShounen)//demografia.setBackgroundColor(R.drawable.backgrounddemografiashounen)
+                    "Shoujo"-> demografia.setTextAppearance(R.style.textShoujo)//demografia.setBackgroundColor(R.drawable.backgroundrosado)
+                }
+                when(manga.type){
+                    "MANGA"->  demografia.setTextAppearance(R.style.tipoManga)//tipo.setBackgroundColor(R.drawable.backgroundazul)
+                    "MANHWA"-> demografia.setTextAppearance(R.style.tipoManhwa)//tipo.setBackgroundColor(R.drawable.backgroundtipoverde)
+                    "MANHUA"-> demografia.setTextAppearance(R.style.tipoManhua)//tipo.setBackgroundColor(R.drawable.backgroundcafe)
+                }
+            }else if (Build.VERSION.SDK_INT <= 23){
+                when(manga.demography){
+                    "Josei"-> demografia.setTextAppearance(itemView.context,R.style.textJosei) //demografia.setBackgroundColor(R.drawable.backgroundtipoverde)
+                    "Seinen" -> demografia.setTextAppearance(itemView.context,R.style.textSeinen)//demografia.setBackgroundColor(R.drawable.backgroundcolorrojo)
+                    "Shounen" -> demografia.setTextAppearance(itemView.context,R.style.textShounen)//demografia.setBackgroundColor(R.drawable.backgrounddemografiashounen)
+                    "Shoujo"-> demografia.setTextAppearance(itemView.context,R.style.textShoujo)//demografia.setBackgroundColor(R.drawable.backgroundrosado)
+                }
+                when(manga.type){
+                    "MANGA"->  demografia.setTextAppearance(itemView.context,R.style.tipoManga)//tipo.setBackgroundColor(R.drawable.backgroundazul)
+                    "MANHWA"-> demografia.setTextAppearance(itemView.context,R.style.tipoManhwa)//tipo.setBackgroundColor(R.drawable.backgroundtipoverde)
+                    "MANHUA"-> demografia.setTextAppearance(itemView.context,R.style.tipoManhua)//tipo.setBackgroundColor(R.drawable.backgroundcafe)
+                }
             }
-
 
             tipo.text = manga.type
 
-            when(manga.type){
-                "MANGA"-> tipo.setBackgroundColor(R.drawable.backgroundazul)
-                "MANHWA"->tipo.setBackgroundColor(R.drawable.backgroundtipoverde)
-                "MANHUA"->tipo.setBackgroundColor(R.drawable.backgroundcafe)
-            }
+
 
 
             score.text = manga.score

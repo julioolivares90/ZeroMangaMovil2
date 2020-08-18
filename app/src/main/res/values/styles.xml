@@ -14,4 +14,25 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="textJosei" parent="@android:style/TextAppearance.Medium">
+        <item name="background">@drawable/backgroundtipoverde</item>
+    </style>
+    <style name="textSeinen">
+        <item name="android:background">@drawable/backgroundcolorrojo</item>
+    </style>
+    <style name="textShounen">
+        <item name="android:background">@drawable/backgrounddemografiashounen</item>
+    </style>
+    <style name="textShoujo">
+        <item name="android:background">@drawable/backgroundrosado</item>
+    </style>
+    <style name="tipoManga">
+        <item name="android:background">@drawable/backgroundazul</item>
+    </style>
+    <style name="tipoManhwa">
+        <item name="android:background">@drawable/backgroundtipoverde</item>
+    </style>
+    <style name="tipoManhua">
+        <item name="android:background">@drawable/backgroundcafe</item>
+    </style>
 </resources>
