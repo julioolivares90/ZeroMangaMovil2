@@ -27,7 +27,7 @@ class MangasPopularesAdapter(val mangas : MutableList<Manga>
         holder.bind(manga = item,mangaOnclickListener = mangaOnclickListener)
     }
 
-    inner class MangasPopularesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    class MangasPopularesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
         private val title : TextView = itemView.findViewById(R.id.tv_title_popular)
         private val demografia : TextView = itemView.findViewById(R.id.tv_demografia_popular)
@@ -38,7 +38,7 @@ class MangasPopularesAdapter(val mangas : MutableList<Manga>
         fun bind(manga: Manga,mangaOnclickListener: MangaOnclickListener){
             title.text = manga.title
             demografia.text = manga.demography
-
+            tipo.text = manga.type
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                 when(manga.demography){
                     "Josei"-> demografia.setTextAppearance(R.style.textJosei) //demografia.setBackgroundColor(R.drawable.backgroundtipoverde)
@@ -64,12 +64,7 @@ class MangasPopularesAdapter(val mangas : MutableList<Manga>
                     "MANHUA"-> demografia.setTextAppearance(itemView.context,R.style.tipoManhua)//tipo.setBackgroundColor(R.drawable.backgroundcafe)
                 }
             }
-
-            tipo.text = manga.type
-
-
-
-
+            
             score.text = manga.score
             Glide.with(itemView.context)
                 .load(manga.mangaImagen).into(imagen)

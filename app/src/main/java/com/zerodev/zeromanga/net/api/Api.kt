@@ -13,6 +13,6 @@ interface Api {
     suspend fun getAllMangasSeinen() : com.zerodev.zeromanga.net.models.Response
 
     @GET("manga/info")
-    suspend fun getInfoManga(@Query("mangaUrl") mangaUrl : String) : Response<MangaResponse>
+    suspend fun getInfoManga(@Query("mangaUrl") mangaUrl : String) : MangaResponse
 
 }

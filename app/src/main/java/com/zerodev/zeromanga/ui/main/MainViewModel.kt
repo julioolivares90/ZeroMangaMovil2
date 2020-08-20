@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.zerodev.zeromanga.net.models.Response
 import com.zerodev.zeromanga.net.models.ResponseManga
 import com.zerodev.zeromanga.net.repository.MangaRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
@@ -17,15 +16,24 @@ class MainViewModel : ViewModel() {
 
     private val _mangasPopulares : MutableLiveData<ResponseManga<Response>> = MutableLiveData()
 
+    private val _isLoading  : MutableLiveData<Boolean> = MutableLiveData()
+
     init {
-        getAllMangasSeinen()
-        getAllMangasPopulares()
+        setMangas()
     }
+
+    fun IsLoading() : LiveData<Boolean> = _isLoading
 
     fun getMangaSeinen() : LiveData<ResponseManga<Response>> = _mangasSeinen
 
     fun getMangasPopulares() : LiveData<ResponseManga<Response>> = _mangasPopulares
 
+    private  fun setMangas () = viewModelScope.launch {
+        _isLoading.value = true
+        getAllMangasPopulares()
+        getAllMangasSeinen()
+        _isLoading.value = false
+    }
     fun getAllMangasSeinen()  = viewModelScope.launch {
         val response = repository.getAllMangasSeinen()
         _mangasSeinen.postValue(response)
@@ -34,6 +42,7 @@ class MainViewModel : ViewModel() {
         val response = repository.getAllMangasPopulares(1)
         _mangasPopulares.postValue(response)
     }
+    /*
     private fun setMangasSeinen() {
         viewModelScope.launch(Dispatchers.IO) {
                val result =  repository.getAllMangasSeinen()
@@ -54,4 +63,6 @@ class MainViewModel : ViewModel() {
             }
         }
     }
+
+     */
 }

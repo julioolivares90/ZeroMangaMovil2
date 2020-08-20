@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import com.zerodev.zeromanga.R
 import com.zerodev.zeromanga.adapters.MangasPopularesAdapter
 import com.zerodev.zeromanga.adapters.MangasSeinenAdapter
@@ -19,6 +20,7 @@ import com.zerodev.zeromanga.net.models.Manga
 import com.zerodev.zeromanga.net.models.Resource
 import com.zerodev.zeromanga.net.models.Response
 import com.zerodev.zeromanga.net.models.ResponseManga
+import com.zerodev.zeromanga.utlities.constantes.ENVIAR_URL
 
 class MainFragment : Fragment() {
 
@@ -46,13 +48,28 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.IsLoading().observe(viewLifecycleOwner, Observer {
+            if (it){
+                hideComponents()
+            }else {
+                hideProgressBar()
+                showComponents()
+            }
+        })
+
         viewModel.getMangaSeinen().observe(viewLifecycleOwner, Observer {
             val result = it
             when(result){
                 is ResponseManga.Success<Response> -> {
                     adapter = MangasSeinenAdapter(result.data.data,mangaOnclickListener = object : MangaOnclickListener{
                         override fun onClick(manga: Manga) {
-                            Log.d("MANGA SEINEN ",manga.title)
+                            val bundle = Bundle()
+                            bundle.putString(ENVIAR_URL,manga.mangaUrl)
+
+                            Navigation
+                                .findNavController(view)
+                                .navigate(R.id.action_mainFragment_to_descripcionFragment
+                                    ,bundle)
                         }
                     })
                 }else -> {}
@@ -66,12 +83,36 @@ class MainFragment : Fragment() {
                 is ResponseManga.Success<Response> -> {
                     adapterPopulares = MangasPopularesAdapter(result.data.data,mangaOnclickListener = object : MangaOnclickListener{
                         override fun onClick(manga: Manga) {
-                            Log.d("MANGA POPULARES",manga.title)
+                            val bundle = Bundle()
+                            bundle.putString(ENVIAR_URL,manga.mangaUrl)
+
+                            Navigation
+                                .findNavController(view)
+                                .navigate(R.id.action_mainFragment_to_descripcionFragment
+                                    ,bundle)
                         }
                     })
                 }else -> {}
             }
             binding.rvMangasPopulares.adapter = adapterPopulares
         })
+    }
+
+    fun hideProgressBar(){
+        binding.pbCargarMangas.visibility = View.GONE
+    }
+
+    fun hideComponents(){
+        binding.textView.visibility = View.GONE
+        binding.rvMangasSeinen.visibility = View.GONE
+        binding.rvMangasPopulares.visibility = View.GONE
+        binding.tvSeinen.visibility = View.GONE
+    }
+
+    fun showComponents(){
+        binding.textView.visibility = View.VISIBLE
+        binding.rvMangasSeinen.visibility = View.VISIBLE
+        binding.rvMangasPopulares.visibility = View.VISIBLE
+        binding.tvSeinen.visibility = View.VISIBLE
     }
 }

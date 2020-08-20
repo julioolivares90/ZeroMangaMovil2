@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.zerodev.zeromanga.ui.main.MainFragment"
+        android:label="inicio"
+        tools:layout="@layout/main_fragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_descripcionFragment"
+            app:destination="@id/descripcionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/descripcionFragment"
+        android:name="com.zerodev.zeromanga.ui.tmo.descripcion.DescripcionFragment"
+        android:label="descripcion"
+        tools:layout="@layout/descripcion_fragment" >
+        <action
+            android:id="@+id/action_descripcionFragment_to_lectorFragment"
+            app:destination="@id/lectorFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/lectorFragment"
+        android:name="com.zerodev.zeromanga.ui.tmo.lector.LectorFragment"
+        android:label=""
+        tools:layout="@layout/lector_fragment" />
+    <fragment
+        android:id="@+id/busquedaFragment"
+        android:name="com.zerodev.zeromanga.ui.busqueda.BusquedaFragment"
+        android:label="buscar"
+        tools:layout="@layout/busqueda_fragment" >
+        <action
+            android:id="@+id/action_busquedaFragment_to_descripcionFragment"
+            app:destination="@id/descripcionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoritosFragment"
+        android:name="com.zerodev.zeromanga.ui.favoritos.FavoritosFragment"
+        android:label="favoritos"
+        tools:layout="@layout/favoritos_fragment" >
+        <action
+            android:id="@+id/action_favoritosFragment_to_descripcionFragment"
+            app:destination="@id/descripcionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/capituloFragment"
+        android:name="com.zerodev.zeromanga.ui.tmo.descripcion.capitulo.CapituloFragment"
+        android:label="capitulo_fragment"
+        tools:layout="@layout/capitulo_fragment"/>
+    <fragment
+        android:id="@+id/detalleFragment"
+        android:name="com.zerodev.zeromanga.ui.tmo.descripcion.detalle.DetalleFragment"
+        android:label="fragment_detalle"
+        tools:layout="@layout/fragment_detalle" />
+</navigation>
