@@ -51,6 +51,7 @@ class MainFragment : Fragment() {
         viewModel.IsLoading().observe(viewLifecycleOwner, Observer {
             if (it){
                 hideComponents()
+                showProgressbar()
             }else {
                 hideProgressBar()
                 showComponents()
@@ -98,6 +99,9 @@ class MainFragment : Fragment() {
         })
     }
 
+    fun showProgressbar(){
+        binding.pbCargarMangas.visibility = View.VISIBLE
+    }
     fun hideProgressBar(){
         binding.pbCargarMangas.visibility = View.GONE
     }
