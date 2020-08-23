@@ -96,4 +96,7 @@ dependencies {
     // Testing Navigation
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
 
+    //jsoup
+    implementation 'org.jsoup:jsoup:1.13.1'
+
 }
