@@ -16,8 +16,26 @@
             android:layout_height="match_parent"
             tools:context=".ui.tmo.descripcion.DescripcionFragment">
             <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardElevation="5dp"
+                app:cardCornerRadius="5dp"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                android:background="@color/colorPrimary"
+                >
+                <ImageView
+                    android:layout_width="400dp"
+                    android:layout_height="200dp"
+                    android:id="@+id/imageView"
+                    android:src="@drawable/rin_tohsaka"/>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:background="@color/colorPrimary"
                 android:layout_gravity="center"
-                android:layout_width="wrap_content"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="5dp"
                 app:cardElevation="5dp"
@@ -114,12 +132,15 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
+                android:background="@color/colorPrimary"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="5dp"
                 app:cardElevation="5dp"
                 android:layout_gravity="center"
+
                 >
             <LinearLayout
                 android:orientation="vertical"
@@ -146,8 +167,8 @@
             </LinearLayout>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:background="@color/colorPrimary"
+                android:layout_margin="10dp"
                 android:layout_gravity="center"
                 android:padding="10dp"
                 android:layout_width="wrap_content"

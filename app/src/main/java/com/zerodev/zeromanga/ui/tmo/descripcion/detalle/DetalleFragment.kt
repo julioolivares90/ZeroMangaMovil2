@@ -54,7 +54,7 @@ class DetalleFragment : Fragment() {
 
         viewModel.mangaResponse.observe(viewLifecycleOwner, Observer {mangaResponse->
 
-           // Glide.with(view).load(mangaResponse.data.image).into(imageView)
+            Glide.with(view).load(mangaResponse.data.image).into(imageView)
            // tv_title_descripcion.text = mangaResponse.data.title
             tv_descripcion.text = mangaResponse.data.descripcion
             tv_demografia.text = mangaResponse.data.demografia

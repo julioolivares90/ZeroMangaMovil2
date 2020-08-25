@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(setOf(R.id.mainFragment, R.id.busquedaFragment,R.id.favoritosFragment))
         setupActionBarWithNavController(nav_host_fragment.findNavController(),appBarConfiguration)
 
-        //findViewById<CollapsingToolbarLayout>(R.id.appbarLayout).title = title
+        //findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout).title = title
        bottomNavigationView.setupWithNavController(nav_host_fragment.findNavController())
 
         nav_host_fragment.findNavController().addOnDestinationChangedListener { _, destination, _ ->

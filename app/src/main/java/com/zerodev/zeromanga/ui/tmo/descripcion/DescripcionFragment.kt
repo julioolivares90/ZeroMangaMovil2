@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -56,6 +58,7 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         viewModel.IsLoading().observe(viewLifecycleOwner, Observer {
             if (it){
                 binding.pbDescripcion.visibility = View.VISIBLE
@@ -74,7 +77,20 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
         viewModel.getInfoManga().observe(viewLifecycleOwner, Observer {
             mangaResponse = it
 
-            Glide.with(requireContext()).load(mangaResponse.data.image).into(binding.imageView)
+
+            //(activity as AppCompatActivity).setSupportActionBar()
+            val toolbar = (activity as AppCompatActivity).supportActionBar
+
+            toolbar?.title = mangaResponse.data.title
+           /*
+            val tb_imagen= toolbar?.customView?.findViewById<ImageView>(R.id.tb_imagen)
+            tb_imagen?.let {imagen ->
+                Glide.with(requireContext()).load(mangaResponse.data.image).into(imagen)
+            }
+
+            */
+
+            //Glide.with(requireContext()).load(mangaResponse.data.image).into(binding.imageView)
             descripcionViewPagerAdapter = DescripcionViewPagerAdapter(mangaResponse,this)
             binding.viewPagerDescripcion.adapter = descripcionViewPagerAdapter
 
@@ -99,13 +115,13 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
     }
 
     fun hideComponents(){
-        binding.imageView.visibility = View.GONE
+       // binding.imageView.visibility = View.GONE
         binding.viewPagerDescripcion.visibility = View.GONE
         binding.tabLayout.visibility = View.GONE
     }
 
     fun showComponents(){
-        binding.imageView.visibility = View.VISIBLE
+       // binding.imageView.visibility = View.VISIBLE
         binding.viewPagerDescripcion.visibility = View.VISIBLE
         binding.tabLayout.visibility = View.VISIBLE
     }
