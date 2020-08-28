@@ -1,13 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.busqueda.BusquedaFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+    <Spinner
+        android:id="@+id/sp_busqueda"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        app:layout_constraintEnd_toEndOf="@+id/sv_buscar_manga"
+        app:layout_constraintStart_toStartOf="@+id/sv_buscar_manga"
+        app:layout_constraintTop_toBottomOf="@+id/sv_buscar_manga" />
 
-</FrameLayout>
+    <SearchView
+        android:id="@+id/sv_buscar_manga"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/sp_ordenar_por"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/sp_busqueda"
+        app:layout_constraintStart_toStartOf="@+id/sp_busqueda"
+        app:layout_constraintTop_toBottomOf="@+id/sp_busqueda" />
+
+    <Spinner
+        android:id="@+id/sp_order_by_desc_asc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/sp_ordenar_por"
+        app:layout_constraintStart_toStartOf="@+id/sp_ordenar_por"
+        app:layout_constraintTop_toBottomOf="@+id/sp_ordenar_por" />
+
+    <TextView
+        android:id="@+id/tv_filtros"
+        android:drawableLeft="@drawable/ic_baseline_arrow_drop_down_24"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Filtrar"
+        app:layout_constraintStart_toStartOf="@+id/sp_order_by_desc_asc"
+        app:layout_constraintTop_toBottomOf="@+id/sp_order_by_desc_asc" />
+
+    <TextView
+        android:id="@+id/tv_generos"
+        android:drawableLeft="@drawable/ic_baseline_arrow_drop_down_24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Generos"
+        app:layout_constraintEnd_toEndOf="@+id/sp_order_by_desc_asc"
+        app:layout_constraintStart_toEndOf="@+id/tv_filtros"
+        app:layout_constraintTop_toTopOf="@+id/tv_filtros" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

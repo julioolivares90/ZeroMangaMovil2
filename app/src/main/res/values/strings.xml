@@ -91,4 +91,21 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+    <string-array name="sp_busqueda_array">
+        <item>Titulo</item>
+        <item>Autor</item>
+        <item>Compañia</item>
+    </string-array>
+    <string-array name="sp_ordenar_por_array">
+        <item>Me Gusta</item>
+        <item>Alfabetico</item>
+        <item>Puntuacion</item>
+        <item>Creacion</item>
+        <item>fecha estreno</item>
+        <item>Num. Capitulos</item>
+    </string-array>
+    <string-array name="sp_order_by_desc_asc_array">
+        <item>desc</item>
+        <item>asc</item>
+    </string-array>
 </resources>

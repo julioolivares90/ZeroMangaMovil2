@@ -6,8 +6,10 @@
     android:orientation="vertical"
     app:cardElevation="5dp"
     app:cardCornerRadius="10dp"
-    android:background="#7b1fa2"
-    android:layout_margin="4dp">
+
+    android:backgroundTint="@color/colorPrimaryDark"
+    android:layout_margin="4dp"
+    >
     <TextView
         android:id="@+id/tv_title_capitulo"
         android:layout_margin="10dp"
@@ -15,6 +17,6 @@
         android:layout_height="wrap_content"
         android:text="capitulo"
         android:textSize="15sp"
-        android:background="#7b1fa2"
+
         android:textColor="@android:color/white"/>
 </androidx.cardview.widget.CardView>
