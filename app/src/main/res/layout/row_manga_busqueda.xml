@@ -7,6 +7,7 @@
     app:cardCornerRadius="10dp"
     android:layout_margin="10dp"
     android:padding="10dp"
+    android:backgroundTint="@color/colorPrimaryDark"
     >
     <LinearLayout
         android:orientation="horizontal"
