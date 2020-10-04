@@ -2,6 +2,7 @@ package com.zerodev.zeromanga.net.api
 
 import com.zerodev.zeromanga.net.models.MangaResponse
 import com.zerodev.zeromanga.net.models.ResponseLista
+import com.zerodev.zeromanga.net.models.ResultListPaginasManga
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -35,5 +36,8 @@ interface Api {
 
     @GET("manga/listas")
     suspend fun getListasMangas() : ResponseLista
+
+    @GET("manga/paginas")
+    suspend fun getPaginasOfManga(@Query("lectorTMO") lectorTMO : String) : ResultListPaginasManga
 
 }

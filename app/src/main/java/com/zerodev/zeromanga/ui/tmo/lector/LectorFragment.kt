@@ -29,12 +29,17 @@ class LectorFragment : Fragment() {
 
     private lateinit var lectorAdapter: LectorAdapter
 
+    private  var urlImagen : String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = LectorFragmentBinding.inflate(layoutInflater)
 
         viewModel = ViewModelProvider(this).get(LectorViewModel::class.java)
+
+        val arguments = requireArguments()
+        urlImagen = arguments.getString(URL_IMAGE_CAP)
 
 
     }
@@ -47,8 +52,8 @@ class LectorFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val arguments =  requireArguments()
-        val urlImagen = arguments.getString(URL_IMAGE_CAP)
+        //val arguments =  requireArguments()
+        //val urlImagen = arguments.getString(URL_IMAGE_CAP)
         urlImagen?.let {
             viewLifecycleOwner.lifecycleScope.launch {
                 viewModel.getImagenesCap(it)

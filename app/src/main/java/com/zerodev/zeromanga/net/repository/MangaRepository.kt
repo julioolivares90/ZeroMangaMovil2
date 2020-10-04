@@ -1,11 +1,10 @@
 package com.zerodev.zeromanga.net.repository
 
+import android.util.Log
 import com.zerodev.zeromanga.net.api.Api
 import com.zerodev.zeromanga.net.api.RetrofitSingleton
-import com.zerodev.zeromanga.net.models.MangaResponse
-import com.zerodev.zeromanga.net.models.Response
-import com.zerodev.zeromanga.net.models.ResponseLista
-import com.zerodev.zeromanga.net.models.ResponseManga
+import com.zerodev.zeromanga.net.models.*
+import com.zerodev.zeromanga.utlities.AdapterString
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.http.Query
@@ -80,6 +79,19 @@ class MangaRepository  {
             if (response.statusCode == 200){
                 ResponseManga.Success(response)
             }else{
+                ResponseManga.Error(Exception("Ocurrio un error ${response.statusCode}"))
+            }
+        }
+    }
+
+    suspend fun getListOfCapitulosfromManga(urlLector : String) : ResponseManga<MutableList<String>>{
+        return withContext(Dispatchers.IO){
+            val url = AdapterString(urlLector)
+            val response = retrofit.getPaginasOfManga(lectorTMO = url)
+            Log.d("RESPONSE",response.toString())
+            if (response.statusCode == 200){
+                ResponseManga.Success(response.data)
+            }else {
                 ResponseManga.Error(Exception("Ocurrio un error ${response.statusCode}"))
             }
         }
