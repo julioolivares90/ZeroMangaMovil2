@@ -1,5 +1,7 @@
 package com.zerodev.zeromanga.ui.tmo.lector
 
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -31,6 +33,9 @@ class LectorFragment : Fragment() {
 
     private  var urlImagen : String? = null
 
+     val pref = activity?.getSharedPreferences(getString(R.string.my_shared_preference),
+        MODE_PRIVATE)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -40,7 +45,6 @@ class LectorFragment : Fragment() {
 
         val arguments = requireArguments()
         urlImagen = arguments.getString(URL_IMAGE_CAP)
-
 
     }
     override fun onCreateView(
@@ -57,13 +61,25 @@ class LectorFragment : Fragment() {
         urlImagen?.let {
             viewLifecycleOwner.lifecycleScope.launch {
                 viewModel.getImagenesCap(it)
+                val session = pref?.getString(getString(R.string.key_tumangaonline_session),"")
+                val cfduid = pref?.getString(getString(R.string.key_cfduid),"")
+                val ga = pref?.getString(getString(R.string.key_ga),"")
+                val cf_bm = pref?.getString(getString(R.string.key__cf_bm),"")
+                val xsrf_token = pref?.getString(getString(R.string.key_XSRF_TOKEN),"")
+                session?.let {s->
+                    viewModel.setTmoSession(tmoSession = session,cfduid = cfduid!!,ga = ga!!,cf_bm = cf_bm!!,xsrf_token = xsrf_token!!)
+                }
+
             }
         }
         viewModel.IsLoading().observe(viewLifecycleOwner, Observer {
-            if (it)
+            if (it){
                 binding.pbCargarImagenesCapitulo.visibility = View.VISIBLE
-            else
+            }
+            else{
                 binding.pbCargarImagenesCapitulo.visibility = View.GONE
+            }
+
         })
         viewModel.getImagenes().observe(viewLifecycleOwner, Observer {
             lectorAdapter = LectorAdapter(it.toMutableList())

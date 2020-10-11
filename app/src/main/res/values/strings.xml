@@ -108,4 +108,11 @@
         <item>desc</item>
         <item>asc</item>
     </string-array>
+    <string name="my_shared_preference">misPreferencias</string>
+    <string name="key_tumangaonline_session">tu_manga_online_session</string>
+    <string name="key_cfduid">_cfduid</string>
+    <string name="key_ga">_ga</string>
+    <string name="key__cf_bm">__cf_bm</string>
+    <string name="key_XSRF_TOKEN">XSRF_TOKEN</string>
+
 </resources>
