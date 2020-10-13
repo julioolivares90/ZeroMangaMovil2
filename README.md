@@ -19,4 +19,4 @@ aplicacion de practica con arquitectura mvvm
 <img src="https://github.com/julioolivares90/ZeroMangaMovil2/blob/master/imagenes/s7.png"  width="600" height="1000"/>
 
 ## interfaz busqueda de un manga
-<img src="https://github.com/julioolivares90/ZeroMangaMovil2/blob/master/imagenes/s7.png"  width="600" height="1000"/>
+<img src="https://github.com/julioolivares90/ZeroMangaMovil2/blob/master/imagenes/s9.png"  width="600" height="1000"/>
