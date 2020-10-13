@@ -47,6 +47,48 @@ class LectorViewModel : ViewModel() {
 
          viewModelScope.launch {
 
+             val cookies = scraper.getCookies()
+
+             cookies?.let {
+                 if (url.contains("lectortmo.com")){
+
+                     val dataSRC = scraper.getDataSRC(url = url,cookies = cookies)
+                     Log.d("DATA-SRC =>",dataSRC)
+
+                     val newUrl = dataSRC
+                     newUrl?.let {
+
+                         val result : ResponseManga<MutableList<String>>? = repository.getListOfCapitulosfromManga(urlLector = newUrl)
+                         when(result){
+                             is ResponseManga.Success<MutableList<String>>->{
+                                 imagenes.postValue(result.data)
+
+                                 _isloading.postValue(false)
+
+                             }else -> {
+                             _isloading.postValue(false)
+                         }
+                         }
+                     }
+                 }else {
+                     cookies.let {c->
+                         val dataSRC = scraper.getDataSRC(url = url,cookies =c)
+                         val newUrl = dataSRC
+                         newUrl?.let {
+                             val result : ResponseManga<MutableList<String>> = repository.getListOfCapitulosfromManga(urlLector = it)
+                             when(result){
+                                 is ResponseManga.Success<MutableList<String>>-> {
+                                     imagenes.postValue(result.data)
+                                     _isloading.postValue(false)
+                                 }else -> {
+                                 _isloading.postValue(false)
+                             }
+                             }
+                         }
+                     }
+                 }
+             }
+             /*
              val cookies = mapOf(
                  "tu_manga_online_session" to TMO_SESSION.value,
                  "_cfduid" to _cfduid.value,
@@ -87,6 +129,8 @@ class LectorViewModel : ViewModel() {
                      }
                  }
              }
+
+              */
          }
     }
 }

@@ -13,6 +13,7 @@ import com.zerodev.zeromanga.databinding.CapituloFragmentBinding
 import com.zerodev.zeromanga.listeners.CapituloOnClickListener
 import com.zerodev.zeromanga.net.models.Capitulo
 import com.zerodev.zeromanga.net.models.MangaResponse
+import com.zerodev.zeromanga.utlities.constantes.NOMBRE_CAP
 import com.zerodev.zeromanga.utlities.constantes.URL_IMAGE_CAP
 
 class CapituloFragment : Fragment() {
@@ -45,6 +46,7 @@ class CapituloFragment : Fragment() {
                     override fun onClick(capitulo: Capitulo) {
                         val bundle = Bundle()
                         bundle.putString(URL_IMAGE_CAP,capitulo.UrlLeer)
+                        bundle.putString(NOMBRE_CAP,capitulo.Title)
                         Navigation.findNavController(view).navigate(R.id.action_descripcionFragment_to_lectorFragment,bundle)
                     }
                 })

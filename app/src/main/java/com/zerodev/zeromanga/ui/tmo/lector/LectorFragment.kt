@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -15,6 +16,7 @@ import com.zerodev.zeromanga.R
 import com.zerodev.zeromanga.adapters.LectorAdapter
 import com.zerodev.zeromanga.databinding.LectorFragmentBinding
 import com.zerodev.zeromanga.ui.tmo.descripcion.DescripcionViewModel
+import com.zerodev.zeromanga.utlities.constantes.NOMBRE_CAP
 import com.zerodev.zeromanga.utlities.constantes.URL_IMAGE_CAP
 import kotlinx.coroutines.launch
 import kotlin.coroutines.coroutineContext
@@ -33,8 +35,13 @@ class LectorFragment : Fragment() {
 
     private  var urlImagen : String? = null
 
+    private  var TitleCap : String? = null
+
+    /*
      val pref = activity?.getSharedPreferences(getString(R.string.my_shared_preference),
         MODE_PRIVATE)
+
+     */
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +52,7 @@ class LectorFragment : Fragment() {
 
         val arguments = requireArguments()
         urlImagen = arguments.getString(URL_IMAGE_CAP)
+        TitleCap = arguments.getString(NOMBRE_CAP)
 
     }
     override fun onCreateView(
@@ -58,9 +66,11 @@ class LectorFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         //val arguments =  requireArguments()
         //val urlImagen = arguments.getString(URL_IMAGE_CAP)
+
         urlImagen?.let {
             viewLifecycleOwner.lifecycleScope.launch {
                 viewModel.getImagenesCap(it)
+                /*
                 val session = pref?.getString(getString(R.string.key_tumangaonline_session),"")
                 val cfduid = pref?.getString(getString(R.string.key_cfduid),"")
                 val ga = pref?.getString(getString(R.string.key_ga),"")
@@ -70,6 +80,13 @@ class LectorFragment : Fragment() {
                     viewModel.setTmoSession(tmoSession = session,cfduid = cfduid!!,ga = ga!!,cf_bm = cf_bm!!,xsrf_token = xsrf_token!!)
                 }
 
+                 */
+            }
+        }
+        TitleCap?.let {t->
+            val myToolbar = (activity as AppCompatActivity).supportActionBar
+            myToolbar?.let {actionBar->
+                actionBar.title = t
             }
         }
         viewModel.IsLoading().observe(viewLifecycleOwner, Observer {

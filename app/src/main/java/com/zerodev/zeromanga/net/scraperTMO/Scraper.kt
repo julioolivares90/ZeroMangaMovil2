@@ -1,8 +1,10 @@
 package com.zerodev.zeromanga.net.scraperTMO
 
 import android.util.Log
+import com.zerodev.zeromanga.utlities.constantes.URL_LECTOR
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.jsoup.Connection
 import org.jsoup.Jsoup
 import org.jsoup.select.Elements
 
@@ -23,7 +25,8 @@ class Scraper {
                 .headers(headers).get()
 
             document?.let {
-                val dataSRC = it.select("#app > div.pbl > div.OUTBRAIN\"").first()
+                Log.d("DOCUMENT => ",document.html())
+                val dataSRC = it.select("#app > div.pbl > div.OUTBRAIN").first()
                  src = dataSRC.attr("data-src")
 
             }
@@ -41,6 +44,26 @@ class Scraper {
 
 */
         return@withContext src
+    }
+
+    suspend fun getDataSRC2(url : String) = withContext(Dispatchers.IO){
+        val cookies = getCookies()
+        cookies?.let {
+            Log.d("COOKIES => ",cookies.toString())
+            val document = Jsoup.connect(url)
+                .cookies(it)
+                .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36")
+                .get()
+
+        }
+    }
+    //obtiene las cookies de una session en la pagina
+    suspend fun getCookies() = withContext(Dispatchers.IO) {
+        val response = Jsoup.connect(URL_LECTOR).method(Connection.Method.GET).execute()
+
+        response?.let {
+            return@withContext response.cookies()
+        }
     }
 
     suspend fun GetPagainasForManga(url : String,cookies : Map<String,String?>?= null)  = withContext(Dispatchers.IO){
