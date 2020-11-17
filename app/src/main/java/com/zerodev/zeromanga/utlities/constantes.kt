@@ -6,5 +6,6 @@ object constantes {
     val NOMBRE_CAP = "NOMBRE_CAPITULO"
     val URL_IMAGE_CAP ="URL_IMAGE_CAP"
     val URL_LECTOR = "https://lectortmo.com/"
+    val URL_REFERER = "urlReferer"
 
 }

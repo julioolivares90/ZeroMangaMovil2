@@ -6,7 +6,7 @@ import com.zerodev.zeromanga.net.models.MangaResponse
 import com.zerodev.zeromanga.ui.tmo.descripcion.capitulo.CapituloFragment
 import com.zerodev.zeromanga.ui.tmo.descripcion.detalle.DetalleFragment
 
-class DescripcionViewPagerAdapter(val mangaResponse: MangaResponse,fragment: Fragment) : FragmentStateAdapter(fragment) {
+class DescripcionViewPagerAdapter(val mangaResponse: MangaResponse,val mangaUrlRefer : String ="",fragment: Fragment) : FragmentStateAdapter(fragment) {
 
 
     override fun getItemCount() = 2
@@ -18,7 +18,7 @@ class DescripcionViewPagerAdapter(val mangaResponse: MangaResponse,fragment: Fra
             val fragment = DetalleFragment.newInstance(mangaResponse)
             return fragment
         }else if (position == 1){
-            val fragment = CapituloFragment.newInstance(mangaResponse)
+            val fragment = CapituloFragment.newInstance(mangaResponse,mangaUrlRefer)
             return fragment
         }
         return inicio

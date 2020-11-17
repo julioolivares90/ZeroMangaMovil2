@@ -33,6 +33,8 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
 
     private lateinit var mangaResponse: MangaResponse
 
+    private lateinit var mangaUrlRefer : String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -45,6 +47,7 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
 
         mangaUrl.let {
             viewModel.setInfoManga(it!!)
+            mangaUrlRefer = it
         }
     }
 
@@ -91,7 +94,7 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
             */
 
             //Glide.with(requireContext()).load(mangaResponse.data.image).into(binding.imageView)
-            descripcionViewPagerAdapter = DescripcionViewPagerAdapter(mangaResponse,this)
+            descripcionViewPagerAdapter = DescripcionViewPagerAdapter(mangaResponse,mangaUrlRefer = mangaUrlRefer ,this)
             binding.viewPagerDescripcion.adapter = descripcionViewPagerAdapter
 
             TabLayoutMediator(tabLayout,binding.viewPagerDescripcion,

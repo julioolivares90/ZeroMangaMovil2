@@ -18,6 +18,7 @@ import com.zerodev.zeromanga.databinding.LectorFragmentBinding
 import com.zerodev.zeromanga.ui.tmo.descripcion.DescripcionViewModel
 import com.zerodev.zeromanga.utlities.constantes.NOMBRE_CAP
 import com.zerodev.zeromanga.utlities.constantes.URL_IMAGE_CAP
+import com.zerodev.zeromanga.utlities.constantes.URL_REFERER
 import kotlinx.coroutines.launch
 import kotlin.coroutines.coroutineContext
 
@@ -37,6 +38,8 @@ class LectorFragment : Fragment() {
 
     private  var TitleCap : String? = null
 
+    private var mangaUrlRefer : String? = null
+
     /*
      val pref = activity?.getSharedPreferences(getString(R.string.my_shared_preference),
         MODE_PRIVATE)
@@ -53,6 +56,7 @@ class LectorFragment : Fragment() {
         val arguments = requireArguments()
         urlImagen = arguments.getString(URL_IMAGE_CAP)
         TitleCap = arguments.getString(NOMBRE_CAP)
+        mangaUrlRefer = arguments.getString(URL_REFERER)
 
     }
     override fun onCreateView(
@@ -69,18 +73,7 @@ class LectorFragment : Fragment() {
 
         urlImagen?.let {
             viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.getImagenesCap(it)
-                /*
-                val session = pref?.getString(getString(R.string.key_tumangaonline_session),"")
-                val cfduid = pref?.getString(getString(R.string.key_cfduid),"")
-                val ga = pref?.getString(getString(R.string.key_ga),"")
-                val cf_bm = pref?.getString(getString(R.string.key__cf_bm),"")
-                val xsrf_token = pref?.getString(getString(R.string.key_XSRF_TOKEN),"")
-                session?.let {s->
-                    viewModel.setTmoSession(tmoSession = session,cfduid = cfduid!!,ga = ga!!,cf_bm = cf_bm!!,xsrf_token = xsrf_token!!)
-                }
-
-                 */
+                viewModel.getImagenesCap(it,mangaUrlRefer!!)
             }
         }
         TitleCap?.let {t->

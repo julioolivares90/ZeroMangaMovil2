@@ -37,7 +37,7 @@ interface Api {
     @GET("manga/listas")
     suspend fun getListasMangas() : ResponseLista
 
-    @GET("manga/paginas")
-    suspend fun getPaginasOfManga(@Query("lectorTMO") lectorTMO : String) : ResultListPaginasManga
+    @GET("get-manga")
+    suspend fun getPaginasOfManga(@Query("urlPage") lectorTMO : String) : ResultListPaginasManga
 
 }

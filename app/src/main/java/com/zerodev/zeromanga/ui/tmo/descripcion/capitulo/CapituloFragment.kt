@@ -15,10 +15,13 @@ import com.zerodev.zeromanga.net.models.Capitulo
 import com.zerodev.zeromanga.net.models.MangaResponse
 import com.zerodev.zeromanga.utlities.constantes.NOMBRE_CAP
 import com.zerodev.zeromanga.utlities.constantes.URL_IMAGE_CAP
+import com.zerodev.zeromanga.utlities.constantes.URL_REFERER
 
 class CapituloFragment : Fragment() {
 
     private lateinit var mangaResponse: MangaResponse
+
+    private  lateinit var mangaUrlRefer: String
 
     lateinit var binding: CapituloFragmentBinding
 
@@ -47,6 +50,7 @@ class CapituloFragment : Fragment() {
                         val bundle = Bundle()
                         bundle.putString(URL_IMAGE_CAP,capitulo.UrlLeer)
                         bundle.putString(NOMBRE_CAP,capitulo.Title)
+                        bundle.putString(URL_REFERER,mangaUrlRefer)
                         Navigation.findNavController(view).navigate(R.id.action_descripcionFragment_to_lectorFragment,bundle)
                     }
                 })
@@ -56,8 +60,9 @@ class CapituloFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(mangaResponse: MangaResponse) = CapituloFragment().apply {
+        fun newInstance(mangaResponse: MangaResponse,mangaUrlRefer : String = "") = CapituloFragment().apply {
             this.mangaResponse = mangaResponse
+            this.mangaUrlRefer = mangaUrlRefer
         }
     }
 }
