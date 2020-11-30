@@ -18,11 +18,12 @@ class ScraperChapter {
     }
 
     //retorna la url despues de la redireccion
-    private suspend fun getUrlFromRedirection(urlRefer : String,url : String) : String{
+     suspend fun getUrlFromRedirection(urlRefer : String,url : String) : String{
         val request = Request.Builder()
             .url(url)
             .addHeader("referer",urlRefer)
             .build()
+
         var newUrl = ""
         val url = withContext(Dispatchers.IO){
             okHttp.newCall(request).execute().request.url.toString()
@@ -37,7 +38,7 @@ class ScraperChapter {
 
     }
 
-    private suspend fun getHTMLFromPage(urlRefer: String,url: String) : String {
+     suspend fun getHTMLFromPage(urlRefer: String,url: String) : String {
 
         val request = Request
             .Builder()
@@ -48,12 +49,13 @@ class ScraperChapter {
             .addHeader("accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9")
             .build()
 
-        return withContext(Dispatchers.IO){
-            okHttp.newCall(request).execute().body.toString()
-        }
+         val html = withContext(Dispatchers.IO){
+             okHttp.newCall(request).execute().body?.string()
+         }
+        return html!!
     }
 
-    private fun ContainMainContainer(content : String) : Boolean{
+     fun ContainMainContainer(content : String) : Boolean{
         val document = Jsoup.parse(content)
         try {
             val container = document.select("#main-container").first()
@@ -67,7 +69,7 @@ class ScraperChapter {
     }
 
 
-    private fun GetUrlFromImages(content : String) : MutableList<String> {
+     fun GetUrlFromImages(content : String) : MutableList<String> {
         val imagenes =  mutableListOf<String>()
 
         val document = Jsoup.parse(content)
@@ -76,13 +78,13 @@ class ScraperChapter {
                 val divMain = document.select("#main-container")
                 val imagenesDiv = divMain.select(".img-container")
                 for (i in imagenesDiv){
-                    val imagen = i.getElementById("img").attr("data-src")
-                    imagen?.let {
+                    val imagen = i.select("img").attr("data-src")
+                    imagen.let {
                         imagenes.add(it)
                     }
                 }
             }catch (ex : Exception){
-                Log.d("Error => ",ex.message.toString())
+                //Log.d("Error => ",ex.message.toString())
                 return imagenes
             }
         }else {
