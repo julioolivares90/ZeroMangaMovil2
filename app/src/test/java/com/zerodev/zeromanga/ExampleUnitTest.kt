@@ -21,27 +21,7 @@ class ExampleUnitTest {
 
     val urlReferTest1 = "https://lectortmo.com/library/manga/16476/Kenja-no-Mago"
     val urlTest1 = "https://lectortmo.com/view_uploads/638593"
-    /*
-    @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
-    }
 
-    @Test
-     fun getUrlRedirection() = runBlocking{
-        val url =
-            scraper.getUrlFromRedirection(urlRefer = urlReferTest2,url = urlTest2)
-
-        print("URL REDIRECTION => $url")
-    }
-    @Test
-     fun getHtmlPage() = runBlocking{
-
-        val html = scraper.getHTMLFromPage(urlRefer = urlReferTest2,url = urlTest2)
-        print("HTML FROM PAGE $html")
-    }
-
-     */
 
     @Test
     fun `comprueba si existe main container en la pagina solicitada`() = runBlocking{
@@ -66,17 +46,5 @@ class ExampleUnitTest {
         for (img in imagenes)
             print(img)
     }
-    /*
-    @Test
-    fun getHtmlFromPage() = runBlocking{
-       val scraper = ScraperChapter()
-        val mangas =
-            scraper.GetImagesFromChapters(urlRefer = urlReferTest1,url = urlTest1)
 
-        for (item in mangas){
-            print(item)
-        }
-    }
-
-     */
 }
