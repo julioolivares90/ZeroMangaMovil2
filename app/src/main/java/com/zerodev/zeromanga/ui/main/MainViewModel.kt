@@ -7,10 +7,11 @@ import androidx.lifecycle.viewModelScope
 import com.zerodev.zeromanga.net.models.Response
 import com.zerodev.zeromanga.net.models.ResponseManga
 import com.zerodev.zeromanga.net.repository.MangaRepository
+import com.zerodev.zeromanga.net.repository.MangaRepositoryImpl
 import kotlinx.coroutines.launch
 
-class MainViewModel : ViewModel() {
-    private val repository = MangaRepository()
+class MainViewModel (val repository: MangaRepository) : ViewModel() {
+    //private val repository = MangaRepository()
 
    private val _mangasSeinen : MutableLiveData<ResponseManga<Response>> = MutableLiveData()
 

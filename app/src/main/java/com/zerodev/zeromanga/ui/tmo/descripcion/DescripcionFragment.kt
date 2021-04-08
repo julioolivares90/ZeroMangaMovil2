@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.zerodev.zeromanga.R
@@ -17,7 +15,8 @@ import com.zerodev.zeromanga.adapters.DescripcionViewPagerAdapter
 import com.zerodev.zeromanga.databinding.DescripcionFragmentBinding
 import com.zerodev.zeromanga.net.models.MangaResponse
 import com.zerodev.zeromanga.utlities.constantes.ENVIAR_URL
-import kotlinx.android.synthetic.main.descripcion_fragment.*
+import org.koin.android.ext.android.inject
+
 
 class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
 
@@ -25,7 +24,7 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
         fun newInstance() = DescripcionFragment()
     }
 
-    private lateinit var viewModel: DescripcionViewModel
+    private  val viewModel: DescripcionViewModel by inject()
 
     private lateinit var binding: DescripcionFragmentBinding
 
@@ -39,7 +38,7 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
         super.onCreate(savedInstanceState)
 
         binding = DescripcionFragmentBinding.inflate(layoutInflater)
-        viewModel = ViewModelProvider(this).get(DescripcionViewModel::class.java)
+        //viewModel = ViewModelProvider(this).get(DescripcionViewModel::class.java)
 
         val arguments = arguments
 
@@ -74,6 +73,10 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
 
         })
         setUpViewPager()
+
+        binding.fbAddMagafav.setOnClickListener {
+
+        }
     }
 
     fun setUpViewPager() {
@@ -97,7 +100,7 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
             descripcionViewPagerAdapter = DescripcionViewPagerAdapter(mangaResponse,mangaUrlRefer = mangaUrlRefer ,this)
             binding.viewPagerDescripcion.adapter = descripcionViewPagerAdapter
 
-            TabLayoutMediator(tabLayout,binding.viewPagerDescripcion,
+            TabLayoutMediator(binding.tabLayout,binding.viewPagerDescripcion,
                 TabLayoutMediator.TabConfigurationStrategy{ tab: TabLayout.Tab, position: Int ->
                     when(position){
                         0-> {
@@ -144,5 +147,7 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
         super.onResume()
         setUpViewPager()
     }
+
+
 
 }

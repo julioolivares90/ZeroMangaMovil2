@@ -1,26 +1,18 @@
 package com.zerodev.zeromanga.ui.tmo.lector
 
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zerodev.zeromanga.net.models.ResponseManga
-import com.zerodev.zeromanga.net.repository.ChaptersRepository
-import com.zerodev.zeromanga.net.repository.MangaRepository
-import com.zerodev.zeromanga.net.scraperTMO.Scraper
-import com.zerodev.zeromanga.net.scraperTMO.ScraperTMO
+import com.zerodev.zeromanga.net.repository.CharpetersRepository
 import kotlinx.coroutines.launch
 
-class LectorViewModel : ViewModel() {
+class LectorViewModel  (private val repository : CharpetersRepository) : ViewModel() {
 
     private val imagenes = MutableLiveData<MutableList<String>>()
 
     private val _isloading = MutableLiveData<Boolean>()
-
-    private val repository = ChaptersRepository()
-
 
     init {
         _isloading.value = true

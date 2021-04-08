@@ -114,5 +114,6 @@
     <string name="key_ga">_ga</string>
     <string name="key__cf_bm">__cf_bm</string>
     <string name="key_XSRF_TOKEN">XSRF_TOKEN</string>
+    <string name="favorito_text">Fav</string>
 
 </resources>

@@ -1,15 +1,11 @@
 package com.zerodev.zeromanga.ui.main
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.zerodev.zeromanga.R
 import com.zerodev.zeromanga.adapters.MangasPopularesAdapter
@@ -17,10 +13,10 @@ import com.zerodev.zeromanga.adapters.MangasSeinenAdapter
 import com.zerodev.zeromanga.databinding.MainFragmentBinding
 import com.zerodev.zeromanga.listeners.MangaOnclickListener
 import com.zerodev.zeromanga.net.models.Manga
-import com.zerodev.zeromanga.net.models.Resource
 import com.zerodev.zeromanga.net.models.Response
 import com.zerodev.zeromanga.net.models.ResponseManga
 import com.zerodev.zeromanga.utlities.constantes.ENVIAR_URL
+import org.koin.android.ext.android.inject
 
 class MainFragment : Fragment() {
 
@@ -28,7 +24,7 @@ class MainFragment : Fragment() {
     private lateinit var adapterPopulares : MangasPopularesAdapter
 
     private lateinit var binding: MainFragmentBinding
-    private lateinit var viewModel: MainViewModel
+    private  val mainViewModel : MainViewModel by inject()
 
     companion object {
         fun newInstance() = MainFragment()
@@ -37,7 +33,7 @@ class MainFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = MainFragmentBinding.inflate(layoutInflater)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        //viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -48,7 +44,7 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.IsLoading().observe(viewLifecycleOwner, Observer {
+        mainViewModel.IsLoading().observe(viewLifecycleOwner, Observer {
             if (it){
                 hideComponents()
                 showProgressbar()
@@ -58,7 +54,7 @@ class MainFragment : Fragment() {
             }
         })
 
-        viewModel.getMangaSeinen().observe(viewLifecycleOwner, Observer {
+        mainViewModel.getMangaSeinen().observe(viewLifecycleOwner, Observer {
             val result = it
             when(result){
                 is ResponseManga.Success<Response> -> {
@@ -78,7 +74,7 @@ class MainFragment : Fragment() {
             binding.rvMangasSeinen.adapter = adapter
         })
 
-        viewModel.getMangasPopulares().observe(viewLifecycleOwner, Observer {
+        mainViewModel.getMangasPopulares().observe(viewLifecycleOwner, Observer {
             val result = it
             when(result){
                 is ResponseManga.Success<Response> -> {

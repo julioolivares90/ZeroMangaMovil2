@@ -2,7 +2,6 @@ package com.zerodev.zeromanga.ui.tmo.lector
 
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -20,7 +19,9 @@ import com.zerodev.zeromanga.utlities.constantes.NOMBRE_CAP
 import com.zerodev.zeromanga.utlities.constantes.URL_IMAGE_CAP
 import com.zerodev.zeromanga.utlities.constantes.URL_REFERER
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import kotlin.coroutines.coroutineContext
+
 
 class LectorFragment : Fragment() {
 
@@ -28,7 +29,7 @@ class LectorFragment : Fragment() {
         fun newInstance() = LectorFragment()
     }
 
-    private lateinit var viewModel: LectorViewModel
+    private  val viewModel: LectorViewModel  by inject()
 
     private lateinit var binding : LectorFragmentBinding
 
@@ -51,7 +52,7 @@ class LectorFragment : Fragment() {
 
         binding = LectorFragmentBinding.inflate(layoutInflater)
 
-        viewModel = ViewModelProvider(this).get(LectorViewModel::class.java)
+        //viewModel = ViewModelProvider(this).get(LectorViewModel::class.java)
 
         val arguments = requireArguments()
         urlImagen = arguments.getString(URL_IMAGE_CAP)
@@ -92,7 +93,8 @@ class LectorFragment : Fragment() {
 
         })
         viewModel.getImagenes().observe(viewLifecycleOwner, Observer {
-            lectorAdapter = LectorAdapter(it.toMutableList())
+            lectorAdapter = LectorAdapter()
+            lectorAdapter.differ.submitList(it.toMutableList())
 
             binding.vpImagenesCapitulos.adapter = lectorAdapter
         })

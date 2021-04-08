@@ -9,6 +9,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -19,11 +20,13 @@ import com.zerodev.zeromanga.net.models.Response
 import com.zerodev.zeromanga.net.models.ResponseManga
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
+
 
 class BusquedaFragment : Fragment(R.layout.busqueda_fragment) {
 
     private lateinit var binding: BusquedaFragmentBinding
-    private lateinit var viewModel: BusquedaViewModel
+    private  val viewModel: BusquedaViewModel  by inject()
     private lateinit var adapterMangaBusqueda: AdapterMangaBusqueda
 
     private var sp_order_field = ""
@@ -38,7 +41,7 @@ class BusquedaFragment : Fragment(R.layout.busqueda_fragment) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = BusquedaFragmentBinding.inflate(layoutInflater)
-        viewModel = ViewModelProvider(this).get(BusquedaViewModel::class.java)
+        //viewModel = ViewModelProvider(this).get(BusquedaViewModel::class.java)
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
