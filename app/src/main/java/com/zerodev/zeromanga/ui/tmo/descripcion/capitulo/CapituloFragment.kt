@@ -45,7 +45,7 @@ class CapituloFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         mangaResponse.let {
 
-            adapterCapitulo = AdapterCapitulos(
+            adapterCapitulo = AdapterCapitulos(it.data.capitulo,
                 object : CapituloOnClickListener {
                     override fun onClick(capitulo: Capitulo) {
                         val bundle = Bundle()
@@ -56,7 +56,7 @@ class CapituloFragment : Fragment() {
                     }
                 })
 
-            adapterCapitulo.differ.submitList(it.data.capitulo.toMutableList())
+            //adapterCapitulo.differ.submitList(it.data.capitulo.toMutableList())
             binding.rvCapitulos.adapter = adapterCapitulo
         }
     }

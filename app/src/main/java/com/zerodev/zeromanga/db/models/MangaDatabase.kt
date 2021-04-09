@@ -1,11 +1,8 @@
 package com.zerodev.zeromanga.db.models
 
-import android.content.Context
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.zerodev.zeromanga.db.MangaFavDao
-import com.zerodev.zeromanga.utlities.constantes.DATABASE_NAME
 
 @Database(
     entities = [MangaFav::class],

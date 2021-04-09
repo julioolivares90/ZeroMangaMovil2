@@ -1,5 +1,10 @@
 package com.zerodev.zeromanga
 
+import com.zerodev.zeromanga.net.api.Api
+import com.zerodev.zeromanga.net.api.RetrofitSingleton
+import com.zerodev.zeromanga.net.repository.MangaFavRepositoryImpl
+import com.zerodev.zeromanga.net.repository.MangaRepository
+import com.zerodev.zeromanga.net.repository.MangaRepositoryImpl
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -16,6 +21,8 @@ import kotlinx.coroutines.withContext
  */
 class ExampleUnitTest {
     val scraper : ScraperChapter = ScraperChapter()
+    val api = RetrofitSingleton.buildService(Api::class.java)
+    val repository : MangaRepository = MangaRepositoryImpl(api)
     val urlReferTest2 = "https://lectortmo.com/library/manhwa/51920/mal-maestro"
     val urlTest2 = "https://mangalong.com/news/5f196aabc786a/cascade"
 
@@ -23,6 +30,18 @@ class ExampleUnitTest {
     val urlTest1 = "https://lectortmo.com/view_uploads/638593"
 
 
+    @Test
+    fun `comprueba repository` () = runBlocking {
+
+       val result = api.getInfoManga("https://lectortmo.com/view_uploads/486011")
+
+        if (result.statusCode == 200){
+            result.data.capitulo.forEach {
+                print("titulo : ${it.Title} - url leer: ${it.UrlLeer}")
+            }
+        }
+        print("Codigo error ${result.statusCode}")
+    }
     @Test
     fun `comprueba si existe main container en la pagina solicitada`() = runBlocking{
         var newUrl = scraper.getUrlFromRedirection(urlReferTest1,urlTest1)
@@ -35,6 +54,7 @@ class ExampleUnitTest {
         else
             print(false)
     }
+   /*
     @Test
     fun `obtener lista de imagenes de un manga`()= runBlocking{
         var newUrl = scraper.getUrlFromRedirection(urlReferTest1,urlTest1)
@@ -46,5 +66,6 @@ class ExampleUnitTest {
         for (img in imagenes)
             print(img)
     }
+    */
 
 }

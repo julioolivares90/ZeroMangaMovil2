@@ -11,22 +11,11 @@ import com.github.chrisbanes.photoview.PhotoView
 import com.zerodev.zeromanga.R
 import com.zerodev.zeromanga.databinding.VisorItemBinding
 
-class LectorAdapter : RecyclerView.Adapter<LectorAdapter.LectorViewHolder>() {
+class LectorAdapter (val imagenes : List<String>) : RecyclerView.Adapter<LectorAdapter.LectorViewHolder>() {
 
     private var binding : VisorItemBinding? = null
 
-    private val differCallback = object : DiffUtil.ItemCallback<String>(){
-        override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
-            return oldItem == newItem
-        }
 
-        override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
-            return oldItem == newItem
-        }
-
-    }
-
-    val differ = AsyncListDiffer(this,differCallback)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LectorViewHolder {
         //val itemView = LayoutInflater.from(parent.context).inflate(R.layout.visor_item,parent,false)
         binding = VisorItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
@@ -34,13 +23,13 @@ class LectorAdapter : RecyclerView.Adapter<LectorAdapter.LectorViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: LectorViewHolder, position: Int) {
-        val imagen = differ.currentList[position]
+        val imagen = imagenes[position]
         holder.itemView.apply {
             Glide.with(this.context).load(imagen).into(binding!!.pvImagenCapitulo)
         }
     }
 
-    override fun getItemCount() = differ.currentList.size
+    override fun getItemCount() = imagenes.size
 
      class LectorViewHolder(itemBinding: VisorItemBinding) : RecyclerView.ViewHolder(itemBinding.root){
        /*

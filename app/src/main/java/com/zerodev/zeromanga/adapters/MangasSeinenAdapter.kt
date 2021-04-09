@@ -29,7 +29,7 @@ class MangasSeinenAdapter (var mangas : MutableList<Manga>
     override fun getItemCount() = mangas.size
 
     override fun onBindViewHolder(holder: MangaSeinenViewHolder, position: Int) {
-        val item = mangas.get(position)
+        val item = mangas[position]
         holder.bind(manga = item,onClickListener = mangaOnclickListener)
     }
 

@@ -1,7 +1,5 @@
 package com.zerodev.zeromanga.ui.tmo.lector
 
-import android.content.Context.MODE_PRIVATE
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,18 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.zerodev.zeromanga.R
 import com.zerodev.zeromanga.adapters.LectorAdapter
 import com.zerodev.zeromanga.databinding.LectorFragmentBinding
-import com.zerodev.zeromanga.ui.tmo.descripcion.DescripcionViewModel
 import com.zerodev.zeromanga.utlities.constantes.NOMBRE_CAP
 import com.zerodev.zeromanga.utlities.constantes.URL_IMAGE_CAP
 import com.zerodev.zeromanga.utlities.constantes.URL_REFERER
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
-import kotlin.coroutines.coroutineContext
 
 
 class LectorFragment : Fragment() {
@@ -92,10 +86,8 @@ class LectorFragment : Fragment() {
             }
 
         })
-        viewModel.getImagenes().observe(viewLifecycleOwner, Observer {
-            lectorAdapter = LectorAdapter()
-            lectorAdapter.differ.submitList(it.toMutableList())
-
+        viewModel.getImagenes().observe(viewLifecycleOwner, Observer {imagenes ->
+            lectorAdapter = LectorAdapter(imagenes)
             binding.vpImagenesCapitulos.adapter = lectorAdapter
         })
     }

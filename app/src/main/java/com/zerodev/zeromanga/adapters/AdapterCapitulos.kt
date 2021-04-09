@@ -12,7 +12,7 @@ import com.zerodev.zeromanga.databinding.RowCapitulosBinding
 import com.zerodev.zeromanga.listeners.CapituloOnClickListener
 import com.zerodev.zeromanga.net.models.Capitulo
 
-class AdapterCapitulos(val capituloOnClickListener: CapituloOnClickListener) : RecyclerView.Adapter<AdapterCapitulos.CapituloViewHolder>() {
+class AdapterCapitulos(val capitulos : List<Capitulo>,val capituloOnClickListener: CapituloOnClickListener) : RecyclerView.Adapter<AdapterCapitulos.CapituloViewHolder>() {
 
 
     private var binding : RowCapitulosBinding? = null
@@ -32,6 +32,8 @@ class AdapterCapitulos(val capituloOnClickListener: CapituloOnClickListener) : R
     }
 
 
+  /*
+  *
     private val differCallback = object : DiffUtil.ItemCallback<Capitulo>(){
         override fun areItemsTheSame(oldItem: Capitulo, newItem: Capitulo): Boolean {
             return oldItem.Title == newItem.Title
@@ -44,6 +46,7 @@ class AdapterCapitulos(val capituloOnClickListener: CapituloOnClickListener) : R
     }
 
     val differ = AsyncListDiffer(this,differCallback)
+   */
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CapituloViewHolder {
         //val itemView = LayoutInflater.from(parent.context).inflate(R.layout.row_capitulos,parent,false)
@@ -52,7 +55,7 @@ class AdapterCapitulos(val capituloOnClickListener: CapituloOnClickListener) : R
     }
 
     override fun onBindViewHolder(holder: CapituloViewHolder, position: Int) {
-        val capitulo = differ.currentList[position]
+        val capitulo = capitulos[position]
 
         //holder.bind(capitulo, capituloOnClickListener)
         holder.itemView.apply {
@@ -63,5 +66,5 @@ class AdapterCapitulos(val capituloOnClickListener: CapituloOnClickListener) : R
         }
     }
 
-    override fun getItemCount() = differ.currentList.size
+    override fun getItemCount() = capitulos.size
 }

@@ -15,11 +15,9 @@ class DescripcionViewPagerAdapter(val mangaResponse: MangaResponse,val mangaUrlR
 
         val  inicio = DetalleFragment.newInstance(mangaResponse)
         if (position == 0){
-            val fragment = DetalleFragment.newInstance(mangaResponse)
-            return fragment
+            return DetalleFragment.newInstance(mangaResponse)
         }else if (position == 1){
-            val fragment = CapituloFragment.newInstance(mangaResponse,mangaUrlRefer)
-            return fragment
+            return CapituloFragment.newInstance(mangaResponse, mangaUrlRefer)
         }
         return inicio
     }

@@ -70,7 +70,6 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
                 binding.pbDescripcion.visibility = View.GONE
                 showComponents()
             }
-
         })
         setUpViewPager()
 
@@ -97,7 +96,7 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
             */
 
             //Glide.with(requireContext()).load(mangaResponse.data.image).into(binding.imageView)
-            descripcionViewPagerAdapter = DescripcionViewPagerAdapter(mangaResponse,mangaUrlRefer = mangaUrlRefer ,this)
+            descripcionViewPagerAdapter = DescripcionViewPagerAdapter(mangaResponse = mangaResponse,mangaUrlRefer = mangaUrlRefer ,this)
             binding.viewPagerDescripcion.adapter = descripcionViewPagerAdapter
 
             TabLayoutMediator(binding.tabLayout,binding.viewPagerDescripcion,
@@ -147,7 +146,4 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
         super.onResume()
         setUpViewPager()
     }
-
-
-
 }
