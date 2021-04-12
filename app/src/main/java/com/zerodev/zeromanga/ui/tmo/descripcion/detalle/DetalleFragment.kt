@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 import com.zerodev.zeromanga.R
 import com.zerodev.zeromanga.adapters.AdapterGeneros
 import com.zerodev.zeromanga.databinding.FragmentDetalleBinding
-import com.zerodev.zeromanga.net.models.MangaResponse
+import com.zerodev.zeromanga.data.remote.models.MangaResponse
 
 
 private const val ARG_PARAM1 = "param1"

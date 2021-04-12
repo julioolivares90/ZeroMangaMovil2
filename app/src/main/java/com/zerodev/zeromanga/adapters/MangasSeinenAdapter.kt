@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.zerodev.zeromanga.R
 import com.zerodev.zeromanga.listeners.MangaOnclickListener
-import com.zerodev.zeromanga.net.models.Manga
+import com.zerodev.zeromanga.data.remote.models.Manga
 
 class MangasSeinenAdapter (var mangas : MutableList<Manga>
                            ,var mangaOnclickListener: MangaOnclickListener) : RecyclerView.Adapter<MangasSeinenAdapter.MangaSeinenViewHolder>() {

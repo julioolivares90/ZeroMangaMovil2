@@ -16,8 +16,8 @@ import androidx.lifecycle.lifecycleScope
 import com.zerodev.zeromanga.R
 import com.zerodev.zeromanga.adapters.AdapterMangaBusqueda
 import com.zerodev.zeromanga.databinding.BusquedaFragmentBinding
-import com.zerodev.zeromanga.net.models.Response
-import com.zerodev.zeromanga.net.models.ResponseManga
+import com.zerodev.zeromanga.data.remote.models.Response
+import com.zerodev.zeromanga.data.remote.models.ResponseManga
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject

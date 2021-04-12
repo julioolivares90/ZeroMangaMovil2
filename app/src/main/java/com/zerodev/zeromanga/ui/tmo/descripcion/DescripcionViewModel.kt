@@ -5,12 +5,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.zerodev.zeromanga.net.models.MangaResponse
-import com.zerodev.zeromanga.net.models.ResponseManga
-import com.zerodev.zeromanga.net.repository.MangaFavRepository
-import com.zerodev.zeromanga.net.repository.MangaFavRepositoryImpl
-import com.zerodev.zeromanga.net.repository.MangaRepository
-import com.zerodev.zeromanga.net.repository.MangaRepositoryImpl
+import com.zerodev.zeromanga.data.remote.models.MangaResponse
+import com.zerodev.zeromanga.data.remote.models.ResponseManga
+import com.zerodev.zeromanga.domain.repository.MangaFavRepository
+import com.zerodev.zeromanga.domain.repository.MangaFavRepositoryImpl
+import com.zerodev.zeromanga.domain.repository.MangaRepository
+import com.zerodev.zeromanga.domain.repository.MangaRepositoryImpl
 import kotlinx.coroutines.launch
 
 class DescripcionViewModel  (val application: Application,

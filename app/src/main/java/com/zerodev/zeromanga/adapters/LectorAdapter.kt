@@ -24,15 +24,13 @@ class LectorAdapter (val imagenes : List<String>) : RecyclerView.Adapter<LectorA
 
     override fun onBindViewHolder(holder: LectorViewHolder, position: Int) {
         val imagen = imagenes[position]
-        holder.itemView.apply {
-            Glide.with(this.context).load(imagen).into(binding!!.pvImagenCapitulo)
-        }
+        holder.bind(imagen)
     }
 
     override fun getItemCount() = imagenes.size
 
      class LectorViewHolder(itemBinding: VisorItemBinding) : RecyclerView.ViewHolder(itemBinding.root){
-       /*
+
         private val photoView : PhotoView = itemView.findViewById(R.id.pv_imagen_capitulo)
 
         fun bind( imagen : String){
@@ -42,6 +40,6 @@ class LectorAdapter (val imagenes : List<String>) : RecyclerView.Adapter<LectorA
                 .load(imagen)
                 .into(photoView)
         }
-        */
+
     }
 }

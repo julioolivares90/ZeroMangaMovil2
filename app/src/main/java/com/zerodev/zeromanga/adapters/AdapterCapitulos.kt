@@ -10,25 +10,25 @@ import androidx.recyclerview.widget.RecyclerView
 import com.zerodev.zeromanga.R
 import com.zerodev.zeromanga.databinding.RowCapitulosBinding
 import com.zerodev.zeromanga.listeners.CapituloOnClickListener
-import com.zerodev.zeromanga.net.models.Capitulo
+import com.zerodev.zeromanga.data.remote.models.Capitulo
 
-class AdapterCapitulos(val capitulos : List<Capitulo>,val capituloOnClickListener: CapituloOnClickListener) : RecyclerView.Adapter<AdapterCapitulos.CapituloViewHolder>() {
+class AdapterCapitulos(val capitulos : List<Capitulo>, val capituloOnClickListener: CapituloOnClickListener) : RecyclerView.Adapter<AdapterCapitulos.CapituloViewHolder>() {
 
 
     private var binding : RowCapitulosBinding? = null
 
     class CapituloViewHolder(itemBinding: RowCapitulosBinding) : RecyclerView.ViewHolder(itemBinding.root){
 
-        /*
+
         private val titleCapitulo : TextView = itemView.findViewById(R.id.tv_title_capitulo)
 
-        fun bind(capitulo : Capitulo,capituloOnClickListener: CapituloOnClickListener){
+        fun bind(capitulo : Capitulo, capituloOnClickListener: CapituloOnClickListener){
             titleCapitulo.text = capitulo.Title
             itemView.setOnClickListener {
                 capituloOnClickListener.onClick(capitulo)
             }
         }
-         */
+
     }
 
 
@@ -58,12 +58,15 @@ class AdapterCapitulos(val capitulos : List<Capitulo>,val capituloOnClickListene
         val capitulo = capitulos[position]
 
         //holder.bind(capitulo, capituloOnClickListener)
+        /*
         holder.itemView.apply {
            binding?.tvTitleCapitulo?.text = capitulo.Title
 
         }.setOnClickListener {
                 capituloOnClickListener.onClick(capitulo)
         }
+         */
+        holder.bind(capitulo = capitulo,capituloOnClickListener = capituloOnClickListener)
     }
 
     override fun getItemCount() = capitulos.size

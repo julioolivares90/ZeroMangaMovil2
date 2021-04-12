@@ -11,8 +11,8 @@ import com.zerodev.zeromanga.R
 import com.zerodev.zeromanga.adapters.AdapterCapitulos
 import com.zerodev.zeromanga.databinding.CapituloFragmentBinding
 import com.zerodev.zeromanga.listeners.CapituloOnClickListener
-import com.zerodev.zeromanga.net.models.Capitulo
-import com.zerodev.zeromanga.net.models.MangaResponse
+import com.zerodev.zeromanga.data.remote.models.Capitulo
+import com.zerodev.zeromanga.data.remote.models.MangaResponse
 import com.zerodev.zeromanga.utlities.constantes.NOMBRE_CAP
 import com.zerodev.zeromanga.utlities.constantes.URL_IMAGE_CAP
 import com.zerodev.zeromanga.utlities.constantes.URL_REFERER
@@ -63,7 +63,7 @@ class CapituloFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(mangaResponse: MangaResponse,mangaUrlRefer : String = "") = CapituloFragment().apply {
+        fun newInstance(mangaResponse: MangaResponse, mangaUrlRefer : String = "") = CapituloFragment().apply {
             this.mangaResponse = mangaResponse
             this.mangaUrlRefer = mangaUrlRefer
         }

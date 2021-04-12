@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.zerodev.zeromanga.R
 import com.zerodev.zeromanga.listeners.MangaOnclickListener
-import com.zerodev.zeromanga.net.models.Manga
+import com.zerodev.zeromanga.data.remote.models.Manga
 
 class MangasPopularesAdapter(val mangas : MutableList<Manga>
                              ,val mangaOnclickListener: MangaOnclickListener) : RecyclerView.Adapter<MangasPopularesAdapter.MangasPopularesViewHolder>() {
@@ -35,7 +35,7 @@ class MangasPopularesAdapter(val mangas : MutableList<Manga>
         private val score : TextView = itemView.findViewById(R.id.tv_score_popular)
         private val imagen : ImageView = itemView.findViewById(R.id.iv_manga_popular)
 
-        fun bind(manga: Manga,mangaOnclickListener: MangaOnclickListener){
+        fun bind(manga: Manga, mangaOnclickListener: MangaOnclickListener){
             title.text = manga.title
             demografia.text = manga.demography
             tipo.text = manga.type

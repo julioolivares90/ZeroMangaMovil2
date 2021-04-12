@@ -2,11 +2,11 @@ package com.zerodev.zeromanga.adapters
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.zerodev.zeromanga.net.models.MangaResponse
+import com.zerodev.zeromanga.data.remote.models.MangaResponse
 import com.zerodev.zeromanga.ui.tmo.descripcion.capitulo.CapituloFragment
 import com.zerodev.zeromanga.ui.tmo.descripcion.detalle.DetalleFragment
 
-class DescripcionViewPagerAdapter(val mangaResponse: MangaResponse,val mangaUrlRefer : String ="",fragment: Fragment) : FragmentStateAdapter(fragment) {
+class DescripcionViewPagerAdapter(val mangaResponse: MangaResponse, val mangaUrlRefer : String ="", fragment: Fragment) : FragmentStateAdapter(fragment) {
 
 
     override fun getItemCount() = 2

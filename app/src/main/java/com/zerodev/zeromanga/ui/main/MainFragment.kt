@@ -12,9 +12,9 @@ import com.zerodev.zeromanga.adapters.MangasPopularesAdapter
 import com.zerodev.zeromanga.adapters.MangasSeinenAdapter
 import com.zerodev.zeromanga.databinding.MainFragmentBinding
 import com.zerodev.zeromanga.listeners.MangaOnclickListener
-import com.zerodev.zeromanga.net.models.Manga
-import com.zerodev.zeromanga.net.models.Response
-import com.zerodev.zeromanga.net.models.ResponseManga
+import com.zerodev.zeromanga.data.remote.models.Manga
+import com.zerodev.zeromanga.data.remote.models.Response
+import com.zerodev.zeromanga.data.remote.models.ResponseManga
 import com.zerodev.zeromanga.utlities.constantes.ENVIAR_URL
 import org.koin.android.ext.android.inject
 

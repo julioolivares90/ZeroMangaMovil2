@@ -13,7 +13,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.zerodev.zeromanga.R
 import com.zerodev.zeromanga.adapters.DescripcionViewPagerAdapter
 import com.zerodev.zeromanga.databinding.DescripcionFragmentBinding
-import com.zerodev.zeromanga.net.models.MangaResponse
+import com.zerodev.zeromanga.data.remote.models.MangaResponse
 import com.zerodev.zeromanga.utlities.constantes.ENVIAR_URL
 import org.koin.android.ext.android.inject
 

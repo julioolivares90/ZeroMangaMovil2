@@ -1,15 +1,15 @@
 package com.zerodev.zeromanga
 
-import com.zerodev.zeromanga.net.api.Api
-import com.zerodev.zeromanga.net.api.RetrofitSingleton
-import com.zerodev.zeromanga.net.repository.MangaFavRepositoryImpl
-import com.zerodev.zeromanga.net.repository.MangaRepository
-import com.zerodev.zeromanga.net.repository.MangaRepositoryImpl
+import com.zerodev.zeromanga.data.remote.api.Api
+import com.zerodev.zeromanga.data.remote.api.RetrofitSingleton
+import com.zerodev.zeromanga.domain.repository.MangaFavRepositoryImpl
+import com.zerodev.zeromanga.domain.repository.MangaRepository
+import com.zerodev.zeromanga.domain.repository.MangaRepositoryImpl
 import org.junit.Test
 
 import org.junit.Assert.*
 
-import com.zerodev.zeromanga.net.scraperTMO.ScraperChapter
+import com.zerodev.zeromanga.domain.scraperTMO.ScraperChapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
