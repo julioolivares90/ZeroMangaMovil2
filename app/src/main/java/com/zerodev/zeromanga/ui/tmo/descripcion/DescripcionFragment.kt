@@ -8,10 +8,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.zerodev.zeromanga.R
 import com.zerodev.zeromanga.adapters.DescripcionViewPagerAdapter
+import com.zerodev.zeromanga.data.local.db.models.MangaFav
 import com.zerodev.zeromanga.databinding.DescripcionFragmentBinding
 import com.zerodev.zeromanga.data.remote.models.MangaResponse
 import com.zerodev.zeromanga.utlities.constantes.ENVIAR_URL
@@ -34,6 +36,8 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
 
     private lateinit var mangaUrlRefer : String
 
+    private lateinit var urlCapitulo : String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -44,8 +48,12 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
 
         val mangaUrl = arguments?.getString(ENVIAR_URL)
 
-        mangaUrl.let {
-            viewModel.setInfoManga(it!!)
+
+        mangaUrl?.let {
+            urlCapitulo = it
+        }
+        mangaUrl?.let {
+            viewModel.setInfoManga(it)
             mangaUrlRefer = it
         }
     }
@@ -74,7 +82,7 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
         setUpViewPager()
 
         binding.fbAddMagafav.setOnClickListener {
-
+            addMangaToFavorites(view)
         }
     }
 
@@ -145,5 +153,35 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
     override fun onResume() {
         super.onResume()
         setUpViewPager()
+    }
+
+    fun addMangaToFavorites(view: View){
+
+        val title = mangaResponse.data.title
+
+        val imagen = mangaResponse.data.image
+
+        val score = mangaResponse.data.score
+
+        val tipo = mangaResponse.data.tipo
+
+        val demografia = mangaResponse.data.demografia
+
+        val descripcion = mangaResponse.data.descripcion
+
+        val url = urlCapitulo
+
+        val mangaFav = MangaFav(0,title, imagen, score, tipo, demografia, descripcion, url)
+        viewModel.addMangaToFavorites(mangaFav = mangaFav)
+
+        Snackbar.make(view,"Manga agregado a favoritos",Snackbar.LENGTH_SHORT).setAction("quieres ver tus favoritos") {
+
+        }.show()
+    }
+
+    fun comprobarVariables(urlCap : String, urlRefer: String)  : Boolean{
+        if (urlCap.isNotEmpty() && urlRefer.isNotEmpty())
+            return true
+        return false
     }
 }

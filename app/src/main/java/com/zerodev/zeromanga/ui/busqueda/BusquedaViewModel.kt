@@ -20,9 +20,9 @@ class BusquedaViewModel  ( private val repository : MangaRepository) : ViewModel
     private val _isLoading : MutableLiveData<Boolean> = MutableLiveData()
 
     init {
-        _isLoading.value = true
+        setIsLoading(true)
         setMangasBusqueda()
-        _isLoading.value = false
+        setIsLoading(false)
     }
 
     fun setMangasBusqueda() =  viewModelScope.launch {
@@ -31,13 +31,20 @@ class BusquedaViewModel  ( private val repository : MangaRepository) : ViewModel
         }
 
 
+    fun setIsLoading(value : Boolean){
+        _isLoading.postValue(value)
+    }
     fun getMangasBusqueda() : LiveData<ResponseManga<Response>> = _mangasBusqueda
 
     fun IsLoading() : LiveData<Boolean> = _isLoading
 
     fun findMangas(title : String,orderField : String,orderItem : String,orderDir : String) = viewModelScope.launch{
+        _isLoading.value = true
         _mangasBusqueda.postValue(null)
+
        val response =  repository.getMangasLibrary(title = title,orderItem = orderItem,orderDir = orderDir,filter_by = orderField)
         _mangasBusqueda.postValue(response)
+        _isLoading.value = false
+
     }
 }

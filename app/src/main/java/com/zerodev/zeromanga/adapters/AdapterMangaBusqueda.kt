@@ -9,8 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.zerodev.zeromanga.R
 import com.zerodev.zeromanga.data.remote.models.Manga
+import com.zerodev.zeromanga.listeners.MangaOnclickListener
 
-class AdapterMangaBusqueda(val mangas : MutableList<Manga>) : RecyclerView.Adapter<AdapterMangaBusqueda.MangaBusquedaViewHolder>(){
+class AdapterMangaBusqueda(val mangas : MutableList<Manga>,
+                           val mangaOnclickListener: MangaOnclickListener) : RecyclerView.Adapter<AdapterMangaBusqueda.MangaBusquedaViewHolder>(){
 
 
     class MangaBusquedaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -20,7 +22,7 @@ class AdapterMangaBusqueda(val mangas : MutableList<Manga>) : RecyclerView.Adapt
         private val tv_type_manga_busqueda : TextView = itemView.findViewById(R.id.tv_type_manga_busqueda)
         private val tv_demografia_manga_busqueda : TextView = itemView.findViewById(R.id.tv_demografia_manga_busqueda)
 
-        fun bind(manga: Manga){
+        fun bind(manga: Manga,mangaOnclickListener: MangaOnclickListener){
 
             tv_title_manga_busqueda.text = manga.title
             tv_score_manga_busqueda.text = manga.score
@@ -28,6 +30,9 @@ class AdapterMangaBusqueda(val mangas : MutableList<Manga>) : RecyclerView.Adapt
             tv_demografia_manga_busqueda.text = manga.demography
 
             Glide.with(itemView).load(manga.mangaImagen).into(iv_manga_buscar)
+            itemView.setOnClickListener {
+                mangaOnclickListener.onClick(manga)
+            }
         }
     }
 
@@ -40,7 +45,7 @@ class AdapterMangaBusqueda(val mangas : MutableList<Manga>) : RecyclerView.Adapt
 
     override fun onBindViewHolder(holder: MangaBusquedaViewHolder, position: Int) {
        val item  = mangas[position]
-        holder.bind(manga = item)
+        holder.bind(manga = item,mangaOnclickListener = mangaOnclickListener)
     }
 
     override fun getItemCount() = mangas.size

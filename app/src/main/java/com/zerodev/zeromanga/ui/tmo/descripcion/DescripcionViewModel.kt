@@ -1,10 +1,8 @@
 package com.zerodev.zeromanga.ui.tmo.descripcion
 
 import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.zerodev.zeromanga.data.local.db.models.MangaFav
 import com.zerodev.zeromanga.data.remote.models.MangaResponse
 import com.zerodev.zeromanga.data.remote.models.ResponseManga
 import com.zerodev.zeromanga.domain.repository.MangaFavRepository
@@ -13,10 +11,10 @@ import com.zerodev.zeromanga.domain.repository.MangaRepository
 import com.zerodev.zeromanga.domain.repository.MangaRepositoryImpl
 import kotlinx.coroutines.launch
 
-class DescripcionViewModel  (val application: Application,
+class DescripcionViewModel  (application: Application,
                              private val mangaFavRepository: MangaFavRepository,
                              private val repository: MangaRepository
-) : ViewModel() {
+) : AndroidViewModel(application) {
 
     //private val repository = MangaRepository()
 
@@ -30,6 +28,7 @@ class DescripcionViewModel  (val application: Application,
 
 
     fun IsLoading() : LiveData<Boolean> = _isLoading
+
     fun getInfoManga() : LiveData<MangaResponse> = _infoManga
 
      fun setInfoManga(mangaUrl : String) = viewModelScope.launch {
@@ -40,5 +39,9 @@ class DescripcionViewModel  (val application: Application,
              else -> {}
          }
          _isLoading.value = false
+    }
+
+    fun addMangaToFavorites(mangaFav: MangaFav) = viewModelScope.launch{
+        mangaFavRepository.addMangaFav(mangaFav)
     }
 }

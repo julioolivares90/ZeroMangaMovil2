@@ -19,7 +19,7 @@ class ScraperChapter {
     fun getInstanceOkHttp() : OkHttpClient {
         val okHttp = OkHttpClient
             .Builder()
-            .connectTimeout(Duration.ofMillis(5000))
+            .connectTimeout(Duration.ofMillis(10000))
             .build()
 
         return okHttp

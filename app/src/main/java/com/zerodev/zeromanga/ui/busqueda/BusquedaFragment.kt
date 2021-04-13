@@ -13,11 +13,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import com.zerodev.zeromanga.R
 import com.zerodev.zeromanga.adapters.AdapterMangaBusqueda
+import com.zerodev.zeromanga.data.remote.models.Manga
 import com.zerodev.zeromanga.databinding.BusquedaFragmentBinding
 import com.zerodev.zeromanga.data.remote.models.Response
 import com.zerodev.zeromanga.data.remote.models.ResponseManga
+import com.zerodev.zeromanga.listeners.MangaOnclickListener
+import com.zerodev.zeromanga.utlities.constantes
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -61,8 +65,7 @@ class BusquedaFragment : Fragment(R.layout.busqueda_fragment) {
             android.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
 
-                Toast.makeText(requireContext(),"Buscando",Toast.LENGTH_SHORT)
-                    .show()
+                //Toast.makeText(requireContext(),"Buscando",Toast.LENGTH_SHORT).show()
 
                 viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
 
@@ -72,7 +75,7 @@ class BusquedaFragment : Fragment(R.layout.busqueda_fragment) {
                        orderItem = sp_order_item,
                        orderDir = sp_order_dir
                    )
-
+                    viewModel.setIsLoading(false)
                 }
                 return true
             }
@@ -85,15 +88,31 @@ class BusquedaFragment : Fragment(R.layout.busqueda_fragment) {
 
 
         viewModel.IsLoading().observe(viewLifecycleOwner, Observer {
-
+            if (it){
+               showProgressBar()
+            }
+            hideProgressBar()
         })
 
         viewModel.getMangasBusqueda().observe(viewLifecycleOwner, Observer {
             val result = it
-            when(result){
+            when (result) {
                 is ResponseManga.Success<Response> -> {
-                    adapterMangaBusqueda = AdapterMangaBusqueda(result.data.data)
-                }else ->{}
+                    adapterMangaBusqueda = AdapterMangaBusqueda(
+                        result.data.data,
+                        mangaOnclickListener = object :
+                            MangaOnclickListener {
+                            override fun onClick(manga: Manga) {
+                                val bundle = Bundle()
+                                bundle.putString(constantes.ENVIAR_URL,manga.mangaUrl)
+
+                                Navigation.findNavController(view).navigate(R.id.action_busquedaFragment_to_descripcionFragment,bundle)
+                            }
+
+                        })
+                }
+                else -> {
+                }
             }
             binding.rvMangasBusqueda.adapter = adapterMangaBusqueda
         })
@@ -134,7 +153,8 @@ class BusquedaFragment : Fragment(R.layout.busqueda_fragment) {
             ) {
                 sp_order_item= parent?.getItemAtPosition(position).toString()
                 sp_order_item.let {
-                    Toast.makeText(requireContext(),sp_order_item,Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(requireContext(),sp_order_item,Toast.LENGTH_SHORT).show()
+
                 }
             }
 
@@ -153,7 +173,7 @@ class BusquedaFragment : Fragment(R.layout.busqueda_fragment) {
             ) {
                 sp_order_field = parent?.getItemAtPosition(position).toString()
                 sp_order_field.let {
-                    Toast.makeText(requireContext(),sp_order_field,Toast.LENGTH_SHORT).show()
+                   // Toast.makeText(requireContext(),sp_order_field,Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -174,7 +194,7 @@ class BusquedaFragment : Fragment(R.layout.busqueda_fragment) {
             ) {
                 sp_order_dir = parent?.getItemAtPosition(position).toString()
                 sp_order_dir.let {
-                    Toast.makeText(requireContext(),sp_order_dir,Toast.LENGTH_SHORT).show()
+                   // Toast.makeText(requireContext(),sp_order_dir,Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -183,5 +203,13 @@ class BusquedaFragment : Fragment(R.layout.busqueda_fragment) {
             }
 
         }
+    }
+
+    private fun hideProgressBar(){
+        binding.pbCargarBusqueda.visibility = View.GONE
+    }
+
+    private fun showProgressBar(){
+        binding.pbCargarBusqueda.visibility = View.VISIBLE
     }
 }

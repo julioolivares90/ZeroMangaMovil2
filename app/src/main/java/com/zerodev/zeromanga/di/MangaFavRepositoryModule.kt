@@ -7,8 +7,8 @@ import com.zerodev.zeromanga.domain.repository.MangaFavRepositoryImpl
 import org.koin.dsl.module
 
 val mangaFavRepositoryModule = module {
-    fun provideMangaFavRepository(mangaDatabase : MangaDatabase) : MangaFavRepository {
-        return MangaFavRepositoryImpl(mangaDatabase)
+    fun provideMangaFavRepository(mangaFavDao: MangaFavDao) : MangaFavRepository {
+        return MangaFavRepositoryImpl(mangaFavDao)
     }
 
     single {
