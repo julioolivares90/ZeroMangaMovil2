@@ -90,5 +90,20 @@ class LectorFragment : Fragment() {
             lectorAdapter = LectorAdapter(imagenes)
             binding.vpImagenesCapitulos.adapter = lectorAdapter
         })
+
+        viewModel.HasError().observe(viewLifecycleOwner,{
+            if (it){
+                showTextError()
+            }
+            hideTextError()
+        })
+    }
+
+    private fun hideTextError(){
+        binding.tvErrorDatos.visibility = View.GONE
+    }
+
+    private fun showTextError(){
+        binding.tvErrorDatos.visibility = View.VISIBLE
     }
 }

@@ -116,5 +116,6 @@
     <string name="key_XSRF_TOKEN">XSRF_TOKEN</string>
     <string name="favorito_text">Fav</string>
     <string name="not_data">aun no tienes favoritos agregados</string>
+    <string name="ocurrio_un_error_vuelve_a_intentar">Ocurrio un error vuelve a intentar</string>
 
 </resources>

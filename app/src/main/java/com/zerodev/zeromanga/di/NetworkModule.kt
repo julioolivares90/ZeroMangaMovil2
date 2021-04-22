@@ -1,9 +1,13 @@
 package com.zerodev.zeromanga.di
 
 import com.zerodev.zeromanga.utlities.constantes.BASE_URL
+import com.zerodev.zeromanga.utlities.getHttpClient
+import okhttp3.*
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.time.Duration
+import java.util.concurrent.TimeUnit
 
 val networkModule = module {
     /*
@@ -41,8 +45,11 @@ val networkModule = module {
     }
      */
 
+
     fun provideRetrofit(baseUrl:String) : Retrofit {
+        val okHttpClient = getHttpClient()
         return Retrofit.Builder()
+            .client(okHttpClient)
             .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

@@ -2,6 +2,7 @@ package com.zerodev.zeromanga.utlities
 
 object constantes {
     val BASE_URL ="https://zero-manga.herokuapp.com/api/v1/"
+    val CHAPTER_BASE_URL = ""
     val ENVIAR_URL ="ENVIAR_URL"
     val NOMBRE_CAP = "NOMBRE_CAPITULO"
     val URL_IMAGE_CAP ="URL_IMAGE_CAP"

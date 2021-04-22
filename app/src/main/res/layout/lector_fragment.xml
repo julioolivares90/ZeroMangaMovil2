@@ -9,11 +9,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/vp_imagenes_capitulos"
-        />
+        >
+
+    </androidx.viewpager2.widget.ViewPager2>
     <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/pb_cargar_imagenes_capitulo"
         android:layout_centerInParent="true"
+        />
+
+    <TextView
+        android:id="@+id/tv_error_datos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/ocurrio_un_error_vuelve_a_intentar"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
         />
 </RelativeLayout>

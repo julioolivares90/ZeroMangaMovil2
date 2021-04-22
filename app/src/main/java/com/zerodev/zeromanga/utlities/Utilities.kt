@@ -1,5 +1,18 @@
 package com.zerodev.zeromanga.utlities
+import okhttp3.OkHttpClient
+import java.util.concurrent.TimeUnit
 
+fun getHttpClient() : OkHttpClient{
+    return OkHttpClient.Builder()
+        .callTimeout(2000L, TimeUnit.MILLISECONDS)
+        .readTimeout(10000,TimeUnit.MILLISECONDS)
+        .addInterceptor{chain ->
+            val request = chain.request()
+            val newChain = chain.withConnectTimeout(10000, TimeUnit.MILLISECONDS)
+            return@addInterceptor newChain.proceed(request)
+        }
+        .build()
+}
 fun GetImagenURL(url : String) : String{
 
     return ""

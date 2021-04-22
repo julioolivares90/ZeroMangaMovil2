@@ -4,6 +4,7 @@ import android.os.Build
 import android.os.Debug
 import android.util.Log
 import androidx.annotation.RequiresApi
+import com.zerodev.zeromanga.utlities.getHttpClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
@@ -14,17 +15,6 @@ import java.time.Duration
 class ScraperChapter {
 
 
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun getInstanceOkHttp() : OkHttpClient {
-        val okHttp = OkHttpClient
-            .Builder()
-            .connectTimeout(Duration.ofMillis(10000))
-            .build()
-
-        return okHttp
-    }
-    @RequiresApi(Build.VERSION_CODES.O)
     suspend fun GetImagesFromChapters(urlRefer : String, url : String) : MutableList<String>{
         Log.d("urlRefer",urlRefer)
         Log.d("url capitulo leer",url)
@@ -35,7 +25,6 @@ class ScraperChapter {
     }
 
     //retorna la url despues de la redireccion
-     @RequiresApi(Build.VERSION_CODES.O)
      suspend fun getUrlFromRedirection(urlRefer : String, url : String) : String{
         val request = Request.Builder()
             .url(url)
@@ -44,7 +33,7 @@ class ScraperChapter {
 
         var newUrl = ""
         val url = withContext(Dispatchers.IO){
-            getInstanceOkHttp()
+            getHttpClient()
                 .newCall(request).execute().request.url.toString()
         }
 
@@ -58,7 +47,6 @@ class ScraperChapter {
 
     }
 
-     @RequiresApi(Build.VERSION_CODES.O)
      suspend fun getHTMLFromPage(urlRefer: String, url: String) : String {
 
         val request = Request
@@ -71,7 +59,7 @@ class ScraperChapter {
             .build()
 
          val html = withContext(Dispatchers.IO){
-             getInstanceOkHttp().newCall(request).execute().body?.string()
+             getHttpClient().newCall(request).execute().body?.string()
          }
         return html!!
     }

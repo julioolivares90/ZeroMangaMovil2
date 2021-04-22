@@ -54,6 +54,11 @@ class ExampleUnitTest {
         else
             print(false)
     }
+
+    @Test
+    fun `obtenerDatosDeRoom`() {
+
+    }
    /*
     @Test
     fun `obtener lista de imagenes de un manga`()= runBlocking{

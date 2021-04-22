@@ -1,5 +1,6 @@
 package com.zerodev.zeromanga.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,6 +35,7 @@ class LectorAdapter (val imagenes : List<String>) : RecyclerView.Adapter<LectorA
         private val photoView : PhotoView = itemView.findViewById(R.id.pv_imagen_capitulo)
 
         fun bind( imagen : String){
+            Log.d("Imagen ->",imagen)
             Glide
                 .with(itemView
                     .context)

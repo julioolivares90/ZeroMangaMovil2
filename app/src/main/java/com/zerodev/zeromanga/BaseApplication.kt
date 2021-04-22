@@ -25,7 +25,6 @@ class BaseApplication : Application() {
                 lectorViewModelModule,
                 mangaFavRepositoryModule,
                 mangaRepositoryModule,
-
             )
         }
     }
