@@ -34,14 +34,18 @@ class LectorViewModel  (private val repository : CharpetersRepository) : ViewMod
          viewModelScope.launch {
              when(val result : ResponseManga<MutableList<String>> = repository.GetImagesFromChapters(url = url,mangaUrlRefer)){
                  is ResponseManga.Success<MutableList<String>>->{
-                     imagenes.postValue(result.data)
+                     if (imagenes.value.isNullOrEmpty()){
+                         _hasError.postValue(true)
+                         _isloading.postValue(false)
+                     } else {
+                         imagenes.postValue(result.data)
 
-                     imagenes.value?.forEach { image->
-                         Log.println(Log.DEBUG,image,"imagen")
-                     }
-                     _isloading.postValue(false)
-                     _hasError.postValue(false)
-
+                         imagenes.value?.forEach { image->
+                             Log.println(Log.DEBUG,image,"imagen")
+                         }
+                         _isloading.postValue(false)
+                         _hasError.postValue(false)
+                         }
                  }else -> {
                  _isloading.postValue(false)
                  _hasError.postValue(true)

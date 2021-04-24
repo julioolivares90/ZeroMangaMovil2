@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.zerodev.zeromanga.adapters.LectorAdapter
+import com.zerodev.zeromanga.data.remote.models.Response
 import com.zerodev.zeromanga.databinding.LectorFragmentBinding
 import com.zerodev.zeromanga.utlities.constantes.NOMBRE_CAP
 import com.zerodev.zeromanga.utlities.constantes.URL_IMAGE_CAP
@@ -77,8 +78,8 @@ class LectorFragment : Fragment() {
                 actionBar.title = t
             }
         }
-        viewModel.IsLoading().observe(viewLifecycleOwner, Observer {
-            if (it){
+        viewModel.IsLoading().observe(viewLifecycleOwner, Observer {isLoading->
+            if (isLoading){
                 binding.pbCargarImagenesCapitulo.visibility = View.VISIBLE
             }
             else{
@@ -87,12 +88,16 @@ class LectorFragment : Fragment() {
 
         })
         viewModel.getImagenes().observe(viewLifecycleOwner, Observer {imagenes ->
-            lectorAdapter = LectorAdapter(imagenes)
-            binding.vpImagenesCapitulos.adapter = lectorAdapter
+            if (imagenes.isNotEmpty()){
+                lectorAdapter = LectorAdapter(imagenes)
+                binding.vpImagenesCapitulos.adapter = lectorAdapter
+            }else {
+                showTextError()
+            }
         })
 
-        viewModel.HasError().observe(viewLifecycleOwner,{
-            if (it){
+        viewModel.HasError().observe(viewLifecycleOwner,{hasError->
+            if (hasError){
                 showTextError()
             }
             hideTextError()

@@ -52,6 +52,13 @@
                 app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                 app:spanCount="2"
                 tools:listitem="@layout/populares_row"/>
+
+            <TextView
+                android:id="@+id/tvError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No se encontraron Datos"
+                tools:visibility="gone" />
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

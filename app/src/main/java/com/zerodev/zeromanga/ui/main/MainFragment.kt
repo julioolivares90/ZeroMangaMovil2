@@ -54,6 +54,15 @@ class MainFragment : Fragment() {
             }
         })
 
+        mainViewModel.hasError().observe(viewLifecycleOwner,{
+            if (it){
+                hideComponents()
+                hideProgressBar()
+                showMessageError()
+            }else{
+                hideMessageError()
+            }
+        })
         mainViewModel.getMangaSeinen().observe(viewLifecycleOwner, Observer {
             val result = it
             when(result){
@@ -69,7 +78,10 @@ class MainFragment : Fragment() {
                                     ,bundle)
                         }
                     })
-                }else -> {}
+                }else -> {
+                    hideComponents()
+                    hideProgressBar()
+                }
             }
             binding.rvMangasSeinen.adapter = adapter
         })
@@ -89,7 +101,11 @@ class MainFragment : Fragment() {
                                     ,bundle)
                         }
                     })
-                }else -> {}
+                }else -> {
+                    hideComponents()
+                    hideProgressBar()
+
+                }
             }
             binding.rvMangasPopulares.adapter = adapterPopulares
         })
@@ -114,5 +130,13 @@ class MainFragment : Fragment() {
         binding.rvMangasSeinen.visibility = View.VISIBLE
         binding.rvMangasPopulares.visibility = View.VISIBLE
         binding.tvSeinen.visibility = View.VISIBLE
+    }
+
+    fun showMessageError(){
+        binding.tvError.visibility = View.VISIBLE
+    }
+
+    fun hideMessageError(){
+        binding.tvError.visibility = View.GONE
     }
 }

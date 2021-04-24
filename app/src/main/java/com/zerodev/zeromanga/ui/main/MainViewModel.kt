@@ -7,10 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.zerodev.zeromanga.data.remote.models.Response
 import com.zerodev.zeromanga.data.remote.models.ResponseManga
 import com.zerodev.zeromanga.domain.repository.MangaRepository
-import com.zerodev.zeromanga.domain.repository.MangaRepositoryImpl
 import kotlinx.coroutines.launch
 
-class MainViewModel (val repository: MangaRepository) : ViewModel() {
+class MainViewModel (private val repository: MangaRepository) : ViewModel() {
     //private val repository = MangaRepository()
 
    private val _mangasSeinen : MutableLiveData<ResponseManga<Response>> = MutableLiveData()
@@ -19,29 +18,55 @@ class MainViewModel (val repository: MangaRepository) : ViewModel() {
 
     private val _isLoading  : MutableLiveData<Boolean> = MutableLiveData()
 
+    private val _hasError : MutableLiveData<Boolean> = MutableLiveData()
+
     init {
         setMangas()
     }
 
     fun IsLoading() : LiveData<Boolean> = _isLoading
 
+    fun hasError() : LiveData<Boolean> =  _hasError
     fun getMangaSeinen() : LiveData<ResponseManga<Response>> = _mangasSeinen
 
     fun getMangasPopulares() : LiveData<ResponseManga<Response>> = _mangasPopulares
 
     private  fun setMangas () = viewModelScope.launch {
-        _isLoading.value = true
+        _isLoading.postValue(true)
         getAllMangasPopulares()
         getAllMangasSeinen()
-        _isLoading.value = false
+        _isLoading.postValue(false)
     }
     fun getAllMangasSeinen()  = viewModelScope.launch {
-        val response = repository.getAllMangasSeinen()
-        _mangasSeinen.postValue(response)
+        when(val response = repository.getAllMangasSeinen()){
+            is ResponseManga.Success<Response> -> {
+                if (response.data.data.isEmpty()){
+                    _hasError.postValue(true)
+                }else {
+                    _mangasSeinen.postValue(response)
+                    _hasError.postValue(false)
+                }
+
+            }else -> {
+                _hasError.postValue(true)
+            }
+        }
+
     }
     fun getAllMangasPopulares() = viewModelScope.launch {
-        val response = repository.getAllMangasPopulares(1)
-        _mangasPopulares.postValue(response)
+       when (val response = repository.getAllMangasPopulares(1)){
+           is  ResponseManga.Success<Response> -> {
+               if (response.data.data.isEmpty()){
+                   _hasError.postValue(true)
+               }else {
+                    _mangasPopulares.postValue(response)
+                   _hasError.postValue(false)
+               }
+           }else -> {
+           _hasError.postValue(true)
+           }
+       }
+
     }
     /*
     private fun setMangasSeinen() {
