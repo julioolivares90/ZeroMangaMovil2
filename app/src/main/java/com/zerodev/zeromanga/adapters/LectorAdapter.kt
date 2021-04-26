@@ -30,9 +30,9 @@ class LectorAdapter (val imagenes : List<String>) : RecyclerView.Adapter<LectorA
 
     override fun getItemCount() = imagenes.size
 
-     class LectorViewHolder(itemBinding: VisorItemBinding) : RecyclerView.ViewHolder(itemBinding.root){
+     class LectorViewHolder(val itemBinding: VisorItemBinding) : RecyclerView.ViewHolder(itemBinding.root){
 
-        private val photoView : PhotoView = itemView.findViewById(R.id.pv_imagen_capitulo)
+        //private val photoView : PhotoView = itemView.findViewById(R.id.pv_imagen_capitulo)
 
         fun bind( imagen : String){
             Log.d("Imagen ->",imagen)
@@ -40,7 +40,7 @@ class LectorAdapter (val imagenes : List<String>) : RecyclerView.Adapter<LectorA
                 .with(itemView
                     .context)
                 .load(imagen)
-                .into(photoView)
+                .into(itemBinding.pvImagenCapitulo)
         }
 
     }
