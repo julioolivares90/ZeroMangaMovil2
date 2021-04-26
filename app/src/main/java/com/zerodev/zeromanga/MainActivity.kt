@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
-        setSupportActionBar(findViewById(R.id.toolbar))
+        //setSupportActionBar(findViewById(R.id.toolbarDescripcion))
 
         setTheme(R.style.AppTheme)
         appBarConfiguration = AppBarConfiguration(setOf(R.id.mainFragment, R.id.busquedaFragment,R.id.favoritosFragment))
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         * */
             //findNavController(R.id.nav_host_fragment)
 
-        setupActionBarWithNavController(navController,appBarConfiguration)
+        //setupActionBarWithNavController(navController,appBarConfiguration)
 
         //findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout).title = title
 

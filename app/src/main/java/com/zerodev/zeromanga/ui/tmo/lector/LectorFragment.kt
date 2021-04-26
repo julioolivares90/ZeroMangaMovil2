@@ -84,17 +84,11 @@ class LectorFragment : Fragment() {
             }
             else{
                 binding.pbCargarImagenesCapitulo.visibility = View.GONE
+                setUpData()
             }
 
         })
-        viewModel.getImagenes().observe(viewLifecycleOwner, Observer {imagenes ->
-            if (imagenes.isNotEmpty()){
-                lectorAdapter = LectorAdapter(imagenes)
-                binding.vpImagenesCapitulos.adapter = lectorAdapter
-            }else {
-                showTextError()
-            }
-        })
+
 
         viewModel.HasError().observe(viewLifecycleOwner,{hasError->
             if (hasError){
@@ -104,6 +98,16 @@ class LectorFragment : Fragment() {
         })
     }
 
+    private fun setUpData(){
+        viewModel.getImagenes().observe(viewLifecycleOwner, Observer {imagenes ->
+            if (imagenes.isNotEmpty()){
+                lectorAdapter = LectorAdapter(imagenes)
+                binding.vpImagenesCapitulos.adapter = lectorAdapter
+            }else {
+                showTextError()
+            }
+        })
+    }
     private fun hideTextError(){
         binding.tvErrorDatos.visibility = View.GONE
     }

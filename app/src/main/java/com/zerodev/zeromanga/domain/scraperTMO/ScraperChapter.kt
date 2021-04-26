@@ -20,7 +20,7 @@ class ScraperChapter {
     }
 
     //retorna la url despues de la redireccion
-     suspend fun getUrlFromRedirection(urlRefer : String, url : String) : String {
+   private  suspend fun getUrlFromRedirection(urlRefer : String, url : String) : String {
 
         val request = Request.Builder()
             .url(url)
@@ -44,7 +44,7 @@ class ScraperChapter {
 
     }
 
-     suspend fun getHTMLFromPage(urlRefer: String, url: String) : String {
+   private  suspend fun getHTMLFromPage(urlRefer: String, url: String) : String {
 
         val request = Request
             .Builder()

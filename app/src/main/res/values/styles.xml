@@ -39,4 +39,10 @@
     <style name="splash_theme" parent="AppTheme">
         <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>
+
+
+
+    <style name="Theme.ScrollingActivity.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.ScrollingActivity.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

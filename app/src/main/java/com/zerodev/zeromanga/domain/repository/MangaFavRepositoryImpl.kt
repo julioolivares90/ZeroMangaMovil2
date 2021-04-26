@@ -4,7 +4,7 @@ import com.zerodev.zeromanga.data.local.db.MangaFavDao
 import com.zerodev.zeromanga.data.local.db.models.MangaDatabase
 import com.zerodev.zeromanga.data.local.db.models.MangaFav
 
-class MangaFavRepositoryImpl constructor (val dao: MangaFavDao) : MangaFavRepository {
+class MangaFavRepositoryImpl constructor (private val dao: MangaFavDao) : MangaFavRepository {
 
    override suspend fun addMangaFav(mangaFav: MangaFav) = dao.addManga(mangaFav)
 

@@ -17,11 +17,14 @@
     <fragment
         android:id="@+id/descripcionFragment"
         android:name="com.zerodev.zeromanga.ui.tmo.descripcion.DescripcionFragment"
-        android:label="descripcion"
+        android:label=""
         tools:layout="@layout/descripcion_fragment" >
         <action
             android:id="@+id/action_descripcionFragment_to_lectorFragment"
             app:destination="@id/lectorFragment" />
+        <action
+            android:id="@+id/action_descripcionFragment_to_detalleFragment"
+            app:destination="@id/detalleFragment" />
     </fragment>
 
     <fragment
@@ -55,6 +58,11 @@
     <fragment
         android:id="@+id/detalleFragment"
         android:name="com.zerodev.zeromanga.ui.tmo.descripcion.detalle.DetalleFragment"
-        android:label="fragment_detalle"
-        tools:layout="@layout/fragment_detalle" />
+        android:label="@string/mas_detalles"
+        tools:layout="@layout/fragment_detalle" >
+        <argument
+            android:name="mangainfo"
+            app:argType="com.zerodev.zeromanga.data.remote.models.InfoManga"
+            app:nullable="true" />
+    </fragment>
 </navigation>

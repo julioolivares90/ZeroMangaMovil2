@@ -5,17 +5,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.zerodev.zeromanga.R
+import com.zerodev.zeromanga.adapters.AdapterCapitulos
 import com.zerodev.zeromanga.adapters.DescripcionViewPagerAdapter
 import com.zerodev.zeromanga.data.local.db.models.MangaFav
+import com.zerodev.zeromanga.data.remote.models.Capitulo
 import com.zerodev.zeromanga.databinding.DescripcionFragmentBinding
 import com.zerodev.zeromanga.data.remote.models.MangaResponse
+import com.zerodev.zeromanga.listeners.CapituloOnClickListener
+import com.zerodev.zeromanga.utlities.constantes
 import com.zerodev.zeromanga.utlities.constantes.ENVIAR_URL
 import org.koin.android.ext.android.inject
 
@@ -37,6 +49,8 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
     private lateinit var mangaUrlRefer : String
 
     private lateinit var urlCapitulo : String
+
+    private lateinit var adapterCapitulo: AdapterCapitulos
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,6 +82,13 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //modificar la toolbar
+        val navController = findNavController()
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+
+        view.findViewById<Toolbar>(R.id.toolbarDescripcion)
+            .setupWithNavController(navController,appBarConfiguration)
+
 
         viewModel.IsLoading().observe(viewLifecycleOwner, Observer {
             if (it){
@@ -77,24 +98,65 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
             else{
                 binding.pbDescripcion.visibility = View.GONE
                 showComponents()
+                setUpInformacion(view)
             }
         })
-        setUpViewPager()
 
-        binding.fbAddMagafav.setOnClickListener {
+
+        binding.btnFav.setOnClickListener {
             addMangaToFavorites(view)
+        }
+
+        binding.btnMasDetalles.setOnClickListener {
+            val directions = DescripcionFragmentDirections.actionDescripcionFragmentToDetalleFragment(mangaResponse.data)
+            Navigation.findNavController(view).navigate(directions)
         }
     }
 
+    fun setUpInformacion(view: View){
+        viewModel.getInfoManga().observe(viewLifecycleOwner,{
+            mangaResponse = it
+
+            Glide.with(view).load(mangaResponse.data.image).into(binding.ivDetalleManga)
+
+            //binding.tvTitleManga.text = mangaResponse.data.title
+
+            view.findViewById<Toolbar>(R.id.toolbarDescripcion).apply { title = mangaResponse.data.title }
+
+            setUpRecyclerView(mangaResponse.data.capitulo,view)
+        })
+    }
+
+    fun setUpRecyclerView(capitulos : List<Capitulo>,view: View){
+        adapterCapitulo = AdapterCapitulos(capitulos,object : CapituloOnClickListener{
+            override fun onClick(capitulo: Capitulo) {
+                val bundle = Bundle()
+                bundle.putString(constantes.URL_IMAGE_CAP,capitulo.UrlLeer)
+                bundle.putString(constantes.NOMBRE_CAP,capitulo.Title)
+                bundle.putString(constantes.URL_REFERER,mangaUrlRefer)
+                Navigation.findNavController(view).navigate(R.id.action_descripcionFragment_to_lectorFragment,bundle)
+            }
+
+        })
+
+        binding.rvCapitulos.apply {
+            adapter = adapterCapitulo
+            layoutManager =LinearLayoutManager(requireContext())
+            setHasFixedSize(true)
+            addItemDecoration(object : DividerItemDecoration(
+                activity,LinearLayoutManager.VERTICAL
+            ){})
+        }
+    }
     fun setUpViewPager() {
         viewModel.getInfoManga().observe(viewLifecycleOwner, Observer {
             mangaResponse = it
 
 
             //(activity as AppCompatActivity).setSupportActionBar()
-            val toolbar = (activity as AppCompatActivity).supportActionBar
+            //val toolbar = (activity as AppCompatActivity).supportActionBar
 
-            toolbar?.title = mangaResponse.data.title
+           // toolbar?.title = mangaResponse.data.title
            /*
             val tb_imagen= toolbar?.customView?.findViewById<ImageView>(R.id.tb_imagen)
             tb_imagen?.let {imagen ->
@@ -105,8 +167,11 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
 
             //Glide.with(requireContext()).load(mangaResponse.data.image).into(binding.imageView)
             descripcionViewPagerAdapter = DescripcionViewPagerAdapter(mangaResponse = mangaResponse,mangaUrlRefer = mangaUrlRefer ,this)
-            binding.viewPagerDescripcion.adapter = descripcionViewPagerAdapter
 
+            //binding.viewPagerDescripcion.adapter = descripcionViewPagerAdapter
+
+            /*
+            *
             TabLayoutMediator(binding.tabLayout,binding.viewPagerDescripcion,
                 TabLayoutMediator.TabConfigurationStrategy{ tab: TabLayout.Tab, position: Int ->
                     when(position){
@@ -120,23 +185,26 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
                         }
                     }
                 }).attach()
+            *
+            * */
         })
     }
 
     fun destroyViewPager(){
-        binding.viewPagerDescripcion.adapter = null
+        //binding.viewPagerDescripcion.adapter = null
     }
 
     fun hideComponents(){
-       // binding.imageView.visibility = View.GONE
-        binding.viewPagerDescripcion.visibility = View.GONE
-        binding.tabLayout.visibility = View.GONE
+        binding.llButtons.apply {
+            visibility = View.GONE
+        }
+
     }
 
     fun showComponents(){
-       // binding.imageView.visibility = View.VISIBLE
-        binding.viewPagerDescripcion.visibility = View.VISIBLE
-        binding.tabLayout.visibility = View.VISIBLE
+        binding.llButtons.apply {
+            visibility = View.VISIBLE
+        }
     }
 
     //override methods

@@ -114,8 +114,13 @@
     <string name="key_ga">_ga</string>
     <string name="key__cf_bm">__cf_bm</string>
     <string name="key_XSRF_TOKEN">XSRF_TOKEN</string>
-    <string name="favorito_text">Fav</string>
+    <string name="favorito_text">Favorito</string>
     <string name="not_data">aun no tienes favoritos agregados</string>
     <string name="ocurrio_un_error_vuelve_a_intentar">Ocurrio un error vuelve a intentar</string>
+    <string name="manga_populares">Manga Populares</string>
+    <string name="mangas_seinen">Mangas Seinen</string>
+    <string name="no_se_encontraron_datos">No se encontraron Datos</string>
+    <string name="imagen_de_descripcion">imagen de descripcion</string>
+    <string name="mas_detalles">Mas Detalles</string>
 
 </resources>

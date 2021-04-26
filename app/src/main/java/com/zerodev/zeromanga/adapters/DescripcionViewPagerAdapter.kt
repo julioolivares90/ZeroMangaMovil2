@@ -12,13 +12,15 @@ class DescripcionViewPagerAdapter(val mangaResponse: MangaResponse, val mangaUrl
     override fun getItemCount() = 2
 
     override fun createFragment(position: Int): Fragment {
-
+        /*
+        *
         val  inicio = DetalleFragment.newInstance(mangaResponse)
         if (position == 0){
             return DetalleFragment.newInstance(mangaResponse)
         }else if (position == 1){
             return CapituloFragment.newInstance(mangaResponse, mangaUrlRefer)
         }
-        return inicio
+        * */
+        return DetalleFragment()
     }
 }
