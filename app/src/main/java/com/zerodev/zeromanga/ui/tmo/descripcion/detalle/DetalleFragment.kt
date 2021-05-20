@@ -74,9 +74,10 @@ class DetalleFragment() : Fragment(R.layout.fragment_detalle) {
     }
 
     private fun setUpInformacion(view: View,mangaResponse: InfoManga){
-        Glide.with(view).load(mangaResponse.image).into(binding.ivDetalleManga)
+        Glide.with(view).load(mangaResponse.imageUrl).into(binding.ivDetalleManga)
         // tv_title_descripcion.text = mangaResponse.data.title
-        binding.tvDescripcion.text = mangaResponse.descripcion
+        binding.toolbarDetalle.title = mangaResponse.title
+        binding.tvDescripcion.text = mangaResponse.description
         binding.tvDemografia.text = mangaResponse.demografia
         binding.tvEstado.text = mangaResponse.estado
         binding.tvScore.text = mangaResponse.score

@@ -61,6 +61,8 @@ class BusquedaFragment : Fragment(R.layout.busqueda_fragment) {
         setSpinnerOrderItem()
         setSpinnerOrderDir()
         setSpinnerOrderField()
+
+
         binding.svBuscarManga.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             android.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -112,6 +114,7 @@ class BusquedaFragment : Fragment(R.layout.busqueda_fragment) {
                         })
                 }
                 else -> {
+
                 }
             }
             binding.rvMangasBusqueda.adapter = adapterMangaBusqueda

@@ -23,7 +23,7 @@ class AdapterCapitulos(val capitulos : List<Capitulo>, val capituloOnClickListen
         private val titleCapitulo : TextView = itemView.findViewById(R.id.tv_title_capitulo)
 
         fun bind(capitulo : Capitulo, capituloOnClickListener: CapituloOnClickListener){
-            titleCapitulo.text = capitulo.Title
+            titleCapitulo.text = capitulo.name
             itemView.setOnClickListener {
                 capituloOnClickListener.onClick(capitulo)
             }

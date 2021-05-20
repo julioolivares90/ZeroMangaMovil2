@@ -1,6 +1,7 @@
 package com.zerodev.zeromanga.ui.tmo.descripcion
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -83,11 +84,7 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
         super.onViewCreated(view, savedInstanceState)
 
         //modificar la toolbar
-        val navController = findNavController()
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
-
-        view.findViewById<Toolbar>(R.id.toolbarDescripcion)
-            .setupWithNavController(navController,appBarConfiguration)
+        setUpToolbar(view)
 
 
         viewModel.IsLoading().observe(viewLifecycleOwner, Observer {
@@ -113,17 +110,26 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
         }
     }
 
+    private fun setUpToolbar(view: View){
+        val navController = findNavController()
+        val appBarConfiguration = AppBarConfiguration(navGraph = navController.graph)
+        view.findViewById<Toolbar>(R.id.toolbarDescripcion)
+            .setupWithNavController(navController,appBarConfiguration)
+    }
     fun setUpInformacion(view: View){
         viewModel.getInfoManga().observe(viewLifecycleOwner,{
             mangaResponse = it
 
-            Glide.with(view).load(mangaResponse.data.image).into(binding.ivDetalleManga)
+            Glide.with(view).load(mangaResponse.data.imageUrl).into(binding.ivDetalleManga)
 
             //binding.tvTitleManga.text = mangaResponse.data.title
+            Log.d("TITLE -> ",it.data.title)
+            Log.d("TITLE MResponse ->",mangaResponse.data.title)
+            //binding.tvTitleManga.text = mangaResponse.data.title
+            binding.toolbarDescripcion.setTitle(mangaResponse.data.title)
+            //view.findViewById<Toolbar>(R.id.toolbarDescripcion).apply { title = mangaResponse.data.title }
 
-            view.findViewById<Toolbar>(R.id.toolbarDescripcion).apply { title = mangaResponse.data.title }
-
-            setUpRecyclerView(mangaResponse.data.capitulo,view)
+            setUpRecyclerView(mangaResponse.data.capitulos,view)
         })
     }
 
@@ -131,8 +137,8 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
         adapterCapitulo = AdapterCapitulos(capitulos,object : CapituloOnClickListener{
             override fun onClick(capitulo: Capitulo) {
                 val bundle = Bundle()
-                bundle.putString(constantes.URL_IMAGE_CAP,capitulo.UrlLeer)
-                bundle.putString(constantes.NOMBRE_CAP,capitulo.Title)
+                bundle.putString(constantes.URL_IMAGE_CAP,capitulo.urlLeer)
+                bundle.putString(constantes.NOMBRE_CAP,capitulo.name)
                 bundle.putString(constantes.URL_REFERER,mangaUrlRefer)
                 Navigation.findNavController(view).navigate(R.id.action_descripcionFragment_to_lectorFragment,bundle)
             }
@@ -227,7 +233,7 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
 
         val title = mangaResponse.data.title
 
-        val imagen = mangaResponse.data.image
+        val imagen = mangaResponse.data.imageUrl
 
         val score = mangaResponse.data.score
 
@@ -235,7 +241,7 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
 
         val demografia = mangaResponse.data.demografia
 
-        val descripcion = mangaResponse.data.descripcion
+        val descripcion = mangaResponse.data.description
 
         val url = urlCapitulo
 

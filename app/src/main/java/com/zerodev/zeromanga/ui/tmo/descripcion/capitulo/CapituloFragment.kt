@@ -45,12 +45,12 @@ class CapituloFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         mangaResponse.let {
 
-            adapterCapitulo = AdapterCapitulos(it.data.capitulo,
+            adapterCapitulo = AdapterCapitulos(it.data.capitulos,
                 object : CapituloOnClickListener {
                     override fun onClick(capitulo: Capitulo) {
                         val bundle = Bundle()
-                        bundle.putString(URL_IMAGE_CAP,capitulo.UrlLeer)
-                        bundle.putString(NOMBRE_CAP,capitulo.Title)
+                        bundle.putString(URL_IMAGE_CAP,capitulo.urlLeer)
+                        bundle.putString(NOMBRE_CAP,capitulo.name)
                         bundle.putString(URL_REFERER,mangaUrlRefer)
                         Navigation.findNavController(view).navigate(R.id.action_descripcionFragment_to_lectorFragment,bundle)
                     }

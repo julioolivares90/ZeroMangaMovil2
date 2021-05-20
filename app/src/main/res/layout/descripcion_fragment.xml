@@ -41,10 +41,11 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-
                 app:titleTextColor="@android:color/white"
+                app:title="title"
                 >
-                <!--
+
+               <!--
                 <TextView
                     android:id="@+id/tv_title_manga"
                     android:layout_width="match_parent"
@@ -59,7 +60,8 @@
                     android:marqueeRepeatLimit="marquee_forever"
                     android:scrollHorizontally="true"
                     />
-                -->
+               -->
+
             </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>

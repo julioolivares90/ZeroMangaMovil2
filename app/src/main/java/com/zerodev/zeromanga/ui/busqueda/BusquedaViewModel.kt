@@ -14,7 +14,6 @@ import kotlinx.coroutines.launch
 class BusquedaViewModel  ( private val repository : MangaRepository) : ViewModel() {
 
 
-
     private val _mangasBusqueda : MutableLiveData<ResponseManga<Response>> = MutableLiveData()
 
     private val _isLoading : MutableLiveData<Boolean> = MutableLiveData()
