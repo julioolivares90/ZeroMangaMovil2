@@ -46,6 +46,7 @@ class BusquedaFragment : Fragment(R.layout.busqueda_fragment) {
         super.onCreate(savedInstanceState)
         binding = BusquedaFragmentBinding.inflate(layoutInflater)
         //viewModel = ViewModelProvider(this).get(BusquedaViewModel::class.java)
+        //viewModel.findMangas("","","","")
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -112,12 +113,13 @@ class BusquedaFragment : Fragment(R.layout.busqueda_fragment) {
                             }
 
                         })
+                    binding.rvMangasBusqueda.adapter = adapterMangaBusqueda
                 }
                 else -> {
 
                 }
             }
-            binding.rvMangasBusqueda.adapter = adapterMangaBusqueda
+
         })
     }
 

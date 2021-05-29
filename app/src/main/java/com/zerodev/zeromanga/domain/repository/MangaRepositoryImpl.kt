@@ -16,8 +16,26 @@ import retrofit2.http.Query
 import kotlin.Exception
 
 class MangaRepositoryImpl  (private val retrofit : Api) : MangaRepository {
+    override suspend fun getMangaData(): ResponseManga<MangaData> {
+         return withContext(Dispatchers.IO){
+             try {
+                 val response = retrofit.GetData()
+                 if (response.isSuccessful){
+                     if (response.body() != null){
+                         ResponseManga.Success(response.body())
+                     }else {
+                         ResponseManga.Error(Exception("OCurrio un Error"))
+                     }
+                 }else {
+                     ResponseManga.Error(Exception(" Error ${response.errorBody()} con codigo ${response.code()}"))
+                 }
+             }catch (ex : Exception){
+                 ResponseManga.Error(ex)
+             }
+         } as ResponseManga<MangaData>
+    }
 
-   override suspend fun getAllMangasSeinen() : ResponseManga<Response> {
+    override suspend fun getAllMangasSeinen() : ResponseManga<Response> {
       return withContext(Dispatchers.IO){
           try{
               ResponseManga.Success(retrofit.getAllMangasSeinen())
@@ -91,6 +109,21 @@ class MangaRepositoryImpl  (private val retrofit : Api) : MangaRepository {
                 ResponseManga.Error(ex)
             }
 
+        }
+    }
+
+    override suspend fun getPaginasFromChapter(urlRefer: String, urlCapitulo: String) : ResponseManga<Chapters> {
+        return withContext(Dispatchers.IO){
+            try {
+                val response = retrofit.getPaginasFromChapter(urlRefer,urlCapitulo)
+                if (response.statusCode == 200){
+                    ResponseManga.Success(response)
+                }else {
+                    ResponseManga.Error(Exception("Ocurrio un error con codigo ${response.statusCode} error : ${response.errorMessage}"))
+                }
+            }catch (ex : Exception){
+                ResponseManga.Error(ex)
+            }
         }
     }
 

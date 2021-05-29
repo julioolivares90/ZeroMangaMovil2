@@ -6,8 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
+import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
+import com.zerodev.zeromanga.R
 import com.zerodev.zeromanga.adapters.LectorAdapter
 import com.zerodev.zeromanga.data.remote.models.Response
 import com.zerodev.zeromanga.databinding.LectorFragmentBinding
@@ -54,6 +60,8 @@ class LectorFragment : Fragment() {
         TitleCap = arguments.getString(NOMBRE_CAP)
         mangaUrlRefer = arguments.getString(URL_REFERER)
 
+
+
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,16 +75,21 @@ class LectorFragment : Fragment() {
         //val arguments =  requireArguments()
         //val urlImagen = arguments.getString(URL_IMAGE_CAP)
 
-        urlImagen?.let {
+        setUpToolbar(view)
+        if (urlImagen != null && mangaUrlRefer != null){
+            viewLifecycleOwner.lifecycle.coroutineScope.launch {
+                viewModel.getImagenesCap(urlImagen!!,mangaUrlRefer!!)
+            }
+        }
+        /*
+        * urlImagen?.let {
             viewLifecycleOwner.lifecycleScope.launch {
                 viewModel.getImagenesCap(it,mangaUrlRefer!!)
             }
         }
+        * */
         TitleCap?.let {t->
-            val myToolbar = (activity as AppCompatActivity).supportActionBar
-            myToolbar?.let {actionBar->
-                actionBar.title = t
-            }
+
         }
         viewModel.IsLoading().observe(viewLifecycleOwner, Observer {isLoading->
             if (isLoading){
@@ -98,6 +111,13 @@ class LectorFragment : Fragment() {
         })
     }
 
+    private fun setUpToolbar(view: View){
+        val navController = findNavController()
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+
+        view.findViewById<Toolbar>(R.id.toolbarVisor).
+                setupWithNavController(navController,appBarConfiguration)
+    }
     private fun setUpData(){
         viewModel.getImagenes().observe(viewLifecycleOwner, Observer {imagenes ->
             if (imagenes.isNotEmpty()){

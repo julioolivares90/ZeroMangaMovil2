@@ -6,11 +6,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.zerodev.zeromanga.data.remote.models.Chapters
 import com.zerodev.zeromanga.data.remote.models.ResponseManga
 import com.zerodev.zeromanga.domain.repository.CharpetersRepository
+import com.zerodev.zeromanga.domain.repository.MangaRepository
 import kotlinx.coroutines.launch
 
-class LectorViewModel  (private val repository : CharpetersRepository) : ViewModel() {
+class LectorViewModel  (private val repository : MangaRepository) : ViewModel() {
 
     private val imagenes = MutableLiveData<MutableList<String>>()
 
@@ -32,14 +34,15 @@ class LectorViewModel  (private val repository : CharpetersRepository) : ViewMod
     {
 
          viewModelScope.launch {
-             when(val result : ResponseManga<MutableList<String>> = repository.GetImagesFromChapters(url = url,urlRefer = mangaUrlRefer)){
+             val result : ResponseManga<Chapters> = repository.getPaginasFromChapter(mangaUrlRefer, url)
+             when(result){
 
-                 is ResponseManga.Success<MutableList<String>>->{
-                     if (imagenes.value.isNullOrEmpty()){
+                 is ResponseManga.Success<Chapters>->{
+                     if (result.data.data.isNullOrEmpty()){
                          _hasError.postValue(true)
                          _isloading.postValue(false)
                      } else {
-                         imagenes.postValue(result.data)
+                         imagenes.postValue(result.data.data)
 
                          imagenes.value?.forEach { image->
                              Log.println(Log.DEBUG,image,"imagen")
@@ -47,7 +50,8 @@ class LectorViewModel  (private val repository : CharpetersRepository) : ViewMod
                          _isloading.postValue(false)
                          _hasError.postValue(false)
                          }
-                 }else -> {
+                 }
+                 else -> {
                  _isloading.postValue(false)
                  _hasError.postValue(true)
              }

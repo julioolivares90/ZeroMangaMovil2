@@ -1,10 +1,9 @@
 package com.zerodev.zeromanga.domain.repository
 
-import com.zerodev.zeromanga.data.remote.models.MangaResponse
-import com.zerodev.zeromanga.data.remote.models.Response
-import com.zerodev.zeromanga.data.remote.models.ResponseManga
+import com.zerodev.zeromanga.data.remote.models.*
 
 interface MangaRepository {
+    suspend fun getMangaData() : ResponseManga<MangaData>
     suspend fun getAllMangasSeinen() : ResponseManga<Response>
 
     suspend fun getAllMangasPopulares(pageNumber : Int) : ResponseManga<Response>
@@ -25,4 +24,7 @@ interface MangaRepository {
                                   amateur : String?="",
                                   erotic : String?=""
     ) : ResponseManga<Response>
+
+
+    suspend fun getPaginasFromChapter(urlRefer:String, urlCapitulo : String) : ResponseManga<Chapters>
 }

@@ -37,11 +37,17 @@ class FavoritosFragment : Fragment(R.layout.favoritos_fragment) {
         //viewModel = ViewModelProvider(this).get(FavoritosViewModel::class.java)
 
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUpLoading()
+        setUpRecyclerView()
+    }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         //setUpLoading()
-        setUpRecyclerView()
+
     }
 
     private fun setUpLoading(){

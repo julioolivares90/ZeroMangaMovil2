@@ -1,14 +1,15 @@
 package com.zerodev.zeromanga.data.remote.api
 
-import com.zerodev.zeromanga.data.remote.models.MangaResponse
-import com.zerodev.zeromanga.data.remote.models.ResponseLista
-import com.zerodev.zeromanga.data.remote.models.ResultListPaginasManga
+import com.zerodev.zeromanga.data.remote.models.*
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface Api {
+    @GET("Mangas/Mangas")
+    suspend fun  GetData() : Response<MangaData>
+
     @GET("Mangas/Mangas-populares/{pageNumber}")
     suspend fun getAllMangasPopulares(@Path("pageNumber") pgeNumber : Int) : com.zerodev.zeromanga.data.remote.models.Response
 
@@ -18,7 +19,7 @@ interface Api {
     @GET("Mangas/Manga-info")
     suspend fun getInfoManga(@Query("urlManga") mangaUrl : String) : MangaResponse
 
-    @GET("manga/library")
+    @GET("Mangas/Buscar-manga")
     suspend fun getMangasLibrary(
         @Query("title") title: String?,
         @Query("_page") page : String?,
@@ -41,8 +42,8 @@ interface Api {
     @GET("get-manga")
     suspend fun getPaginasOfManga(@Query("urlPage") lectorTMO : String) : ResultListPaginasManga
 
-    @GET("Manga-paginas")
+    @GET("Mangas/Manga-paginas")
     suspend fun getPaginasFromChapter(@Query("urlRefer") urlRefer: String
-                                      ,@Query("urlCapitulo") urlChapter: String)
+                                      ,@Query("urlCapitulo") urlChapter: String) : Chapters
 
 }

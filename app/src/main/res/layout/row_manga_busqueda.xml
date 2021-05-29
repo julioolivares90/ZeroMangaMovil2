@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="200dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -14,12 +15,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:id="@+id/iv_manga_buscar"
-            android:src="@drawable/rin_tohsaka"
-            />
+            >
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:id="@+id/iv_manga_buscar"
+                android:src="@drawable/rin_tohsaka"
+                />
+        </com.google.android.material.card.MaterialCardView>
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -63,4 +70,4 @@
                 />
         </LinearLayout>
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView >
