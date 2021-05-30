@@ -1,5 +1,6 @@
 package com.zerodev.zeromanga
 
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -23,7 +24,6 @@ class MainActivity : AppCompatActivity() {
    private lateinit var appBarConfiguration : AppBarConfiguration
    private lateinit var navController: NavController
 
-   lateinit var descripcionViewModel: DescripcionViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
         //setSupportActionBar(findViewById(R.id.toolbarDescripcion))
 
-        setTheme(R.style.AppTheme)
+        //setTheme(R.style.AppTheme)
         appBarConfiguration = AppBarConfiguration(setOf(R.id.mainFragment, R.id.busquedaFragment,R.id.favoritosFragment))
 
 
@@ -71,9 +71,22 @@ class MainActivity : AppCompatActivity() {
             }
         }
         */
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+
     }
 
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
+        val currentNightMode = newConfig.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        when (currentNightMode) {
+            Configuration.UI_MODE_NIGHT_NO -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            } // Night mode is not active, we're using the light theme
+            Configuration.UI_MODE_NIGHT_YES -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } // Night mode is active, we're using dark theme
+        }
+    }
     override fun onSupportNavigateUp(): Boolean {
 
         return  navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import com.zerodev.zeromanga.data.local.db.models.MangaFav
 
 interface MangaFavRepository {
-    suspend fun addMangaFav(mangaFav: MangaFav)
+    suspend fun addMangaFav(mangaFav: MangaFav) : Long
 
     suspend fun updateMangaFav(mangaFav: MangaFav)
 

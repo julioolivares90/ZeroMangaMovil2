@@ -7,7 +7,7 @@ import com.zerodev.zeromanga.data.local.db.models.MangaFav
 @Dao
 interface MangaFavDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addManga(mangaFav: MangaFav)
+    suspend fun addManga(mangaFav: MangaFav) : Long
 
     @Update
     suspend fun updateManga(mangaFav: MangaFav)

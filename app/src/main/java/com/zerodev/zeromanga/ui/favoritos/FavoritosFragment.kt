@@ -74,13 +74,15 @@ class FavoritosFragment : Fragment(R.layout.favoritos_fragment) {
 
     private fun updateUI(mangasFav : List<MangaFav>) {
         if (mangasFav.isEmpty()){
-            showRecyclerView()
-            hideMessage()
-            hideProgressBar()
-        }else {
             hideProgressBar()
             hideRecyclerView()
             showMessage()
+        }else {
+            showRecyclerView()
+            hideMessage()
+            hideProgressBar()
+
+
         }
     }
 

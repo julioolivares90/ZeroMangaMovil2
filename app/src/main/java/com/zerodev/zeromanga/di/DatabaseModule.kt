@@ -1,23 +1,20 @@
 package com.zerodev.zeromanga.di
 
-import android.app.Application
-import androidx.room.Room
+import android.content.Context
 import com.zerodev.zeromanga.data.local.db.MangaFavDao
 import com.zerodev.zeromanga.data.local.db.models.MangaDatabase
-import com.zerodev.zeromanga.utlities.constantes.DATABASE_NAME
-import org.koin.android.ext.koin.androidApplication
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val databaseModule = module {
-    fun provideDatabase(application: Application) : MangaDatabase {
-        return  Room.databaseBuilder(application, MangaDatabase::class.java,DATABASE_NAME)
-            .build()
+    fun provideDatabase(context: Context) : MangaDatabase {
+        return  MangaDatabase.getDataBase(context =context )
     }
 
     fun provideMangaFavDao(database: MangaDatabase): MangaFavDao {
         return database.getMangaFavDao()
     }
 
-    single { provideDatabase(androidApplication()) }
+    single { provideDatabase(androidContext()) }
     single { provideMangaFavDao(get()) }
 }

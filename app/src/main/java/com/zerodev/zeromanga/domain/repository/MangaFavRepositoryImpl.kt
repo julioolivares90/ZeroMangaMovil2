@@ -1,7 +1,5 @@
 package com.zerodev.zeromanga.domain.repository
-
 import com.zerodev.zeromanga.data.local.db.MangaFavDao
-import com.zerodev.zeromanga.data.local.db.models.MangaDatabase
 import com.zerodev.zeromanga.data.local.db.models.MangaFav
 
 class MangaFavRepositoryImpl constructor (private val dao: MangaFavDao) : MangaFavRepository {
