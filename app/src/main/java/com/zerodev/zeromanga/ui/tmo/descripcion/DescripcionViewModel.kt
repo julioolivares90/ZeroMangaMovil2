@@ -19,32 +19,46 @@ class DescripcionViewModel  (application: Application,
 
     private val _isLoading  = MutableLiveData<Boolean>()
 
+    private val _mangaExist = MutableLiveData<Boolean>()
+
     init {
         _isLoading.value = true
+        _mangaExist.value = false
     }
 
     fun IsLoading() : LiveData<Boolean> = _isLoading
 
     fun getInfoManga() : LiveData<MangaResponse> = _infoManga
 
+    fun MangaExist() : LiveData<Boolean> = _mangaExist
+
      fun setInfoManga(mangaUrl : String) = viewModelScope.launch {
+
          _isLoading.value = true
          val response =  repository.getInfoManga(urlVisitar = mangaUrl)
          when(response){
              is ResponseManga.Success<MangaResponse> ->_infoManga.postValue(response.data)
              else -> {
-
              }
          }
          _isLoading.value = false
     }
 
+    fun mangaExiste(title : String) : Boolean {
+        val manga = mangaFavRepository.findMangaByTitle(title)
+        if (manga.value != null)
+            return true
+        return false
+    }
     fun addMangaToFavorites(mangaFav: MangaFav) = viewModelScope.launch{
         try {
-          val rowsAfected =   mangaFavRepository.addMangaFav(mangaFav)
-            if (rowsAfected > 0){
-                Log.d("ROWS AFECTED =>",rowsAfected.toString())
-            }
+
+                val rowsAfected =   mangaFavRepository.addMangaFav(mangaFav)
+                if (rowsAfected > 0){
+                    Log.d("ROWS AFECTED =>",rowsAfected.toString())
+                }
+
+
         }catch (ex : Exception){
             println(ex.message)
         }

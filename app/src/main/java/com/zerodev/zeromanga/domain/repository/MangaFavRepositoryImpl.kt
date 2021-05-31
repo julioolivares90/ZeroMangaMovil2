@@ -1,4 +1,5 @@
 package com.zerodev.zeromanga.domain.repository
+import androidx.lifecycle.LiveData
 import com.zerodev.zeromanga.data.local.db.MangaFavDao
 import com.zerodev.zeromanga.data.local.db.models.MangaFav
 
@@ -13,4 +14,8 @@ class MangaFavRepositoryImpl constructor (private val dao: MangaFavDao) : MangaF
     override fun getAllMangas() = dao.getAllMangas()
 
     override fun searchManga(query:String) = dao.seachManga(query)
+
+    override fun findMangaByTitle(title: String): LiveData<MangaFav> {
+        return dao.findMangaByTitle(title)
+    }
 }

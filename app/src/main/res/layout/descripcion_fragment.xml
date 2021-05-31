@@ -41,11 +41,10 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:titleTextColor="@android:color/white"
                 app:title="title"
-                >
+                app:titleTextColor="@android:color/white">
 
-               <!--
+                <!--
                 <TextView
                     android:id="@+id/tv_title_manga"
                     android:layout_width="match_parent"

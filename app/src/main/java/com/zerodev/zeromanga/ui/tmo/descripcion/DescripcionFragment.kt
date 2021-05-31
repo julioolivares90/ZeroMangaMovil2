@@ -28,6 +28,7 @@ import com.zerodev.zeromanga.data.remote.models.Capitulo
 import com.zerodev.zeromanga.databinding.DescripcionFragmentBinding
 import com.zerodev.zeromanga.data.remote.models.MangaResponse
 import com.zerodev.zeromanga.listeners.CapituloOnClickListener
+import com.zerodev.zeromanga.listeners.SnackBarClickListener
 import com.zerodev.zeromanga.utlities.constantes
 import com.zerodev.zeromanga.utlities.constantes.ENVIAR_URL
 import org.koin.android.ext.android.inject
@@ -99,7 +100,14 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
             }
         })
 
+        viewModel.MangaExist().observe(viewLifecycleOwner,{existe->
+            if (existe){
+               val snackbar = Snackbar.make(view,"Manga ya se encuentra en tus favoritos",Snackbar.LENGTH_SHORT)
 
+                snackbar.setAction(R.string.error_favoritos,SnackBarClickListener())
+                snackbar.show()
+            }
+        })
         binding.btnFav.setOnClickListener {
             addMangaToFavorites(view)
         }
@@ -129,6 +137,10 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
             binding.toolbarDescripcion.setTitle(mangaResponse.data.title)
             //view.findViewById<Toolbar>(R.id.toolbarDescripcion).apply { title = mangaResponse.data.title }
 
+            val existe = viewModel.mangaExiste(it.data.title)
+            if (existe){
+                binding.btnFav.isEnabled = false
+            }
             setUpRecyclerView(mangaResponse.data.capitulos,view)
         })
     }
@@ -226,7 +238,7 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
 
     override fun onResume() {
         super.onResume()
-        setUpViewPager()
+        //setUpViewPager()
     }
 
     fun addMangaToFavorites(view: View){

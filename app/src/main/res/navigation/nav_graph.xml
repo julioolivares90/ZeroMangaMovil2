@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_descripcionFragment_to_busquedaFragment"
             app:destination="@id/busquedaFragment" />
+        <action
+            android:id="@+id/action_descripcionFragment_to_favoritosFragment"
+            app:destination="@id/favoritosFragment" />
     </fragment>
 
     <fragment
