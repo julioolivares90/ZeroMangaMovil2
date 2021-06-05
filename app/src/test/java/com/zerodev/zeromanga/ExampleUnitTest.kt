@@ -36,24 +36,13 @@ class ExampleUnitTest {
        val result = api.getInfoManga("https://lectortmo.com/view_uploads/486011")
 
         if (result.statusCode == 200){
-            result.data.capitulo.forEach {
-                print("titulo : ${it.Title} - url leer: ${it.UrlLeer}")
+            result.data.capitulos.forEach {
+                print("titulo : ${it.name} - url leer: ${it.urlLeer}")
             }
         }
         print("Codigo error ${result.statusCode}")
     }
-    @Test
-    fun `comprueba si existe main container en la pagina solicitada`() = runBlocking{
-        var newUrl = scraper.getUrlFromRedirection(urlReferTest1,urlTest1)
-        var htmlOfPage = scraper.getHTMLFromPage(urlRefer = urlReferTest1,url = newUrl)
 
-        val existMainContainer = scraper.ContainMainContainer(htmlOfPage)
-
-        if (existMainContainer)
-            print(true)
-        else
-            print(false)
-    }
 
     @Test
     fun `obtenerDatosDeRoom`() {

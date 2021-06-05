@@ -123,5 +123,6 @@
     <string name="no_se_encontraron_datos">No se encontraron Datos</string>
     <string name="imagen_de_descripcion">imagen de descripcion</string>
     <string name="mas_detalles">Mas Detalles</string>
+    <string name="verifica_que_estes_conectado_a_una_red_y_vuelve_a_intentar">Verifica que estes conectado a una red y vuelve a intentar!</string>
 
 </resources>

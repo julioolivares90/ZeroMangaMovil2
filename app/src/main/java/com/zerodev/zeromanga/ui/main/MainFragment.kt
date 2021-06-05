@@ -6,17 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import androidx.navigation.Navigation
 import com.zerodev.zeromanga.R
 import com.zerodev.zeromanga.adapters.MangasPopularesAdapter
 import com.zerodev.zeromanga.adapters.MangasSeinenAdapter
+import com.zerodev.zeromanga.data.remote.models.*
 import com.zerodev.zeromanga.databinding.MainFragmentBinding
 import com.zerodev.zeromanga.listeners.MangaOnclickListener
-import com.zerodev.zeromanga.data.remote.models.Manga
-import com.zerodev.zeromanga.data.remote.models.Response
-import com.zerodev.zeromanga.data.remote.models.ResponseManga
 import com.zerodev.zeromanga.utlities.constantes.ENVIAR_URL
 import org.koin.android.ext.android.inject
+import com.zerodev.zeromanga.utlities.CheckNetwork
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainFragment : Fragment() {
 
@@ -44,6 +47,7 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //muestra un progressbar si esta cargando y esconde los componentes
         mainViewModel.IsLoading().observe(viewLifecycleOwner, Observer {
             if (it){
                 hideComponents()
@@ -54,7 +58,33 @@ class MainFragment : Fragment() {
             }
         })
 
-        mainViewModel.hasError().observe(viewLifecycleOwner,{
+        val checkNetwork = CheckNetwork(requireContext())
+
+        checkNetwork.observe(viewLifecycleOwner){
+            if (it){
+                binding.nestedScroll.visibility = View.VISIBLE
+                binding.showError.root.visibility = View.GONE
+                setMangaData()
+            }else {
+                hideComponents()
+                binding.showError.root.visibility = View.VISIBLE
+            }
+        }
+        /*
+        mainViewModel.ConnectedError().observe(viewLifecycleOwner,{isNetworkAvailable->
+            if (isNetworkAvailable){
+                binding.nestedScroll.visibility = View.VISIBLE
+                binding.showError.root.visibility = View.GONE
+
+            }else {
+                hideComponents()
+                hideProgressBar()
+                binding.showError.root.visibility = View.VISIBLE
+            }
+        })
+        * */
+        //si tiene un error esconde los componentes y muestra un mensaje de error
+        mainViewModel.hasError().observe(viewLifecycleOwner) {
             if (it){
                 hideComponents()
                 hideProgressBar()
@@ -62,81 +92,87 @@ class MainFragment : Fragment() {
             }else{
                 hideMessageError()
             }
-        })
-        mainViewModel.getMangaSeinen().observe(viewLifecycleOwner, Observer {
-            val result = it
-            when(result){
-                is ResponseManga.Success<Response> -> {
-                    adapter = MangasSeinenAdapter(result.data.data,mangaOnclickListener = object : MangaOnclickListener{
-                        override fun onClick(manga: Manga) {
-                            val bundle = Bundle()
-                            bundle.putString(ENVIAR_URL,manga.mangaUrl)
+        }
 
-                            Navigation
-                                .findNavController(view)
-                                .navigate(R.id.action_mainFragment_to_descripcionFragment
-                                    ,bundle)
-                        }
-                    })
-                }else -> {
-                    hideComponents()
-                    hideProgressBar()
-                }
+        //obtiene la informacion de los mangas
+        mainViewModel.getMangaData().observe(viewLifecycleOwner) {
+            when(it){
+                is ResponseManga.Success<MangaData> -> {
+                    if (it.data.mangasSeinen.isNullOrEmpty() || it.data.mangasPopulares.isNullOrEmpty()){
+                        hideComponents()
+                        hideProgressBar()
+                    }else {
+
+                        //adapter mangas seinen
+                        adapter = MangasSeinenAdapter(it.data.mangasSeinen,mangaOnclickListener = object : MangaOnclickListener{
+                            override fun onClick(manga: Manga) {
+                                val bundle = Bundle()
+                                bundle.putString(ENVIAR_URL,manga.mangaUrl)
+
+                                Navigation
+                                    .findNavController(view)
+                                    .navigate(R.id.action_mainFragment_to_descripcionFragment
+                                        ,bundle)
+                            }
+
+                        })
+
+                        //adapter mangas populares
+                        adapterPopulares = MangasPopularesAdapter(it.data.mangasPopulares,mangaOnclickListener = object : MangaOnclickListener{
+                            override fun onClick(manga: Manga) {
+                                val bundle = Bundle()
+                                bundle.putString(ENVIAR_URL,manga.mangaUrl)
+
+                                Navigation
+                                    .findNavController(view)
+                                    .navigate(R.id.action_mainFragment_to_descripcionFragment
+                                        ,bundle)
+                            }
+                        })
+
+                        binding.rvMangasSeinen.adapter = adapter
+                        binding.rvMangasPopulares.adapter = adapterPopulares
+                    }
+                }else ->{
+                hideComponents()
+                hideProgressBar()
             }
-            binding.rvMangasSeinen.adapter = adapter
-        })
-
-        mainViewModel.getMangasPopulares().observe(viewLifecycleOwner, Observer {
-            val result = it
-            when(result){
-                is ResponseManga.Success<Response> -> {
-                    adapterPopulares = MangasPopularesAdapter(result.data.data,mangaOnclickListener = object : MangaOnclickListener{
-                        override fun onClick(manga: Manga) {
-                            val bundle = Bundle()
-                            bundle.putString(ENVIAR_URL,manga.mangaUrl)
-
-                            Navigation
-                                .findNavController(view)
-                                .navigate(R.id.action_mainFragment_to_descripcionFragment
-                                    ,bundle)
-                        }
-                    })
-                }else -> {
-                    hideComponents()
-                    hideProgressBar()
-
-                }
             }
-            binding.rvMangasPopulares.adapter = adapterPopulares
-        })
+        }
+
+
     }
 
-    fun showProgressbar(){
+    private  fun setMangaData () = CoroutineScope(Dispatchers.IO).launch {
+        mainViewModel.setMangaData()
+    }
+
+    private fun showProgressbar(){
         binding.pbCargarMangas.visibility = View.VISIBLE
     }
-    fun hideProgressBar(){
+    private fun hideProgressBar(){
         binding.pbCargarMangas.visibility = View.GONE
     }
 
-    fun hideComponents(){
+    private fun hideComponents(){
         binding.textView.visibility = View.GONE
         binding.rvMangasSeinen.visibility = View.GONE
         binding.rvMangasPopulares.visibility = View.GONE
         binding.tvSeinen.visibility = View.GONE
     }
 
-    fun showComponents(){
+    private fun showComponents(){
         binding.textView.visibility = View.VISIBLE
         binding.rvMangasSeinen.visibility = View.VISIBLE
         binding.rvMangasPopulares.visibility = View.VISIBLE
         binding.tvSeinen.visibility = View.VISIBLE
     }
 
-    fun showMessageError(){
+    private fun showMessageError(){
         binding.tvError.visibility = View.VISIBLE
     }
 
-    fun hideMessageError(){
+    private fun hideMessageError(){
         binding.tvError.visibility = View.GONE
     }
 }

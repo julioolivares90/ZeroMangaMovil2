@@ -1,6 +1,15 @@
 package com.zerodev.zeromanga.utlities
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
+import android.os.Build
+import androidx.annotation.RequiresApi
 import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
+
+
+
+
 
 fun getHttpClient() : OkHttpClient{
     return OkHttpClient.Builder()
