@@ -20,6 +20,7 @@
             android:background="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
+            app:titleTextColor="@android:color/white"
             />
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -75,13 +76,14 @@
                             android:orientation="horizontal">
 
                             <TextView
+                                android:textColor="@android:color/white"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="100dp"
-
                                 android:text="Tipo" />
 
                             <TextView
+                                style="@style/text_view_theme"
                                 android:id="@+id/tv_tipo"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -98,6 +100,7 @@
                             android:orientation="horizontal">
 
                             <TextView
+                                style="@style/text_view_theme"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="100dp"
@@ -124,7 +127,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="100dp"
-                                android:text="Demografia" />
+                                android:text="Demografia"
+                                style="@style/text_view_theme"
+                                />
 
                             <TextView
                                 android:id="@+id/tv_demografia"
@@ -147,7 +152,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="100dp"
-                                android:text="Estado" />
+                                android:text="Estado"
+
+                                style="@style/text_view_theme"/>
 
                             <TextView
                                 android:id="@+id/tv_estado"
@@ -183,6 +190,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            style="@style/text_view_theme"
                             android:text="Generos"
                             android:textAlignment="center" />
 

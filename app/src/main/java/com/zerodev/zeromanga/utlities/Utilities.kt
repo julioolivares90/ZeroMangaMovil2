@@ -13,11 +13,11 @@ import java.util.concurrent.TimeUnit
 
 fun getHttpClient() : OkHttpClient{
     return OkHttpClient.Builder()
-        .callTimeout(2000L, TimeUnit.MILLISECONDS)
-        .readTimeout(10000,TimeUnit.MILLISECONDS)
+        .callTimeout(20, TimeUnit.SECONDS)
+        .readTimeout(40,TimeUnit.SECONDS)
         .addInterceptor{chain ->
             val request = chain.request()
-            val newChain = chain.withConnectTimeout(10000, TimeUnit.MILLISECONDS)
+            val newChain = chain.withConnectTimeout(40, TimeUnit.SECONDS)
             return@addInterceptor newChain.proceed(request)
         }
         .build()
