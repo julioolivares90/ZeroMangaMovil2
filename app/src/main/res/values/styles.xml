@@ -36,8 +36,8 @@
         <item name="android:background">@drawable/backgroundcafe</item>
     </style>
 
-    <style name="splash_theme" parent="AppTheme">
-        <item name="android:windowBackground">@drawable/splash_screen</item>
+    <style name="splash_theme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:background">@drawable/splash_screen</item>
     </style>
 
 

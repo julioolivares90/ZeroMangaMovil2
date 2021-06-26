@@ -15,16 +15,32 @@ class BusquedaViewModel  ( private val repository : MangaRepository) : ViewModel
 
     private val _isLoading : MutableLiveData<Boolean> = MutableLiveData()
 
+    private val _hasError : MutableLiveData<Boolean> = MutableLiveData()
+
     init {
-        setIsLoading(true)
-        setMangasBusqueda()
-        setIsLoading(false)
+        //setIsLoading(true)
+        //setMangasBusqueda()
+        //setIsLoading(false)
     }
 
     fun setMangasBusqueda() =  viewModelScope.launch {
-            val response = repository.getMangasLibrary()
-            _mangasBusqueda.postValue(response)
+        val response = repository.getMangasLibrary()
+
+        when(response){
+            is ResponseManga.Success ->{
+                _mangasBusqueda.postValue(response)
+                _hasError.postValue(false)
+                setIsLoading(false)
+            }
+            else -> {
+                _hasError.postValue(true)
+                _isLoading.postValue(false)
+            }
+        }
+
     }
+
+    fun hasError() : LiveData<Boolean> = _hasError
 
     fun setIsLoading(value : Boolean) {
         _isLoading.postValue(value)

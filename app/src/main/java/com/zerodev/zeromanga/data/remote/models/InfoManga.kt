@@ -1,6 +1,8 @@
 package com.zerodev.zeromanga.data.remote.models
 
+import android.os.Parcel
 import android.os.Parcelable
+import kotlinx.android.parcel.Parceler
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

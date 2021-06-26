@@ -20,18 +20,23 @@ import com.zerodev.zeromanga.data.remote.models.Manga
 import com.zerodev.zeromanga.databinding.BusquedaFragmentBinding
 import com.zerodev.zeromanga.data.remote.models.Response
 import com.zerodev.zeromanga.data.remote.models.ResponseManga
+import com.zerodev.zeromanga.di.busquedaViewModelModule
 import com.zerodev.zeromanga.listeners.MangaOnclickListener
+import com.zerodev.zeromanga.utlities.CheckNetwork
 import com.zerodev.zeromanga.utlities.constantes
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
+import timber.log.Timber
 
 
 class BusquedaFragment : Fragment(R.layout.busqueda_fragment) {
 
     private lateinit var binding: BusquedaFragmentBinding
-    private  val viewModel: BusquedaViewModel  by inject()
+    private  val BusquedaviewModel: BusquedaViewModel  by inject()
     private lateinit var adapterMangaBusqueda: AdapterMangaBusqueda
+
+    private val hasInternerConnection = CheckNetwork(requireContext())
 
     private var sp_order_field = ""
     private var sp_order_item = ""
@@ -64,6 +69,8 @@ class BusquedaFragment : Fragment(R.layout.busqueda_fragment) {
         setSpinnerOrderField()
 
 
+
+
         binding.svBuscarManga.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             android.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -72,13 +79,13 @@ class BusquedaFragment : Fragment(R.layout.busqueda_fragment) {
 
                 viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
 
-                   viewModel.findMangas(
+                    BusquedaviewModel.findMangas(
                        title = query!!,
                        orderField = sp_order_field,
                        orderItem = sp_order_item,
                        orderDir = sp_order_dir
                    )
-                    viewModel.setIsLoading(false)
+                    BusquedaviewModel.setIsLoading(false)
                 }
                 return true
             }
@@ -88,16 +95,33 @@ class BusquedaFragment : Fragment(R.layout.busqueda_fragment) {
             }
 
         })
+        BusquedaviewModel.hasError().observe(viewLifecycleOwner, Observer {hasError->
+            if (hasError){
+                showOrHideTextError(hasError)
+                hideComponents()
+                hideProgressBar()
+            }else {
+                showOrHideTextError(hasError)
+                showComponents()
+                hideProgressBar()
+            }
+        })
 
-
-        viewModel.IsLoading().observe(viewLifecycleOwner, Observer {
+        BusquedaviewModel.IsLoading().observe(viewLifecycleOwner, Observer {
             if (it){
                showProgressBar()
             }
             hideProgressBar()
         })
 
-        viewModel.getMangasBusqueda().observe(viewLifecycleOwner, Observer {
+        hasInternerConnection.observe(viewLifecycleOwner, Observer{
+            if (it){
+                Timber.d("$it")
+            }else {
+                Timber.d("$it")
+            }
+        })
+        BusquedaviewModel.getMangasBusqueda().observe(viewLifecycleOwner, Observer {
             val result = it
             when (result) {
                 is ResponseManga.Success<Response> -> {
@@ -216,5 +240,31 @@ class BusquedaFragment : Fragment(R.layout.busqueda_fragment) {
 
     private fun showProgressBar(){
         binding.pbCargarBusqueda.visibility = View.VISIBLE
+    }
+
+    private fun hideComponents(){
+        binding.rvMangasBusqueda.visibility =View.GONE
+        binding.spOrderDir.visibility = View.GONE
+        binding.spOrderField.visibility = View.GONE
+        binding.svBuscarManga.visibility = View.GONE
+        binding.tvGeneros.visibility = View.GONE
+        binding.tvFiltros.visibility = View.GONE
+
+    }
+    private fun showComponents(){
+        binding.rvMangasBusqueda.visibility = View.VISIBLE
+        binding.spOrderDir.visibility = View.VISIBLE
+        binding.spOrderField.visibility = View.VISIBLE
+        binding.svBuscarManga.visibility = View.VISIBLE
+        binding.tvGeneros.visibility = View.VISIBLE
+        binding.tvFiltros.visibility = View.VISIBLE
+    }
+
+    private fun showOrHideTextError(hasError : Boolean){
+        if (hasError){
+            binding.tvErrorBusqueda.visibility = View.VISIBLE
+        }
+        else
+            binding.tvErrorBusqueda.visibility = View.GONE
     }
 }
