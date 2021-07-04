@@ -10,23 +10,28 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
+        android:layout_height="280dp"
         android:fitsSystemWindows="true"
         android:background="@color/colorPrimaryDark"
         android:theme="@style/Theme.ScrollingActivity.AppBarOverlay"
         >
         <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsion_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
             android:background="@android:color/transparent"
-            app:toolbarId="@id/toolbarDescripcion"
+
+
+            android:textDirection="firstStrong"
+            app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Large"
             >
+            <!--app:toolbarId="@id/toolbarDescripcion" este es para collapsingToolabarLayout-->
             <ImageView
                 android:id="@+id/iv_detalle_manga"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:src="@drawable/rin_tohsaka"
                 android:scaleType="fitXY"
                 android:contentDescription="@string/imagen_de_descripcion"
@@ -40,26 +45,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.PopupOverlay"
+
                 app:title="title"
                 app:titleTextColor="@android:color/white">
 
-                <!--
-                <TextView
-                    android:id="@+id/tv_title_manga"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView"
-                    android:textColor="@android:color/white"
-                    android:textSize="20sp"
-                    android:layout_gravity="center"
-                    android:fadingEdge="horizontal"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:scrollHorizontally="true"
-                    />
-               -->
+
 
             </androidx.appcompat.widget.Toolbar>
 
@@ -70,7 +60,9 @@
 
    <androidx.core.widget.NestedScrollView
        android:layout_width="match_parent"
-       android:layout_height="match_parent">
+       android:layout_height="match_parent"
+
+       app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
        <androidx.constraintlayout.widget.ConstraintLayout
            android:layout_width="match_parent"
            android:layout_height="match_parent"

@@ -10,14 +10,30 @@ import com.zerodev.zeromanga.data.remote.models.ResponseManga
 import com.zerodev.zeromanga.data.remote.models.*
 import com.zerodev.zeromanga.utlities.AdapterString
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.http.Query
 import kotlin.Exception
 
 class MangaRepositoryImpl  (private val retrofit : Api) : MangaRepository {
-    override suspend fun getMangaData(): ResponseManga<MangaData> {
-         return withContext(Dispatchers.IO){
+    @ExperimentalCoroutinesApi
+    override suspend fun getMangaData(): Flow<ResponseManga<MangaData>> = callbackFlow {
+
+        offer(ResponseManga.Success(retrofit.GetData().body()!!))
+        /*
+        * trySend(
+            ResponseManga.Success(
+                retrofit.GetData().body()!!
+            )
+        ).isSuccess
+        * */
+        awaitClose { close() }
+        /*
+        *  return withContext(Dispatchers.IO){
              try {
                  val response = retrofit.GetData()
                  if (response.isSuccessful){
@@ -33,6 +49,7 @@ class MangaRepositoryImpl  (private val retrofit : Api) : MangaRepository {
                  ResponseManga.Error(ex)
              }
          } as ResponseManga<MangaData>
+        * */
     }
 
     override suspend fun getAllMangasSeinen() : ResponseManga<Response> {

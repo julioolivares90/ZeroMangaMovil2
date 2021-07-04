@@ -36,7 +36,6 @@ class BusquedaFragment : Fragment(R.layout.busqueda_fragment) {
     private  val BusquedaviewModel: BusquedaViewModel  by inject()
     private lateinit var adapterMangaBusqueda: AdapterMangaBusqueda
 
-    private val hasInternerConnection = CheckNetwork(requireContext())
 
     private var sp_order_field = ""
     private var sp_order_item = ""
@@ -68,6 +67,8 @@ class BusquedaFragment : Fragment(R.layout.busqueda_fragment) {
         setSpinnerOrderDir()
         setSpinnerOrderField()
 
+
+         val hasInternerConnection = CheckNetwork(requireContext())
 
 
 

@@ -38,6 +38,13 @@ class PruebaRoom {
     }
 
     @Test
+    @Throws
+    fun findManabyTitle(){
+        val resultado = mangaFavDao.findMangaByTitle("Futago Complex ( 2019 )")
+
+        print(resultado.value?.id)
+    }
+    @Test
     @Throws(Exception::class)
     fun writeMangaInList() = runBlocking{
         val mangaFav : MangaFav = MangaFav(1,"test1","test1","test1","test1","test1","test1","test1")

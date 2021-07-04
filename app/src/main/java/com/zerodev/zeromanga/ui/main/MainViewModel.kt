@@ -4,12 +4,14 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import androidx.lifecycle.viewModelScope
 import com.zerodev.zeromanga.data.remote.models.MangaData
 import com.zerodev.zeromanga.data.remote.models.ResponseManga
 import com.zerodev.zeromanga.domain.repository.MangaRepository
 import com.zerodev.zeromanga.utlities.CheckNetwork
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class MainViewModel (private val repository: MangaRepository,private val context: Context) : ViewModel() {
@@ -25,7 +27,7 @@ class MainViewModel (private val repository: MangaRepository,private val context
         //setMangas()
     }
 
-    fun getMangaData() : LiveData<ResponseManga<MangaData>> = _mangaData
+   // fun getMangaData() : LiveData<ResponseManga<MangaData>> = _mangaData
 
 
 
@@ -33,18 +35,42 @@ class MainViewModel (private val repository: MangaRepository,private val context
 
     fun hasError() : LiveData<Boolean> =  _hasError
 
-    private  fun setMangas () = viewModelScope.launch {
-        _isLoading.postValue(true)
-        setMangaData()
-        _isLoading.postValue(false)
+
+    fun getMangaData() = liveData<ResponseManga<MangaData>>(viewModelScope.coroutineContext + Dispatchers.IO){
+        emit(ResponseManga.Loading)
+        try {
+            repository.getMangaData().collect {
+                emit(it)
+            }
+        }
+        catch (ex : Exception){
+            emit(ResponseManga.Error(ex))
+        }
     }
+    val mangaData : Flow<ResponseManga<MangaData>> = flow {
+        liveData {
+            emit(ResponseManga.Loading)
+            repository.getMangaData().catch{ emit(ResponseManga.Error(Exception("Ocurrio un error"))) }
+                .collect {
+                emit(it)
+            }
+        }
+    }
+    /*
+    * fun setMangaData() = Flow<ResponseManga<MangaData>> {
+            liveData<ResponseManga<MangaData>>(viewModelScope.coroutineContext + Dispatchers.IO){
+                val result = repository.getMangaData().collect {
+                    emit(ResponseManga.Loading)
+                    try {
+                        emit(it)
+                    }catch (ex : Exception){
+                        emit(ResponseManga.Error(ex))
+                    }
+                }
+            }
 
-    fun setMangaData() = viewModelScope.launch {
-
-        _isLoading.postValue(true)
-        _hasError.postValue(false)
-            val result = repository.getMangaData()
-            when(result){
+            /*
+            * when(result){
                 is ResponseManga.Success -> {
                     if (result.data.statusCode == 200){
                         _hasError.postValue(false)
@@ -57,6 +83,8 @@ class MainViewModel (private val repository: MangaRepository,private val context
                     _isLoading.postValue(false)
                 }
             }
+            * */
     }
+    * */
 
 }

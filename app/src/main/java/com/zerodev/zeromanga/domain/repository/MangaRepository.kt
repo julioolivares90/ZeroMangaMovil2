@@ -1,9 +1,10 @@
 package com.zerodev.zeromanga.domain.repository
 
 import com.zerodev.zeromanga.data.remote.models.*
+import kotlinx.coroutines.flow.Flow
 
 interface MangaRepository {
-    suspend fun getMangaData() : ResponseManga<MangaData>
+    suspend fun getMangaData() : Flow<ResponseManga<MangaData>>
     suspend fun getAllMangasSeinen() : ResponseManga<Response>
 
     suspend fun getAllMangasPopulares(pageNumber : Int) : ResponseManga<Response>

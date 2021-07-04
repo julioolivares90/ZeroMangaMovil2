@@ -15,11 +15,10 @@ import com.zerodev.zeromanga.data.remote.models.*
 import com.zerodev.zeromanga.databinding.MainFragmentBinding
 import com.zerodev.zeromanga.listeners.MangaOnclickListener
 import com.zerodev.zeromanga.utlities.constantes.ENVIAR_URL
-import org.koin.android.ext.android.inject
+
+
 import com.zerodev.zeromanga.utlities.CheckNetwork
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 
 class MainFragment : Fragment() {
 
@@ -48,15 +47,7 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //muestra un progressbar si esta cargando y esconde los componentes
-        mainViewModel.IsLoading().observe(viewLifecycleOwner, Observer {
-            if (it){
-                hideComponents()
-                showProgressbar()
-            }else {
-                hideProgressBar()
-                showComponents()
-            }
-        })
+
 
         val checkNetwork = CheckNetwork(requireContext())
 
@@ -64,7 +55,7 @@ class MainFragment : Fragment() {
             if (it){
                 binding.nestedScroll.visibility = View.VISIBLE
                 binding.showError.root.visibility = View.GONE
-                setMangaData()
+                setMangaData(view)
             }else {
                 hideComponents()
                 binding.showError.root.visibility = View.VISIBLE
@@ -84,18 +75,11 @@ class MainFragment : Fragment() {
         })
         * */
         //si tiene un error esconde los componentes y muestra un mensaje de error
-        mainViewModel.hasError().observe(viewLifecycleOwner) {
-            if (it){
-                hideComponents()
-                hideProgressBar()
-                showMessageError()
-            }else{
-                hideMessageError()
-            }
-        }
+
 
         //obtiene la informacion de los mangas
-        mainViewModel.getMangaData().observe(viewLifecycleOwner) {
+      /*
+      *   mainViewModel.getMangaData().observe(viewLifecycleOwner) {
             when(it){
                 is ResponseManga.Success<MangaData> -> {
                     if (it.data.mangasSeinen.isNullOrEmpty() || it.data.mangasPopulares.isNullOrEmpty()){
@@ -139,14 +123,76 @@ class MainFragment : Fragment() {
             }
             }
         }
+      * */
 
 
     }
 
-    private  fun setMangaData () = CoroutineScope(Dispatchers.IO).launch {
-        mainViewModel.setMangaData()
+    private  fun setMangaData (view: View) {
+        //mainViewModel.setMangaData()
+        mainViewModel.getMangaData().observe(viewLifecycleOwner, Observer {
+            when(it){
+                is ResponseManga.Loading->{
+                    hideMessageError()
+                    showProgressbar()
+                    hideComponents()
+
+                }
+                is ResponseManga.Success->{
+                    hideProgressBar()
+                    showComponents()
+                    SetData(view)
+                    hideMessageError()
+                }
+                is ResponseManga.Error ->{
+                    showMessageError()
+                    hideProgressBar()
+                    hideComponents()
+                }
+            }
+        })
     }
 
+    private fun SetData(view: View) {
+        mainViewModel.getMangaData().observe(viewLifecycleOwner, Observer {
+            when(it){
+                is ResponseManga.Success->{
+                    //adapter mangas seinen
+                    adapter = MangasSeinenAdapter(it.data.mangasSeinen,mangaOnclickListener = object : MangaOnclickListener{
+                        override fun onClick(manga: Manga) {
+                            val bundle = Bundle()
+                            bundle.putString(ENVIAR_URL,manga.mangaUrl)
+
+                            Navigation
+                                .findNavController(view)
+                                .navigate(R.id.action_mainFragment_to_descripcionFragment
+                                    ,bundle)
+                        }
+
+                    })
+
+                    //adapter mangas populares
+                    adapterPopulares = MangasPopularesAdapter(it.data.mangasPopulares,mangaOnclickListener = object : MangaOnclickListener{
+                        override fun onClick(manga: Manga) {
+                            val bundle = Bundle()
+                            bundle.putString(ENVIAR_URL,manga.mangaUrl)
+
+                            Navigation
+                                .findNavController(view)
+                                .navigate(R.id.action_mainFragment_to_descripcionFragment
+                                    ,bundle)
+                        }
+                    })
+
+                    binding.rvMangasSeinen.adapter = adapter
+                    binding.rvMangasPopulares.adapter = adapterPopulares
+                }
+                is ResponseManga.Error-> {
+
+                }
+            }
+        })
+    }
     private fun showProgressbar(){
         binding.pbCargarMangas.visibility = View.VISIBLE
     }

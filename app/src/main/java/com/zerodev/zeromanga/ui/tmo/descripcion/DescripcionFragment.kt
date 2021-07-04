@@ -134,7 +134,8 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
             Log.d("TITLE -> ",it.data.title)
             Log.d("TITLE MResponse ->",mangaResponse.data.title)
             //binding.tvTitleManga.text = mangaResponse.data.title
-            binding.toolbarDescripcion.setTitle(mangaResponse.data.title)
+            binding.collapsionToolbar.title = mangaResponse.data.title
+            //binding.toolbarDescripcion.setTitle(mangaResponse.data.title)
             //view.findViewById<Toolbar>(R.id.toolbarDescripcion).apply { title = mangaResponse.data.title }
 
             val existe = viewModel.mangaExiste(it.data.title)
