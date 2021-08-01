@@ -22,6 +22,6 @@ interface MangaFavDao {
     fun seachManga(query : String) : LiveData<List<MangaFav>>
 
 
-    @Query("SELECT * from mangas_favoritos where title like :title")
-    fun findMangaByTitle(title: String) : LiveData<MangaFav>
+    @Query("SELECT * from mangas_favoritos where title like :search or descripcion like :search")
+    fun findMangaByTitle(search: String) : LiveData<List<MangaFav>>
 }

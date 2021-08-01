@@ -15,7 +15,7 @@ class MangaFavRepositoryImpl constructor (private val dao: MangaFavDao) : MangaF
 
     override fun searchManga(query:String) = dao.seachManga(query)
 
-    override fun findMangaByTitle(title: String): LiveData<MangaFav> {
+    override fun findMangaByTitle(title: String): LiveData<List<MangaFav>> {
         return dao.findMangaByTitle(title)
     }
 }

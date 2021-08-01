@@ -14,5 +14,5 @@ interface MangaFavRepository {
 
     fun searchManga(query:String) : LiveData<List<MangaFav>>
 
-    fun findMangaByTitle(title: String) : LiveData<MangaFav>
+    fun findMangaByTitle(title: String) : LiveData<List<MangaFav>>
 }

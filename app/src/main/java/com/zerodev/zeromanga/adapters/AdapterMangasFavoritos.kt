@@ -2,6 +2,7 @@ package com.zerodev.zeromanga.adapters
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -10,10 +11,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.zerodev.zeromanga.R
 import com.zerodev.zeromanga.data.local.db.models.MangaFav
+import com.zerodev.zeromanga.data.remote.models.InfoManga
+import com.zerodev.zeromanga.data.remote.models.Manga
 import com.zerodev.zeromanga.databinding.RowFavoritosBinding
+import com.zerodev.zeromanga.listeners.MangaFavOnClickListener
 import com.zerodev.zeromanga.utlities.constantes.ENVIAR_URL
 
-class AdapterMangasFavoritos  : RecyclerView.Adapter<AdapterMangasFavoritos.MangaHoder>() {
+class AdapterMangasFavoritos(val mangaFavOnClickListener: MangaFavOnClickListener)  : RecyclerView.Adapter<AdapterMangasFavoritos.MangaHoder>() {
+
 
     private var binding : RowFavoritosBinding? = null
 
@@ -40,7 +45,9 @@ class AdapterMangasFavoritos  : RecyclerView.Adapter<AdapterMangasFavoritos.Mang
     override fun onBindViewHolder(holder: MangaHoder, position: Int) {
         val mangaFav = differ.currentList[position]
 
-        holder.itemView.apply {
+        Bind(mangaFav = mangaFav,mangaFavOnClickListener)
+        /*
+        * holder.itemView.apply {
 
             binding?.tvFavoritoTitle?.text = mangaFav.title
             binding?.tvDescripcionFavoritos?.text = mangaFav.descripcion
@@ -59,8 +66,28 @@ class AdapterMangasFavoritos  : RecyclerView.Adapter<AdapterMangasFavoritos.Mang
              */
 
             val bundle = Bundle()
-            bundle.putString(ENVIAR_URL,mangaFav.url)
-            Navigation.findNavController(it).navigate(R.id.action_favoritosFragment_to_descripcionFragment,bundle)
+            bundle.putString(ENVIAR_URL,
+                mangaFav.url)
+            Navigation.findNavController(it).navigate(R.id.action_favoritosFragment_to_descripcionFragment,
+                bundle)
+        }
+        * */
+    }
+
+    private  fun Bind(mangaFav: MangaFav,_mangaFavOnClickListener: MangaFavOnClickListener){
+        binding?.tvFavoritoTitle?.text = mangaFav.title
+        binding?.tvDescripcionFavoritos?.text = mangaFav.descripcion
+        Glide.with(binding!!.root).load(mangaFav.imagen).into(binding!!.ivFavoritos)
+
+        binding?.root?.setOnClickListener {
+            val manga = Manga(title = mangaFav.title,
+                score = mangaFav.score,
+                type = mangaFav.tipo,
+                demography = mangaFav.demografia,
+                mangaUrl =  mangaFav.url,
+                mangaImagen = mangaFav.imagen
+            )
+            _mangaFavOnClickListener.OnClick(manga = manga)
         }
     }
 

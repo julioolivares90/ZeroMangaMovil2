@@ -1,25 +1,26 @@
 package com.zerodev.zeromanga.ui.tmo.descripcion
 
 import android.os.Bundle
-import android.util.Log
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
+
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
+
 import com.zerodev.zeromanga.R
 import com.zerodev.zeromanga.adapters.AdapterCapitulos
 import com.zerodev.zeromanga.adapters.DescripcionViewPagerAdapter
@@ -32,6 +33,7 @@ import com.zerodev.zeromanga.listeners.SnackBarClickListener
 import com.zerodev.zeromanga.utlities.constantes
 import com.zerodev.zeromanga.utlities.constantes.ENVIAR_URL
 import org.koin.android.ext.android.inject
+import timber.log.Timber
 
 
 class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
@@ -53,6 +55,8 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
     private lateinit var urlCapitulo : String
 
     private lateinit var adapterCapitulo: AdapterCapitulos
+
+    private lateinit var collapsingToolbarLayout: CollapsingToolbarLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,6 +92,8 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
         setUpToolbar(view)
 
 
+        collapsingToolbarLayout = view.findViewById(R.id.collapsing_toolbar)
+
         viewModel.IsLoading().observe(viewLifecycleOwner, Observer {
             if (it){
                 binding.pbDescripcion.visibility = View.VISIBLE
@@ -119,26 +125,33 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
     }
 
     private fun setUpToolbar(view: View){
+
         val navController = findNavController()
         val appBarConfiguration = AppBarConfiguration(navGraph = navController.graph)
+
         view.findViewById<Toolbar>(R.id.toolbarDescripcion)
             .setupWithNavController(navController,appBarConfiguration)
+
     }
+
     fun setUpInformacion(view: View){
         viewModel.getInfoManga().observe(viewLifecycleOwner,{
             mangaResponse = it
 
             Glide.with(view).load(mangaResponse.data.imageUrl).into(binding.ivDetalleManga)
 
-            //binding.tvTitleManga.text = mangaResponse.data.title
-            Log.d("TITLE -> ",it.data.title)
-            Log.d("TITLE MResponse ->",mangaResponse.data.title)
-            //binding.tvTitleManga.text = mangaResponse.data.title
-            binding.collapsionToolbar.title = mangaResponse.data.title
-            //binding.toolbarDescripcion.setTitle(mangaResponse.data.title)
-            //view.findViewById<Toolbar>(R.id.toolbarDescripcion).apply { title = mangaResponse.data.title }
+            if (it.data.title.contains("\n") && it.data.title.startsWith("\n")){
+                val title = mangaResponse.data.title.replace("\n","")
+                collapsingToolbarLayout.title = title
+            }else  {
+                val title = mangaResponse.data.title
+                collapsingToolbarLayout.title = title
+            }
+
+            Timber.d(collapsingToolbarLayout.title.toString())
 
             val existe = viewModel.mangaExiste(it.data.title)
+
             if (existe){
                 binding.btnFav.isEnabled = false
             }
@@ -244,7 +257,9 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
 
     fun addMangaToFavorites(view: View){
 
-        val title = mangaResponse.data.title
+        val title = if(mangaResponse.data.title.contains("\n"))  mangaResponse.data.title.replace("\n","") else mangaResponse.data.title
+
+        Timber.d(" add manga to favoritos => $title")
 
         val imagen = mangaResponse.data.imageUrl
 
@@ -262,7 +277,7 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
         viewModel.addMangaToFavorites(mangaFav = mangaFav)
 
         Snackbar.make(view,"Manga agregado a favoritos",Snackbar.LENGTH_SHORT).setAction("quieres ver tus favoritos") {
-
+            Navigation.findNavController(it).navigate(R.id.action_descripcionFragment_to_favoritosFragment)
         }.show()
     }
 
