@@ -18,6 +18,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.snackbar.Snackbar
 
@@ -32,6 +33,7 @@ import com.zerodev.zeromanga.listeners.CapituloOnClickListener
 import com.zerodev.zeromanga.listeners.SnackBarClickListener
 import com.zerodev.zeromanga.utlities.constantes
 import com.zerodev.zeromanga.utlities.constantes.ENVIAR_URL
+import org.koin.android.ext.android.bind
 import org.koin.android.ext.android.inject
 import timber.log.Timber
 
@@ -122,6 +124,13 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
             val directions = DescripcionFragmentDirections.actionDescripcionFragmentToDetalleFragment(mangaResponse.data)
             Navigation.findNavController(view).navigate(directions)
         }
+
+        val listener = AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+            val seekPosition = verticalOffset / appBarLayout.totalScrollRange.toFloat()
+
+            //todo binding.motionLayout.progress = seekPosition
+        }
+        binding.appBarTitle.addOnOffsetChangedListener(listener)
     }
 
     private fun setUpToolbar(view: View){
