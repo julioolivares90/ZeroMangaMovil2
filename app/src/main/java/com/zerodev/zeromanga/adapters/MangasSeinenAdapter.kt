@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.zerodev.zeromanga.R
 import com.zerodev.zeromanga.listeners.MangaOnclickListener
 import com.zerodev.zeromanga.data.remote.models.Manga
+import com.zerodev.zeromanga.utlities.getUrlManga
 
 class MangasSeinenAdapter (var mangas : MutableList<Manga>
                            ,var mangaOnclickListener: MangaOnclickListener) : RecyclerView.Adapter<MangasSeinenAdapter.MangaSeinenViewHolder>() {
@@ -70,7 +71,7 @@ class MangasSeinenAdapter (var mangas : MutableList<Manga>
 
             score.text = manga.score
             Glide.with(itemView.context)
-                .load(manga.mangaImagen).into(imagen)
+                .load(getUrlManga(manga.mangaUrl)).into(imagen)
             itemView.setOnClickListener {
                 onClickListener.onClick(manga = manga)
             }

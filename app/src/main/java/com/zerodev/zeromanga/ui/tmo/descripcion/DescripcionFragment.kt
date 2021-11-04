@@ -94,7 +94,7 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
         setUpToolbar(view)
 
 
-        collapsingToolbarLayout = view.findViewById(R.id.collapsing_toolbar)
+        //collapsingToolbarLayout = view.findViewById(R.id.collapsing_toolbar)
 
         viewModel.IsLoading().observe(viewLifecycleOwner, Observer {
             if (it){
@@ -125,12 +125,19 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
             Navigation.findNavController(view).navigate(directions)
         }
 
-        val listener = AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+        /*
+        * val listener = AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             val seekPosition = verticalOffset / appBarLayout.totalScrollRange.toFloat()
 
-            //todo binding.motionLayout.progress = seekPosition
+            Timber.d("POSITION => $seekPosition")
+            when(seekPosition){
+                 0.0f -> {
+
+                }
+            }
         }
         binding.appBarTitle.addOnOffsetChangedListener(listener)
+        * */
     }
 
     private fun setUpToolbar(view: View){
@@ -149,6 +156,8 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
 
             Glide.with(view).load(mangaResponse.data.imageUrl).into(binding.ivDetalleManga)
 
+            binding.toolbarDescripcion.title = it.data.title
+            /*
             if (it.data.title.contains("\n") && it.data.title.startsWith("\n")){
                 val title = mangaResponse.data.title.replace("\n","")
                 collapsingToolbarLayout.title = title
@@ -157,7 +166,9 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
                 collapsingToolbarLayout.title = title
             }
 
-            Timber.d(collapsingToolbarLayout.title.toString())
+
+             */
+            //Timber.d(collapsingToolbarLayout.title.toString())
 
             val existe = viewModel.mangaExiste(it.data.title)
 

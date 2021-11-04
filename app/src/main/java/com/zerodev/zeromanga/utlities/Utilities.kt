@@ -9,7 +9,9 @@ import java.util.concurrent.TimeUnit
 
 
 
-
+fun getUrlManga(urlManga : String) : String {
+    return if(urlManga.startsWith("tps")) "ht${urlManga}" else urlManga
+}
 
 fun getHttpClient() : OkHttpClient{
     return OkHttpClient.Builder()

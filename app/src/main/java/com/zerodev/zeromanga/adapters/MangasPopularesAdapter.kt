@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.zerodev.zeromanga.R
 import com.zerodev.zeromanga.listeners.MangaOnclickListener
 import com.zerodev.zeromanga.data.remote.models.Manga
+import com.zerodev.zeromanga.utlities.getUrlManga
 
 class MangasPopularesAdapter(val mangas : MutableList<Manga>
                              ,val mangaOnclickListener: MangaOnclickListener) : RecyclerView.Adapter<MangasPopularesAdapter.MangasPopularesViewHolder>() {
@@ -35,7 +36,7 @@ class MangasPopularesAdapter(val mangas : MutableList<Manga>
         private val score : TextView = itemView.findViewById(R.id.tv_score_popular)
         private val imagen : ImageView = itemView.findViewById(R.id.iv_manga_popular)
 
-        fun bind(manga: Manga, mangaOnclickListener: MangaOnclickListener){
+        fun bind(manga: Manga, mangaOnclickListener: MangaOnclickListener) {
             title.text = manga.title
             demografia.text = manga.demography
             tipo.text = manga.type
@@ -66,8 +67,10 @@ class MangasPopularesAdapter(val mangas : MutableList<Manga>
             }
             
             score.text = manga.score
+            val imagenUrl = getUrlManga(manga.mangaUrl)
+
             Glide.with(itemView.context)
-                .load(manga.mangaImagen).into(imagen)
+                .load(imagenUrl).into(imagen)
             itemView.setOnClickListener {
                 mangaOnclickListener.onClick(manga = manga)
             }
