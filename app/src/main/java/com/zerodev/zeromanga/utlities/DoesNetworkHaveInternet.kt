@@ -3,6 +3,7 @@ package com.zerodev.zeromanga.utlities
 
 import android.util.Log
 import com.zerodev.zeromanga.utlities.TAG
+import timber.log.Timber
 import java.io.IOException
 import java.net.InetSocketAddress
 import javax.net.SocketFactory
@@ -15,8 +16,8 @@ object DoesNetworkHaveInternet {
 
     // Make sure to execute this on a background thread.
     fun execute(socketFactory: SocketFactory): Boolean {
-        return try{
-            Log.d(TAG, "PINGING google.")
+        return try {
+            Timber.d("PINGING google.")
             val socket = socketFactory.createSocket() ?: throw IOException("Socket is null.")
             socket.connect(InetSocketAddress("8.8.8.8", 53), 1500)
             socket.close()

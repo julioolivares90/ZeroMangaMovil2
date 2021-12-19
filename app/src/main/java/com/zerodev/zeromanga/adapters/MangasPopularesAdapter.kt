@@ -67,7 +67,7 @@ class MangasPopularesAdapter(val mangas : MutableList<Manga>
             }
             
             score.text = manga.score
-            val imagenUrl = getUrlManga(manga.mangaUrl)
+            val imagenUrl = getUrlManga(manga.mangaImagen)
 
             Glide.with(itemView.context)
                 .load(imagenUrl).into(imagen)

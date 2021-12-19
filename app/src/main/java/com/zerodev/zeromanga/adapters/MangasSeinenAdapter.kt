@@ -71,7 +71,7 @@ class MangasSeinenAdapter (var mangas : MutableList<Manga>
 
             score.text = manga.score
             Glide.with(itemView.context)
-                .load(getUrlManga(manga.mangaUrl)).into(imagen)
+                .load(getUrlManga(manga.mangaImagen)).into(imagen)
             itemView.setOnClickListener {
                 onClickListener.onClick(manga = manga)
             }

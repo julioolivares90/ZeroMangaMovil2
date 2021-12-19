@@ -99,9 +99,7 @@ class LectorFragment : Fragment() {
                 binding.pbCargarImagenesCapitulo.visibility = View.GONE
                 setUpData()
             }
-
         })
-
 
         viewModel.HasError().observe(viewLifecycleOwner,{hasError->
             if (hasError){
@@ -121,7 +119,7 @@ class LectorFragment : Fragment() {
     private fun setUpData(){
         viewModel.getImagenes().observe(viewLifecycleOwner, Observer {imagenes ->
             if (imagenes.isNotEmpty()){
-                lectorAdapter = LectorAdapter(imagenes)
+                lectorAdapter = LectorAdapter(imagenes,urlImagen!!)
                 binding.vpImagenesCapitulos.adapter = lectorAdapter
             }else {
                 showTextError()

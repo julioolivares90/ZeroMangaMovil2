@@ -23,72 +23,46 @@
 
     <ConstraintSet android:id="@+id/start">
         <Constraint
-            android:layout_height="300dp"
+            android:layout_height="wrap_content"
+            motion:layout_constraintTop_toTopOf="parent"
             android:layout_width="wrap_content"
             motion:layout_constraintStart_toStartOf="parent"
-            android:id="@+id/iv_detalle_manga"
-            motion:layout_constraintTop_toTopOf="parent"
-            motion:layout_constraintEnd_toEndOf="@id/toolbarDescripcion"
-            motion:layout_constraintHorizontal_bias="0.0" />
-        <Constraint
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/toolbarDescripcion"
-            motion:layout_constraintTop_toTopOf="@+id/iv_detalle_manga"
-            motion:layout_constraintEnd_toStartOf="@+id/iv_detalle_manga"
-            motion:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="300dp" />
+            android:id="@+id/pb_descripcion"
+            android:layout_marginTop="420dp"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginLeft="180dp"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="180dp"
+            motion:layout_constraintVertical_bias="0.629"
+            motion:layout_constraintHorizontal_bias="0.432" />
         <Constraint
             android:layout_height="673dp"
-            motion:layout_editor_absoluteX="1dp"
+            motion:layout_constraintBottom_toTopOf="@+id/rv_capitulos"
+           
             android:layout_width="409dp"
-            motion:layout_constraintTop_toBottomOf="@+id/toolbarDescripcion"
             android:id="@+id/ll_buttons" />
         <Constraint
-            android:id="@+id/ll_buttons"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            motion:layout_editor_absoluteY="57dp"
-            motion:layout_editor_absoluteX="1dp" />
-        <Constraint
             android:layout_height="wrap_content"
             motion:layout_editor_absoluteX="1dp"
             android:layout_width="match_parent"
             motion:layout_constraintTop_toBottomOf="@+id/toolbarDescripcion"
-            android:id="@+id/rv_capitulos"
-            motion:layout_constraintBottom_toBottomOf="parent"
-            motion:layout_editor_absoluteY="356dp" />
-        <Constraint
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            motion:layout_editor_absoluteY="356dp"
-            motion:layout_editor_absoluteX="1dp"
-            android:id="@+id/rv_capitulos"
-            motion:layout_constraintTop_toBottomOf="@+id/toolbarDescripcion" />
+            android:id="@+id/rv_capitulos" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
         <Constraint
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:id="@+id/iv_detalle_manga"
-            motion:layout_constraintTop_toTopOf="parent"
-            motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintStart_toStartOf="parent" />
-        <Constraint
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/toolbarDescripcion"
-            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintTop_toTopOf="parent"
+            android:layout_width="wrap_content"
             motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintHorizontal_bias="0.0"
-            motion:layout_constraintTop_toTopOf="@+id/iv_detalle_manga" />
-        <Constraint
-            android:layout_width="409dp"
-            android:layout_height="673dp"
-            android:id="@+id/ll_buttons"
+            android:id="@+id/pb_descripcion"
+            android:layout_marginTop="0dp"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginLeft="180dp"
             motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintBottom_toBottomOf="parent" />
+            android:layout_marginStart="180dp"
+            motion:layout_constraintVertical_bias="0.629"
+            motion:layout_constraintHorizontal_bias="0.432" />
+
     </ConstraintSet>
 </MotionScene>

@@ -11,80 +11,67 @@
 
     <ProgressBar
         android:id="@+id/pb_descripcion"
-        style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        app:layout_constraintBottom_toBottomOf="@+id/ll_buttons"
-        app:layout_constraintEnd_toEndOf="@+id/ll_buttons"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/iv_detalle_manga" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+
         android:id="@+id/iv_detalle_manga"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/rin_tohsaka"
-        tools:layout_editor_absoluteX="138dp"
-        tools:layout_editor_absoluteY="10dp" />
+        android:layout_height="250dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/rin_tohsaka" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarDescripcion"
-        android:layout_width="40dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:backgroundTint="@color/negrotransparente"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        tools:layout_editor_absoluteX="170dp"
-        tools:layout_editor_absoluteY="17dp"
 
-        />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_capitulos"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="356dp"
-        android:layout_alignEnd="@+id/ll_buttons"
-        android:layout_alignBottom="@+id/ll_buttons"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_buttons"
-        tools:listitem="@layout/row_capitulos"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/iv_detalle_manga" />
 
     <LinearLayout
         android:id="@+id/ll_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="57dp">
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarDescripcion">
 
-        <LinearLayout
+        <Button
+            android:id="@+id/btnMasDetalles"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:text="Mas Detalles" />
 
-            <Button
-                android:id="@+id/btnMasDetalles"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Button" />
-
-            <Button
-                android:id="@+id/btnFav"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Button" />
-
-        </LinearLayout>
+        <Button
+            android:id="@+id/btnFav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Favoritos" />
 
     </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_capitulos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toTopOf="@+id/pb_descripcion"
+        tools:listitem="@layout/row_capitulos" />
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

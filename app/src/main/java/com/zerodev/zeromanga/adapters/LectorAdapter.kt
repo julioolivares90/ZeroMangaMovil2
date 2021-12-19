@@ -8,11 +8,13 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.LazyHeaders
 import com.github.chrisbanes.photoview.PhotoView
 import com.zerodev.zeromanga.R
 import com.zerodev.zeromanga.databinding.VisorItemBinding
 
-class LectorAdapter (val imagenes : List<String>) : RecyclerView.Adapter<LectorAdapter.LectorViewHolder>() {
+class LectorAdapter (val imagenes : List<String>,val urlRefer: String) : RecyclerView.Adapter<LectorAdapter.LectorViewHolder>() {
 
     private var binding : VisorItemBinding? = null
 
@@ -25,7 +27,8 @@ class LectorAdapter (val imagenes : List<String>) : RecyclerView.Adapter<LectorA
 
     override fun onBindViewHolder(holder: LectorViewHolder, position: Int) {
         val imagen = imagenes[position]
-        holder.bind(imagen)
+
+        holder.bind(imagen, urlRefer = urlRefer)
     }
 
     override fun getItemCount() = imagenes.size
@@ -34,12 +37,14 @@ class LectorAdapter (val imagenes : List<String>) : RecyclerView.Adapter<LectorA
 
         //private val photoView : PhotoView = itemView.findViewById(R.id.pv_imagen_capitulo)
 
-        fun bind( imagen : String){
+        fun bind( imagen : String,urlRefer : String){
+            val url = GlideUrl(imagen,LazyHeaders.Builder().addHeader("Referer",urlRefer)
+                .build())
             Log.d("Imagen ->",imagen)
             Glide
                 .with(itemView
                     .context)
-                .load(imagen)
+                .load(url)
                 .into(itemBinding.pvImagenCapitulo)
         }
 

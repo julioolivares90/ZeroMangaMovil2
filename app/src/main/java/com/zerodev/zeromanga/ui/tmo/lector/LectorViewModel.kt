@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zerodev.zeromanga.data.remote.models.Chapters
 import com.zerodev.zeromanga.data.remote.models.ResponseManga
-import com.zerodev.zeromanga.domain.repository.CharpetersRepository
 import com.zerodev.zeromanga.domain.repository.MangaRepository
 import kotlinx.coroutines.launch
 
