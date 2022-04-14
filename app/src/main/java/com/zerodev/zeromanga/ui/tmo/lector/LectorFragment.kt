@@ -101,12 +101,12 @@ class LectorFragment : Fragment() {
             }
         })
 
-        viewModel.HasError().observe(viewLifecycleOwner,{hasError->
-            if (hasError){
+        viewModel.HasError().observe(viewLifecycleOwner) { hasError ->
+            if (hasError) {
                 showTextError()
             }
             hideTextError()
-        })
+        }
     }
 
     private fun setUpToolbar(view: View){

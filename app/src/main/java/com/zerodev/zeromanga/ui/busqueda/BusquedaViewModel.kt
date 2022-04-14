@@ -1,5 +1,6 @@
 package com.zerodev.zeromanga.ui.busqueda
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,9 +19,9 @@ class BusquedaViewModel  ( private val repository : MangaRepository) : ViewModel
     private val _hasError : MutableLiveData<Boolean> = MutableLiveData()
 
     init {
-        //setIsLoading(true)
-        //setMangasBusqueda()
-        //setIsLoading(false)
+        setIsLoading(true)
+        setMangasBusqueda()
+        setIsLoading(false)
     }
 
     fun setMangasBusqueda() =  viewModelScope.launch {
@@ -52,7 +53,7 @@ class BusquedaViewModel  ( private val repository : MangaRepository) : ViewModel
     fun findMangas(title : String,orderField : String,orderItem : String,orderDir : String) = viewModelScope.launch {
 
         _isLoading.value = true
-        _mangasBusqueda.postValue(null)
+       // _mangasBusqueda.postValue(null)
 
        val response =  repository.getMangasLibrary(title = title,orderItem = orderItem,orderDir = orderDir,filter_by = orderField)
 
