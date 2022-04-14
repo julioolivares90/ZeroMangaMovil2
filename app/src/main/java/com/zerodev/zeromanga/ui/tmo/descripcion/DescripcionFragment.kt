@@ -108,14 +108,18 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
             }
         })
 
-        viewModel.MangaExist().observe(viewLifecycleOwner,{existe->
-            if (existe){
-               val snackbar = Snackbar.make(view,"Manga ya se encuentra en tus favoritos",Snackbar.LENGTH_SHORT)
+        viewModel.MangaExist().observe(viewLifecycleOwner) { existe ->
+            if (existe) {
+                val snackbar = Snackbar.make(
+                    view,
+                    "Manga ya se encuentra en tus favoritos",
+                    Snackbar.LENGTH_SHORT
+                )
 
-                snackbar.setAction(R.string.error_favoritos,SnackBarClickListener())
+                snackbar.setAction(R.string.error_favoritos, SnackBarClickListener())
                 snackbar.show()
             }
-        })
+        }
         binding.btnFav.setOnClickListener {
             addMangaToFavorites(view)
         }
@@ -151,7 +155,7 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
     }
 
     fun setUpInformacion(view: View){
-        viewModel.getInfoManga().observe(viewLifecycleOwner,{
+        viewModel.getInfoManga().observe(viewLifecycleOwner) {
             mangaResponse = it
 
             Glide.with(view).load(mangaResponse.data.imageUrl).into(binding.ivDetalleManga)
@@ -172,11 +176,11 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
 
             val existe = viewModel.mangaExiste(it.data.title)
 
-            if (existe){
+            if (existe) {
                 binding.btnFav.isEnabled = false
             }
-            setUpRecyclerView(mangaResponse.data.capitulos,view)
-        })
+            setUpRecyclerView(mangaResponse.data.capitulos, view)
+        }
     }
 
     fun setUpRecyclerView(capitulos : List<Capitulo>,view: View){
