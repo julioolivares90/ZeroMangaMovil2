@@ -5,17 +5,18 @@ import androidx.navigation.dynamicfeatures.Constants
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.zerodev.zeromanga.data.local.db.MangaCacheDao
 import com.zerodev.zeromanga.data.local.db.MangaFavDao
 import com.zerodev.zeromanga.utlities.constantes.DATABASE_NAME
 
 @Database(
-    entities = [MangaFav::class],
+    entities = [MangaFav::class,MangaCache::class],
     version = 1
 )
 abstract class MangaDatabase : RoomDatabase() {
 
     abstract fun getMangaFavDao(): MangaFavDao
-
+    abstract fun getMangaCacheDao():MangaCacheDao
 
     companion object {
         @Volatile
