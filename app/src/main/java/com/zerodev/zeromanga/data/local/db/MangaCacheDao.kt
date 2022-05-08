@@ -4,6 +4,7 @@ import androidx.room.*
 import com.zerodev.zeromanga.data.local.db.models.MangaCache
 import kotlinx.coroutines.flow.Flow
 
+@Dao
 interface MangaCacheDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE )
@@ -16,8 +17,11 @@ interface MangaCacheDao {
     suspend fun delete(mangaCache: MangaCache)
 
     @Query("SELECT * FROM mangaCache WHERE id=:id")
-    suspend fun getByID(id : Int): Flow<MangaCache>
+     fun getByID(id : Int): Flow<MangaCache>
 
     @Query("SELECT * FROM mangaCache WHERE demography=:demography")
-    suspend fun getMangas(demography:String): Flow<MutableList<MangaCache>>
+     fun getMangas(demography:String): Flow<MutableList<MangaCache>>
+
+     @Query("SELECT * FROM mangaCache WHERE title like :title")
+     fun getMangasByTitle(title : String) : Flow<MangaCache>
 }

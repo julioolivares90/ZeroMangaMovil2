@@ -8,7 +8,7 @@ interface MangaCacheRepository {
 
     suspend fun getMangasChache(demography : String) : LiveData<MutableList<MangaCache>>
 
-    suspend fun AddMangaCahce(mangaCache: MangaCache): Long
+    suspend fun AddMangaCahce(mangaCache: MangaCache)
 
     suspend fun findMangaByTitle(title : String) : LiveData<MangaCache>
 }

@@ -23,7 +23,7 @@ class MangaRepositoryImpl  (private val retrofit : Api) : MangaRepository {
     @ExperimentalCoroutinesApi
     override suspend fun getMangaData(): Flow<ResponseManga<MangaData>> = callbackFlow {
 
-        offer(ResponseManga.Success(retrofit.GetData().body()!!))
+        this.trySend(ResponseManga.Success(retrofit.GetData().body()!!)).isSuccess
         /*
         * trySend(
             ResponseManga.Success(

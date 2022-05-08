@@ -150,6 +150,8 @@ dependencies {
 
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
+    //efecto shimmer
+    implementation "com.facebook.shimmer:shimmer:0.1.0@aar"
 }
 
 kapt {

@@ -22,19 +22,13 @@ class MainViewModel (private val repository: MangaRepository,private val context
 
     private val _hasError : MutableLiveData<Boolean> = MutableLiveData()
 
-
     init {
         //setMangas()
     }
 
-   // fun getMangaData() : LiveData<ResponseManga<MangaData>> = _mangaData
-
-
-
     fun IsLoading() : LiveData<Boolean> = _isLoading
 
     fun hasError() : LiveData<Boolean> =  _hasError
-
 
     fun getMangaData() = liveData<ResponseManga<MangaData>>(viewModelScope.coroutineContext + Dispatchers.IO){
         emit(ResponseManga.Loading)
@@ -56,35 +50,4 @@ class MainViewModel (private val repository: MangaRepository,private val context
             }
         }
     }
-    /*
-    * fun setMangaData() = Flow<ResponseManga<MangaData>> {
-            liveData<ResponseManga<MangaData>>(viewModelScope.coroutineContext + Dispatchers.IO){
-                val result = repository.getMangaData().collect {
-                    emit(ResponseManga.Loading)
-                    try {
-                        emit(it)
-                    }catch (ex : Exception){
-                        emit(ResponseManga.Error(ex))
-                    }
-                }
-            }
-
-            /*
-            * when(result){
-                is ResponseManga.Success -> {
-                    if (result.data.statusCode == 200){
-                        _hasError.postValue(false)
-                        _mangaData.postValue(result)
-                        _isLoading.postValue(false)
-                    }
-                }
-                else -> {
-                    _hasError.postValue(true)
-                    _isLoading.postValue(false)
-                }
-            }
-            * */
-    }
-    * */
-
 }

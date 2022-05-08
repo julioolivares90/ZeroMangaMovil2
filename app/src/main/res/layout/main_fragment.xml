@@ -29,6 +29,40 @@
                 android:textAlignment="center"
                 />
 
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:id="@+id/shimerLayout"
+                app:auto_start="true"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:orientation="horizontal">
+                        <include layout="@layout/row_load_items"/>
+                        <include layout="@layout/row_load_items"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <include layout="@layout/row_load_items"/>
+                        <include layout="@layout/row_load_items"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <include layout="@layout/row_load_items"/>
+                        <include layout="@layout/row_load_items"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_mangas_populares"
                 android:layout_width="match_parent"
@@ -69,13 +103,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"/>
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/pb_cargar_mangas"
-        android:layout_centerInParent="true"
-        />
-
     <TextView
         android:textAlignment="center"
         android:textStyle="bold"

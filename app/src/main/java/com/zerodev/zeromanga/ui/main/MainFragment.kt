@@ -69,12 +69,14 @@ class MainFragment : Fragment() {
             when(it){
                 is ResponseManga.Loading->{
                     hideMessageError()
-                    showProgressbar()
+                    //showProgressbar()
+                    showShimerLayout()
                     hideComponents()
 
                 }
                 is ResponseManga.Success->{
-                    hideProgressBar()
+                    //hideProgressBar()
+                    hideShimerLayout()
                     showComponents()
                     SetData(view)
                     hideMessageError()
@@ -92,6 +94,8 @@ class MainFragment : Fragment() {
         mainViewModel.getMangaData().observe(viewLifecycleOwner, Observer {
             when(it){
                 is ResponseManga.Success->{
+
+
                     //adapter mangas seinen
                     adapter = MangasSeinenAdapter(it.data.mangasSeinen,mangaOnclickListener = object : MangaOnclickListener{
                         override fun onClick(manga: Manga) {
@@ -125,14 +129,21 @@ class MainFragment : Fragment() {
                 is ResponseManga.Error-> {
 
                 }
+                else -> {}
             }
         })
     }
+    private  fun showShimerLayout(){
+        binding.shimerLayout.visibility = View.VISIBLE
+    }
+    private fun hideShimerLayout(){
+        binding.shimerLayout.visibility = View.GONE
+    }
     private fun showProgressbar(){
-        binding.pbCargarMangas.visibility = View.VISIBLE
+        //binding.pbCargarMangas.visibility = View.VISIBLE
     }
     private fun hideProgressBar(){
-        binding.pbCargarMangas.visibility = View.GONE
+        //binding.pbCargarMangas.visibility = View.GONE
     }
 
     private fun hideComponents(){

@@ -23,6 +23,5 @@ val databaseModule = module {
     single { provideDatabase(androidContext()) }
     single { provideMangaFavDao(get()) }
 
-    single { provideDatabase(androidContext()) }
     single { provideMangaCacheDao(get()) }
 }
