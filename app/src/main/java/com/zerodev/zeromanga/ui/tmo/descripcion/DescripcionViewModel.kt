@@ -23,7 +23,6 @@ class DescripcionViewModel  (application: Application,
     private val _mangaExist = MutableLiveData<Boolean>()
 
     init {
-        _isLoading.value = true
         _mangaExist.value = false
     }
 
@@ -35,15 +34,18 @@ class DescripcionViewModel  (application: Application,
 
      fun setInfoManga(mangaUrl : String) = viewModelScope.launch {
 
-         _isLoading.value = true
+         _isLoading.postValue(true)
          val response =  repository.getInfoManga(urlVisitar = mangaUrl)
 
          when(response){
-             is ResponseManga.Success<MangaResponse> ->_infoManga.postValue(response.data!!)
+             is ResponseManga.Success<MangaResponse> -> {
+                 _infoManga.postValue(response.data!!)
+                 _isLoading.postValue(false)
+             }
              else -> {
              }
          }
-         _isLoading.value = false
+
     }
 
     //busca un manga por titulo
@@ -69,7 +71,7 @@ class DescripcionViewModel  (application: Application,
         try {
             val rowsAfected =   mangaFavRepository.addMangaFav(mangaFav)
             if (rowsAfected > 0){
-                    Log.d("ROWS AFECTED =>",rowsAfected.toString())
+                Log.d("ROWS AFECTED =>",rowsAfected.toString())
             }
         }catch (ex : Exception){
             println(ex.message)

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <MotionScene 
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:motion="http://schemas.android.com/apk/res-auto">
+    xmlns:motion="http://schemas.android.com/apk/res-auto"
+    >
 
     <Transition
-        motion:constraintSetEnd="@+id/end"
         motion:constraintSetStart="@id/start"
+        motion:constraintSetEnd="@+id/end"
         motion:duration="1000">
         <OnSwipe
             motion:dragDirection="dragUp"
@@ -15,54 +16,75 @@
             motion:touchAnchorId="@id/rv_capitulos"
             motion:touchAnchorSide="top"
             >
-
         </OnSwipe>
-       <KeyFrameSet>
-       </KeyFrameSet>
+
     </Transition>
 
     <ConstraintSet android:id="@+id/start">
         <Constraint
-            android:layout_height="wrap_content"
-            motion:layout_constraintTop_toTopOf="parent"
-            android:layout_width="wrap_content"
-            motion:layout_constraintStart_toStartOf="parent"
-            android:id="@+id/pb_descripcion"
-            android:layout_marginTop="420dp"
-            motion:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginLeft="180dp"
+            android:id="@+id/iv_detalle_manga"
             motion:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginStart="180dp"
-            motion:layout_constraintVertical_bias="0.629"
-            motion:layout_constraintHorizontal_bias="0.432" />
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            />
         <Constraint
-            android:layout_height="673dp"
-            motion:layout_constraintBottom_toTopOf="@+id/rv_capitulos"
-           
-            android:layout_width="409dp"
-            android:id="@+id/ll_buttons" />
+            android:id="@+id/toolbarDescripcion"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            motion:layout_constraintTop_toBottomOf="@+id/iv_detalle_manga"
+            motion:layout_constraintStart_toStartOf="parent" />
+
         <Constraint
+            android:id="@+id/ll_buttons"
+            android:layout_height="50dp"
+            motion:layout_constraintTop_toBottomOf="@+id/toolbarDescripcion"
+            android:layout_width="match_parent"
+            />
+
+        <Constraint
+            android:id="@+id/rv_capitulos"
             android:layout_height="wrap_content"
             motion:layout_editor_absoluteX="1dp"
             android:layout_width="match_parent"
-            motion:layout_constraintTop_toBottomOf="@+id/toolbarDescripcion"
-            android:id="@+id/rv_capitulos" />
+            motion:layout_constraintTop_toBottomOf="@+id/ll_buttons"
+            />
+
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
         <Constraint
-            android:layout_height="wrap_content"
-            motion:layout_constraintTop_toTopOf="parent"
-            android:layout_width="wrap_content"
-            motion:layout_constraintStart_toStartOf="parent"
-            android:id="@+id/pb_descripcion"
-            android:layout_marginTop="0dp"
-            motion:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginLeft="180dp"
+            android:id="@+id/iv_detalle_manga"
             motion:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginStart="180dp"
-            motion:layout_constraintVertical_bias="0.629"
-            motion:layout_constraintHorizontal_bias="0.432" />
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:minWidth="100dp"
+            />
 
+        <Constraint
+            android:id="@+id/toolbarDescripcion"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            motion:layout_constraintTop_toTopOf="@+id/iv_detalle_manga"
+            motion:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            android:id="@+id/ll_buttons"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            motion:layout_constraintTop_toBottomOf="@id/toolbarDescripcion"
+            motion:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            android:id="@+id/rv_capitulos"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            motion:layout_constraintTop_toBottomOf="@id/ll_buttons"
+            motion:layout_constraintStart_toStartOf="parent" />
     </ConstraintSet>
 </MotionScene>

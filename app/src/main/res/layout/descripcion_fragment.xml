@@ -10,7 +10,7 @@
 
 
     <ProgressBar
-        android:id="@+id/pb_descripcion"
+        android:id="@+id/pbdescripcion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -19,10 +19,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-
+        android:scaleType="fitXY"
         android:id="@+id/iv_detalle_manga"
         android:layout_width="wrap_content"
         android:layout_height="250dp"
+        android:contentDescription="Imagen"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -44,25 +45,27 @@
     <LinearLayout
         android:id="@+id/ll_buttons"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbarDescripcion"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarDescripcion">
+        app:layout_constraintEnd_toEndOf="parent">
 
         <Button
             android:id="@+id/btnMasDetalles"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Mas Detalles" />
+            android:text="@string/mas_detalles"
+             />
 
         <Button
             android:id="@+id/btnFav"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Favoritos" />
+            android:text="@string/favoritos"
+            />
 
     </LinearLayout>
 
@@ -70,8 +73,9 @@
         android:id="@+id/rv_capitulos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        app:layout_constraintTop_toTopOf="@+id/pb_descripcion"
+        app:layout_constraintTop_toBottomOf="@id/ll_buttons"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         tools:listitem="@layout/row_capitulos" />
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

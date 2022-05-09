@@ -3,7 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Android Studio Projects/ZeroMangaMovil2/app/src/main/res/layout/descripcion_fragment.xml" value="0.1" />
+        <entry key="..\:/Android Studio Projects/ZeroMangaMovil2/app/src/main/res/layout/descripcion_fragment.xml" value="0.25" />
+        <entry key="..\:/Android Studio Projects/ZeroMangaMovil2/app/src/main/res/layout/fragment_detalle.xml" value="0.1" />
         <entry key="..\:/Android Studio Projects/ZeroMangaMovil2/app/src/main/res/layout/main_fragment.xml" value="0.14351851851851852" />
         <entry key="..\:/Android Studio Projects/ZeroMangaMovil2/app/src/main/res/layout/network_error.xml" value="0.14351851851851852" />
         <entry key="..\:/Android Studio Projects/ZeroMangaMovil2/app/src/main/res/layout/populares_row.xml" value="0.264" />

@@ -11,7 +11,7 @@ import com.zerodev.zeromanga.utlities.constantes.DATABASE_NAME
 
 @Database(
     entities = [MangaFav::class,MangaCache::class],
-    version = 1
+    version = 2
 )
 abstract class MangaDatabase : RoomDatabase() {
 
@@ -33,23 +33,6 @@ abstract class MangaDatabase : RoomDatabase() {
                 instance
             }
         }
-
-        /*
-        private val LOCK = Any()
-
-        operator fun invoke(context: Context) = instanse?: synchronized(LOCK){
-            instanse?:
-            createDatabse(context).also {
-                instanse = it
-            }
-        }
-
-        private fun createDatabse(context: Context) = Room.databaseBuilder(
-            context.applicationContext,
-            MangaDatabase::class.java,
-            DATABASE_NAME
-        ).build()
-        * */
     }
 
 }

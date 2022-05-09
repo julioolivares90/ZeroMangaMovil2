@@ -93,16 +93,13 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
         //modificar la toolbar
         setUpToolbar(view)
 
-
-        //collapsingToolbarLayout = view.findViewById(R.id.collapsing_toolbar)
-
         viewModel.IsLoading().observe(viewLifecycleOwner, Observer {
             if (it){
-                binding.pbDescripcion.visibility = View.VISIBLE
+                binding.pbdescripcion.visibility = View.VISIBLE
                 hideComponents()
             }
             else{
-                binding.pbDescripcion.visibility = View.GONE
+                binding.pbdescripcion.visibility = View.GONE
                 showComponents()
                 setUpInformacion(view)
             }
@@ -129,19 +126,6 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
             Navigation.findNavController(view).navigate(directions)
         }
 
-        /*
-        * val listener = AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
-            val seekPosition = verticalOffset / appBarLayout.totalScrollRange.toFloat()
-
-            Timber.d("POSITION => $seekPosition")
-            when(seekPosition){
-                 0.0f -> {
-
-                }
-            }
-        }
-        binding.appBarTitle.addOnOffsetChangedListener(listener)
-        * */
     }
 
     private fun setUpToolbar(view: View){
@@ -161,18 +145,6 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
             Glide.with(view).load(mangaResponse.data.imageUrl).into(binding.ivDetalleManga)
 
             binding.toolbarDescripcion.title = it.data.title
-            /*
-            if (it.data.title.contains("\n") && it.data.title.startsWith("\n")){
-                val title = mangaResponse.data.title.replace("\n","")
-                collapsingToolbarLayout.title = title
-            }else  {
-                val title = mangaResponse.data.title
-                collapsingToolbarLayout.title = title
-            }
-
-
-             */
-            //Timber.d(collapsingToolbarLayout.title.toString())
 
             val existe = viewModel.mangaExiste(it.data.title)
 
@@ -208,41 +180,8 @@ class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
         viewModel.getInfoManga().observe(viewLifecycleOwner, Observer {
             mangaResponse = it
 
-
-            //(activity as AppCompatActivity).setSupportActionBar()
-            //val toolbar = (activity as AppCompatActivity).supportActionBar
-
-           // toolbar?.title = mangaResponse.data.title
-           /*
-            val tb_imagen= toolbar?.customView?.findViewById<ImageView>(R.id.tb_imagen)
-            tb_imagen?.let {imagen ->
-                Glide.with(requireContext()).load(mangaResponse.data.image).into(imagen)
-            }
-
-            */
-
-            //Glide.with(requireContext()).load(mangaResponse.data.image).into(binding.imageView)
             descripcionViewPagerAdapter = DescripcionViewPagerAdapter(mangaResponse = mangaResponse,mangaUrlRefer = mangaUrlRefer ,this)
 
-            //binding.viewPagerDescripcion.adapter = descripcionViewPagerAdapter
-
-            /*
-            *
-            TabLayoutMediator(binding.tabLayout,binding.viewPagerDescripcion,
-                TabLayoutMediator.TabConfigurationStrategy{ tab: TabLayout.Tab, position: Int ->
-                    when(position){
-                        0-> {
-                            tab.text = "Informacion"
-                            tab.icon = resources.getDrawable(R.drawable.ic_baseline_recent_actors_24)
-                        }
-                        1-> {
-                            tab.text = "Capitulo"
-                            tab.icon = resources.getDrawable(R.drawable.ic_baseline_list_24)
-                        }
-                    }
-                }).attach()
-            *
-            * */
         })
     }
 
