@@ -1,6 +1,9 @@
 package com.zerodev.zeromanga
 
 import android.app.Application
+import com.microsoft.appcenter.AppCenter
+import com.microsoft.appcenter.analytics.Analytics
+import com.microsoft.appcenter.crashes.Crashes
 import com.zerodev.zeromanga.di.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -27,5 +30,16 @@ class BaseApplication : Application() {
                 mangaRepositoryModule,
             )
         }
+
+        Thread.setDefaultUncaughtExceptionHandler { t, e ->
+            handleUncaughtException(t,e)
+        }
+    }
+
+    private  fun handleUncaughtException(thread: Thread,e : Throwable){
+        AppCenter.start(
+            this, "{Your app secret here}",
+            Analytics::class.java, Crashes::class.java
+        )
     }
 }
