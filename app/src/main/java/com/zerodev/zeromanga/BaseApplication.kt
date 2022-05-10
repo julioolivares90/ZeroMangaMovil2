@@ -13,6 +13,11 @@ class BaseApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        AppCenter.start(
+            this, "",
+            Analytics::class.java, Crashes::class.java
+        )
+
         startKoin {
             androidLogger()
             androidContext(this@BaseApplication)
@@ -37,9 +42,6 @@ class BaseApplication : Application() {
     }
 
     private  fun handleUncaughtException(thread: Thread,e : Throwable){
-        AppCenter.start(
-            this, "{Your app secret here}",
-            Analytics::class.java, Crashes::class.java
-        )
+        Crashes.trackError(e)
     }
 }
