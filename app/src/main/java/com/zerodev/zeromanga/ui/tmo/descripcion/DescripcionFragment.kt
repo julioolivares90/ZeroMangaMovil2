@@ -8,6 +8,7 @@ import android.view.ViewGroup
 
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
@@ -33,18 +34,19 @@ import com.zerodev.zeromanga.listeners.CapituloOnClickListener
 import com.zerodev.zeromanga.listeners.SnackBarClickListener
 import com.zerodev.zeromanga.utlities.constantes
 import com.zerodev.zeromanga.utlities.constantes.ENVIAR_URL
-import org.koin.android.ext.android.bind
-import org.koin.android.ext.android.inject
+import dagger.hilt.android.AndroidEntryPoint
+
 import timber.log.Timber
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class DescripcionFragment : Fragment(R.layout.descripcion_fragment) {
 
     companion object {
         fun newInstance() = DescripcionFragment()
     }
 
-    private  val viewModel: DescripcionViewModel by inject()
+   val viewModel: DescripcionViewModel by viewModels()
 
     private lateinit var binding: DescripcionFragmentBinding
 

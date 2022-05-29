@@ -16,9 +16,13 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.microsoft.appcenter.AppCenter
+import com.microsoft.appcenter.analytics.Analytics
+import com.microsoft.appcenter.crashes.Crashes
 import com.zerodev.zeromanga.ui.tmo.descripcion.DescripcionViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
    private lateinit var appBarConfiguration : AppBarConfiguration
@@ -28,7 +32,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
-
+        AppCenter.start(
+            application, "",
+            Analytics::class.java, Crashes::class.java
+        )
         //setSupportActionBar(findViewById(R.id.toolbarDescripcion))
 
         //setTheme(R.style.AppTheme)

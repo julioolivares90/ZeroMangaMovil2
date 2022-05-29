@@ -8,9 +8,11 @@ import androidx.lifecycle.viewModelScope
 import com.zerodev.zeromanga.data.remote.models.Response
 import com.zerodev.zeromanga.data.remote.models.ResponseManga
 import com.zerodev.zeromanga.domain.repository.MangaRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-
-class BusquedaViewModel  ( private val repository : MangaRepository) : ViewModel() {
+import javax.inject.Inject
+@HiltViewModel
+class BusquedaViewModel @Inject constructor ( private val repository : MangaRepository) : ViewModel() {
 
     private val _mangasBusqueda : MutableLiveData<ResponseManga<Response>> = MutableLiveData()
 

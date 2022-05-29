@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
@@ -20,20 +21,19 @@ import com.zerodev.zeromanga.data.remote.models.Manga
 import com.zerodev.zeromanga.databinding.BusquedaFragmentBinding
 import com.zerodev.zeromanga.data.remote.models.Response
 import com.zerodev.zeromanga.data.remote.models.ResponseManga
-import com.zerodev.zeromanga.di.busquedaViewModelModule
 import com.zerodev.zeromanga.listeners.MangaOnclickListener
 import com.zerodev.zeromanga.utlities.CheckNetwork
 import com.zerodev.zeromanga.utlities.constantes
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
 import timber.log.Timber
 
-
+@AndroidEntryPoint
 class BusquedaFragment : Fragment(R.layout.busqueda_fragment) {
 
     private lateinit var binding: BusquedaFragmentBinding
-    private  val BusquedaviewModel: BusquedaViewModel  by inject()
+    val BusquedaviewModel: BusquedaViewModel by viewModels()
     private lateinit var adapterMangaBusqueda: AdapterMangaBusqueda
 
 

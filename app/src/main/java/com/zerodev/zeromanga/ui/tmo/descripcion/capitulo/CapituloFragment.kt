@@ -32,7 +32,7 @@ class CapituloFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = CapituloFragmentBinding.inflate(layoutInflater)
-        viewModel = ViewModelProvider(this).get(CapituloViewModel::class.java)
+        viewModel = ViewModelProvider(this)[CapituloViewModel::class.java]
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

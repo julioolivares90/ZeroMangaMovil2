@@ -1,15 +1,31 @@
 package com.zerodev.zeromanga.di
 
+import com.zerodev.zeromanga.data.local.db.MangaCacheDao
+import com.zerodev.zeromanga.data.local.db.MangaFavDao
 import com.zerodev.zeromanga.data.remote.api.Api
-import com.zerodev.zeromanga.domain.repository.MangaFavRepositoryImpl
-import com.zerodev.zeromanga.domain.repository.MangaRepository
-import com.zerodev.zeromanga.domain.repository.MangaRepositoryImpl
-import org.koin.dsl.module
+import com.zerodev.zeromanga.domain.repository.*
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.components.SingletonComponent
 
-val repositoryModule = module {
-    fun provideMangaRepository(api : Api) : MangaRepository {
+@InstallIn(SingletonComponent::class)
+@Module
+object RepositoryModule {
+
+    @Provides
+    fun providesRepository(api : Api) : MangaRepository{
         return MangaRepositoryImpl(api)
     }
 
-    single { provideMangaRepository(get()) }
+    @Provides
+    fun providesMangaFavRepository(mangaFavDao: MangaFavDao): MangaFavRepository {
+        return  MangaFavRepositoryImpl(mangaFavDao)
+    }
+
+    @Provides
+    fun providesMangaCacheRepository(mangaCacheDao: MangaCacheDao): MangaCacheRepository{
+        return  MangaCacheRepositoryImpl(mangaCacheDao)
+    }
 }

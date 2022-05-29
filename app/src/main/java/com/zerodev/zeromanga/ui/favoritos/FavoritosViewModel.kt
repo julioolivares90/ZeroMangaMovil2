@@ -7,9 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.zerodev.zeromanga.data.local.db.MangaFavDao
 import com.zerodev.zeromanga.data.local.db.models.MangaFav
 import com.zerodev.zeromanga.domain.repository.MangaFavRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class FavoritosViewModel  (private val mangaFavRepository: MangaFavRepository) : ViewModel() {
+@HiltViewModel
+class FavoritosViewModel @Inject constructor (private val mangaFavRepository: MangaFavRepository) : ViewModel() {
 
     private val _mangasFav : MutableLiveData<List<MangaFav>> = MutableLiveData()
 
@@ -24,11 +27,12 @@ class FavoritosViewModel  (private val mangaFavRepository: MangaFavRepository) :
         _isLoading.value = false
     }
 
+    fun getMangas(){
+
+    }
     fun deleteMangaFav(mangaFav: MangaFav) = viewModelScope.launch {
         mangaFavRepository.deleteMangaFav(mangaFav)
     }
-    
-    fun getMangas() : LiveData<List<MangaFav>> = _mangasFav
 
     fun isLoading() : LiveData<Boolean> = _isLoading
 }

@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.zerodev.zeromanga.R
 import com.zerodev.zeromanga.adapters.AdapterMangasFavoritos
@@ -16,9 +15,9 @@ import com.zerodev.zeromanga.data.remote.models.Manga
 import com.zerodev.zeromanga.databinding.FavoritosFragmentBinding
 import com.zerodev.zeromanga.listeners.MangaFavOnClickListener
 import com.zerodev.zeromanga.utlities.constantes.ENVIAR_URL
-import org.koin.android.ext.android.inject
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class FavoritosFragment : Fragment(R.layout.favoritos_fragment) {
 
     private lateinit var binding : FavoritosFragmentBinding
@@ -27,7 +26,8 @@ class FavoritosFragment : Fragment(R.layout.favoritos_fragment) {
         fun newInstance() = FavoritosFragment()
     }
 
-    private  val viewModel: FavoritosViewModel by inject()
+       private val viewModel: FavoritosViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -74,15 +74,13 @@ class FavoritosFragment : Fragment(R.layout.favoritos_fragment) {
             adapter = adapterFavoritos
         }
 
-        viewModel.getMangasFav().observe(viewLifecycleOwner,{
-            it.forEach { m->
-                val manga  = m
-
-                println(manga.title)
+        viewModel.getMangasFav().observe(viewLifecycleOwner) {
+            it.forEach { m ->
+                println(m.title)
             }
             adapterFavoritos.differ.submitList(it)
             updateUI(it)
-        })
+        }
     }
 
     private fun updateUI(mangasFav : List<MangaFav>) {
@@ -94,8 +92,6 @@ class FavoritosFragment : Fragment(R.layout.favoritos_fragment) {
             showRecyclerView()
             hideMessage()
             hideProgressBar()
-
-
         }
     }
 

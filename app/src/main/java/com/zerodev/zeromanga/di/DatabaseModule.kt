@@ -4,24 +4,30 @@ import android.content.Context
 import com.zerodev.zeromanga.data.local.db.MangaCacheDao
 import com.zerodev.zeromanga.data.local.db.MangaFavDao
 import com.zerodev.zeromanga.data.local.db.models.MangaDatabase
-import org.koin.android.ext.koin.androidContext
-import org.koin.dsl.module
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
-val databaseModule = module {
-    fun provideDatabase(context: Context) : MangaDatabase {
-        return  MangaDatabase.getDataBase(context =context )
+
+@InstallIn(SingletonComponent::class)
+@Module
+object DatabaseModule {
+    @Provides
+    @Singleton
+    fun provideMangaDatabase(@ApplicationContext appcontext: Context): MangaDatabase {
+        return MangaDatabase.getDataBase(appcontext)
     }
-
+    @Provides
     fun provideMangaFavDao(database: MangaDatabase): MangaFavDao {
-        return database.getMangaFavDao()
+       return database.getMangaFavDao()
     }
 
-    fun provideMangaCacheDao(database:MangaDatabase) : MangaCacheDao{
-        return database.getMangaCacheDao()
+    @Provides
+    fun provideMangaCacheDao(database: MangaDatabase) : MangaCacheDao {
+        return  database.getMangaCacheDao()
     }
-
-    single { provideDatabase(androidContext()) }
-    single { provideMangaFavDao(get()) }
-
-    single { provideMangaCacheDao(get()) }
 }

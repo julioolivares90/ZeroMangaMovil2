@@ -41,7 +41,7 @@ class DetalleFragment() : Fragment(R.layout.fragment_detalle) {
         super.onCreate(savedInstanceState)
 
         binding = FragmentDetalleBinding.inflate(layoutInflater)
-        viewModel = ViewModelProvider(this).get(DetalleViewModel::class.java)
+        viewModel = ViewModelProvider(this)[DetalleViewModel::class.java]
     }
 
 

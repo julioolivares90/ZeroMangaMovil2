@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -20,17 +22,19 @@ import com.zerodev.zeromanga.databinding.LectorFragmentBinding
 import com.zerodev.zeromanga.utlities.constantes.NOMBRE_CAP
 import com.zerodev.zeromanga.utlities.constantes.URL_IMAGE_CAP
 import com.zerodev.zeromanga.utlities.constantes.URL_REFERER
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class LectorFragment : Fragment() {
 
     companion object {
         fun newInstance() = LectorFragment()
     }
 
-    private  val viewModel: LectorViewModel  by inject()
+
+      private val viewModel: LectorViewModel by viewModels()
 
     private lateinit var binding : LectorFragmentBinding
 

@@ -9,9 +9,12 @@ import androidx.lifecycle.viewModelScope
 import com.zerodev.zeromanga.data.remote.models.Chapters
 import com.zerodev.zeromanga.data.remote.models.ResponseManga
 import com.zerodev.zeromanga.domain.repository.MangaRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LectorViewModel  (private val repository : MangaRepository) : ViewModel() {
+@HiltViewModel
+class LectorViewModel @Inject constructor (private val repository : MangaRepository) : ViewModel() {
 
     private val imagenes = MutableLiveData<MutableList<String>>()
 

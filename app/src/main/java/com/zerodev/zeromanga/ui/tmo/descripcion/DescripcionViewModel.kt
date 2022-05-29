@@ -9,12 +9,15 @@ import com.zerodev.zeromanga.data.remote.models.MangaResponse
 import com.zerodev.zeromanga.data.remote.models.ResponseManga
 import com.zerodev.zeromanga.domain.repository.MangaFavRepository
 import com.zerodev.zeromanga.domain.repository.MangaRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 
-class DescripcionViewModel  (application: Application,
-                             private val mangaFavRepository: MangaFavRepository,
-                             private val repository: MangaRepository) : AndroidViewModel(application) {
+@HiltViewModel
+class DescripcionViewModel @Inject constructor(application: Application,
+                                                   private val mangaFavRepository: MangaFavRepository,
+                                                   private val repository: MangaRepository) : AndroidViewModel(application) {
 
     private val  _infoManga = MutableLiveData<MangaResponse>()
 

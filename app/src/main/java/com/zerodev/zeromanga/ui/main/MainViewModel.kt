@@ -1,6 +1,6 @@
 package com.zerodev.zeromanga.ui.main
 
-import android.content.Context
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,12 +9,14 @@ import androidx.lifecycle.viewModelScope
 import com.zerodev.zeromanga.data.remote.models.MangaData
 import com.zerodev.zeromanga.data.remote.models.ResponseManga
 import com.zerodev.zeromanga.domain.repository.MangaRepository
-import com.zerodev.zeromanga.utlities.CheckNetwork
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel (private val repository: MangaRepository,private val context: Context) : ViewModel() {
+@HiltViewModel
+class MainViewModel  @Inject constructor(private val repository: MangaRepository) : ViewModel() {
 
     private val _mangaData : MutableLiveData<ResponseManga<MangaData>> = MutableLiveData()
 

@@ -2,8 +2,9 @@ package com.zerodev.zeromanga.domain.repository
 import androidx.lifecycle.LiveData
 import com.zerodev.zeromanga.data.local.db.MangaFavDao
 import com.zerodev.zeromanga.data.local.db.models.MangaFav
+import javax.inject.Inject
 
-class MangaFavRepositoryImpl constructor (private val dao: MangaFavDao) : MangaFavRepository {
+class MangaFavRepositoryImpl  constructor (private val dao: MangaFavDao) : MangaFavRepository {
 
    override suspend fun addMangaFav(mangaFav: MangaFav) = dao.addManga(mangaFav)
 
